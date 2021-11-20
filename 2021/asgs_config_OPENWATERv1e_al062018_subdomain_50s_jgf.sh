@@ -36,14 +36,17 @@
 
 # Fundamental
 
-INSTANCENAME=HSOFS_nam_jgf  # "name" of this ASGS process
+INSTANCENAME=OPENWATERv1e_al062018_50s_jgf  # "name" of this ASGS process
 
 # Input files and templates
 
-GRIDNAME=HSOFS
+GRIDNAME=OPENWATERv1e
 source $SCRIPTDIR/config/mesh_defaults.sh
 
 # Physical forcing (defaults set in config/forcing_defaults)
+
+TIMESTEPSIZE=50.0
+CONTROLTEMPLATE=openwater_adcircv55.fort.15.template
 
 TIDEFAC=on            # tide factor recalc
 HINDCASTLENGTH=30.0   # length of initial hindcast, from cold (days)
@@ -51,9 +54,9 @@ BACKGROUNDMET=on      # NAM download/forcing
 FORECASTCYCLE="06"
    forecastSelection="strict"
 TROPICALCYCLONE=off   # tropical cyclone forcing
-STORM=05             # storm number, e.g. 05=ernesto in 2006
-YEAR=2021            # year of the storm
-WAVES=off            # wave forcing
+#STORM=07             # storm number, e.g. 05=ernesto in 2006
+#YEAR=2018            # year of the storm
+WAVES=off             # wave forcing
 #STATICOFFSET=0.1524
 REINITIALIZESWAN=no   # used to bounce the wave solution
 VARFLUX=off           # variable river flux forcing
@@ -68,32 +71,29 @@ NCPUCAPACITY=9999
 # Post processing and publication
 
 INTENDEDAUDIENCE=general    # can also be "developers-only" or "professional"
+#POSTPROCESS=( createMaxCSV.sh cpra_slide_deck_post.sh includeWind10m.sh createOPeNDAPFileList.sh opendap_post.sh )
+#POSTPROCESS=( createMaxCSV.sh includeWind10m.sh cpra_slide_deck_post.sh createOPeNDAPFileList.sh opendap_post.sh )
 POSTPROCESS=( createMaxCSV.sh includeWind10m.sh createOPeNDAPFileList.sh opendap_post.sh )
-OPENDAPNOTIFY="null"
-RMQMessaging_Enable=off
-RMQMessaging_Transmit=off
+OPENDAPNOTIFY="asgs.cera.lsu@gmail.com,jason.g.fleming@gmail.com"
+TDS=( lsu_tds )
 
 # Initial state (overridden by STATEFILE after ASGS gets going)
 
-COLDSTARTDATE=auto
-HOTORCOLD=hotstart      # "hotstart" or "coldstart"
-LASTSUBDIR=https://fortytwo.cct.lsu.edu/thredds/fileServer/2021/nam/2021072206/HSOFS/qbc.loni.org/HSOFS_nam_jgf/namforecast
+COLDSTARTDATE=2021032000
+HOTORCOLD=coldstart      # "hotstart" or "coldstart"
+LASTSUBDIR=null
 
 # Scenario package 
 
 #PERCENT=default
-SCENARIOPACKAGESIZE=0  # nowcast only 
+SCENARIOPACKAGESIZE=2 # number of storms in the ensemble
 case $si in
  -2)
    ENSTORM=hindcast
-   FINISH_SPINUP_SCENARIO=( "output/createOPeNDAPFileList.sh" "output/opendap_post.sh" )   # post spinup to opendap
-   OPENDAPNOTIFY="null"
    ;;
 -1)
    # do nothing ... this is not a forecast
    ENSTORM=nowcast
-   FINISH_NOWCAST_SCENARIO=( "output/createOPeNDAPFileList.sh" "output/opendap_post.sh" )  # post nowcast to opendap
-   OPENDAPNOTIFY="null"
    ;;
  0)
    ENSTORM=namforecastWind10m
@@ -109,3 +109,4 @@ esac
 
 PREPPEDARCHIVE=prepped_${GRIDNAME}_${INSTANCENAME}_${NCPU}.tar.gz
 HINDCASTARCHIVE=prepped_${GRIDNAME}_hc_${INSTANCENAME}_${NCPU}.tar.gz
+
