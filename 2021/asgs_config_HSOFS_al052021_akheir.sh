@@ -36,7 +36,7 @@
 
 # Fundamental
 
-INSTANCENAME=HSOFS_nam_jgf  # "name" of this ASGS process
+INSTANCENAME=HSOFS_al052021_akheir  # "name" of this ASGS process
 
 # Input files and templates
 
@@ -47,10 +47,10 @@ source $SCRIPTDIR/config/mesh_defaults.sh
 
 TIDEFAC=on            # tide factor recalc
 HINDCASTLENGTH=30.0   # length of initial hindcast, from cold (days)
-BACKGROUNDMET=on      # NAM download/forcing
+BACKGROUNDMET=off      # NAM download/forcing
 FORECASTCYCLE="06"
    forecastSelection="strict"
-TROPICALCYCLONE=off   # tropical cyclone forcing
+TROPICALCYCLONE=on   # tropical cyclone forcing
 STORM=05             # storm number, e.g. 05=ernesto in 2006
 YEAR=2021            # year of the storm
 WAVES=off            # wave forcing
@@ -69,38 +69,34 @@ NCPUCAPACITY=9999
 
 INTENDEDAUDIENCE=general    # can also be "developers-only" or "professional"
 POSTPROCESS=( createMaxCSV.sh includeWind10m.sh createOPeNDAPFileList.sh opendap_post.sh )
-OPENDAPNOTIFY="null"
-RMQMessaging_Enable=off
-RMQMessaging_Transmit=off
+OPENDAPNOTIFY="asgs.cera.lsu@gmail.com,jason.g.fleming@gmail.com,cera.asgs.tk@gmail.com,asgsnotes4ian@gmail.com,asgsnotifications@opayq.com,kheirkhahan@gmail.com,janelle.fleming@seahorsecoastal.com"
+TDS=( lsu_tds )
 
+#RMQMessaging_Enable=off
 # Initial state (overridden by STATEFILE after ASGS gets going)
 
 COLDSTARTDATE=auto
 HOTORCOLD=hotstart      # "hotstart" or "coldstart"
-LASTSUBDIR=https://fortytwo.cct.lsu.edu/thredds/fileServer/2021/nam/2021072206/HSOFS/qbc.loni.org/HSOFS_nam_jgf/namforecast
+LASTSUBDIR=https://fortytwo.cct.lsu.edu/thredds/fileServer/2021/nam/2021070206/HSOFS/qbc.loni.org/HSOFS_nam_akheir/namforecast/
 
 # Scenario package 
 
 #PERCENT=default
-SCENARIOPACKAGESIZE=0  # nowcast only 
+SCENARIOPACKAGESIZE=2 # number of storms in the ensemble
 case $si in
  -2)
    ENSTORM=hindcast
-   FINISH_SPINUP_SCENARIO=( "output/createOPeNDAPFileList.sh" "output/opendap_post.sh" )   # post spinup to opendap
-   OPENDAPNOTIFY="null"
    ;;
 -1)
    # do nothing ... this is not a forecast
    ENSTORM=nowcast
-   FINISH_NOWCAST_SCENARIO=( "output/createOPeNDAPFileList.sh" "output/opendap_post.sh" )  # post nowcast to opendap
-   OPENDAPNOTIFY="null"
    ;;
  0)
-   ENSTORM=namforecastWind10m
+   ENSTORM=nhcConsensusWind10m
    source $SCRIPTDIR/config/io_defaults.sh # sets met-only mode based on "Wind10m" suffix
    ;;
 1)
-   ENSTORM=namforecast
+   ENSTORM=nhcConsensus
    ;;
 *)
    echo "CONFIGRATION ERROR: Unknown scenario number: '$si'."
