@@ -53,7 +53,7 @@ FORECASTCYCLE="06"
 TROPICALCYCLONE=off   # tropical cyclone forcing
 STORM=05             # storm number, e.g. 05=ernesto in 2006
 YEAR=2021            # year of the storm
-WAVES=off            # wave forcing
+WAVES=on            # wave forcing
 #STATICOFFSET=0.1524
 REINITIALIZESWAN=no   # used to bounce the wave solution
 VARFLUX=off           # variable river flux forcing
@@ -68,10 +68,16 @@ NCPUCAPACITY=9999
 # Post processing and publication
 
 INTENDEDAUDIENCE=general    # can also be "developers-only" or "professional"
-POSTPROCESS=( createMaxCSV.sh includeWind10m.sh createOPeNDAPFileList.sh opendap_post.sh )
-OPENDAPNOTIFY="null"
+POSTPROCESS=( includeWind10m.sh createOPeNDAPFileList.sh opendap_post.sh )
+OPENDAPNOTIFY="asgs.cera.lsu@gmail.com"
+
+# Monitoring
+
 RMQMessaging_Enable=off
 RMQMessaging_Transmit=off
+enablePostStatus="no"
+enableStatusNotify="no"
+statusNotify="null"
 
 # Initial state (overridden by STATEFILE after ASGS gets going)
 
@@ -82,7 +88,7 @@ LASTSUBDIR=https://fortytwo.cct.lsu.edu/thredds/fileServer/2021/nam/2021072206/H
 # Scenario package 
 
 #PERCENT=default
-SCENARIOPACKAGESIZE=0  # nowcast only 
+SCENARIOPACKAGESIZE=2  # nowcast only 
 case $si in
  -2)
    ENSTORM=hindcast
