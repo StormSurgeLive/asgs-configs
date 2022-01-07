@@ -85,10 +85,10 @@ statusNotify="null"
 
 # Initial state (overridden by STATEFILE after ASGS gets going)
 
-COLDSTARTDATE=2021102000
-HOTORCOLD=coldstart      # "hotstart" or "coldstart"
-LASTSUBDIR=null
-#LASTSUBDIR=http://adcircvis.tacc.utexas.edu:8080/thredds/fileServer/asgs/2021/al09/18/LAv20a/frontera.tacc.utexas.edu/LAv20a_al092021_jgf_10kcms/nhcConsensus
+COLDSTARTDATE=auto
+HOTORCOLD=hotstart      # "hotstart" or "coldstart"
+#LASTSUBDIR=null
+LASTSUBDIR=https://fortytwo.cct.lsu.edu/thredds/fileServer/2021/nam/2021120706/LAv20a/qbc.loni.org/LAv20a_nam_jgf_10kcms/namforecast
 
 # Scenario package 
 
