@@ -88,7 +88,7 @@ statusNotify="null"
 COLDSTARTDATE=auto
 HOTORCOLD=hotstart      # "hotstart" or "coldstart"
 #LASTSUBDIR=null
-LASTSUBDIR=https://fortytwo.cct.lsu.edu/thredds/fileServer/2021/nam/2021120706/LAv20a/qbc.loni.org/LAv20a_nam_jgf_10kcms/namforecast
+LASTSUBDIR=/work/jgflemin/asgs3087/2022010406
 
 # Scenario package 
 
@@ -101,6 +101,7 @@ case $si in
 -1)
    # do nothing ... this is not a forecast
    ENSTORM=nowcast
+   OPENDAPNOTIFY="null"
    ;;
 0)
    ENSTORM=namforecastWind10m

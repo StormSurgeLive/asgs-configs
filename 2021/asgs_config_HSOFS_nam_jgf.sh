@@ -83,9 +83,9 @@ statusNotify="null"
 
 # Initial state (overridden by STATEFILE after ASGS gets going)
 
-COLDSTARTDATE=auto
-HOTORCOLD=hotstart      # "hotstart" or "coldstart"
-LASTSUBDIR=https://fortytwo.cct.lsu.edu/thredds/fileServer/2021/nam/2021120706/HSOFS/qbc.loni.org/HSOFS_nam_jgf/namforecast
+COLDSTARTDATE=2021121500
+HOTORCOLD=coldstart      # "hotstart" or "coldstart"
+LASTSUBDIR=null
 
 # Scenario package 
 
@@ -94,13 +94,11 @@ SCENARIOPACKAGESIZE=2  # nowcast only
 case $si in
  -2)
    ENSTORM=hindcast
-   FINISH_SPINUP_SCENARIO=( "output/createOPeNDAPFileList.sh" "output/opendap_post.sh" )   # post spinup to opendap
    OPENDAPNOTIFY="null"
    ;;
 -1)
    # do nothing ... this is not a forecast
    ENSTORM=nowcast
-   FINISH_NOWCAST_SCENARIO=( "output/createOPeNDAPFileList.sh" "output/opendap_post.sh" )  # post nowcast to opendap
    OPENDAPNOTIFY="null"
    ;;
  0)
