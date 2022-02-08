@@ -85,10 +85,10 @@ statusNotify="null"
 
 # Initial state (overridden by STATEFILE after ASGS gets going)
 
-COLDSTARTDATE=2021102000
-HOTORCOLD=coldstart      # "hotstart" or "coldstart"
-LASTSUBDIR=null
-#LASTSUBDIR=http://adcircvis.tacc.utexas.edu:8080/thredds/fileServer/asgs/2021/al09/18/LAv20a/frontera.tacc.utexas.edu/LAv20a_al092021_jgf_10kcms/nhcConsensus
+COLDSTARTDATE=auto
+HOTORCOLD=hotstart      # "hotstart" or "coldstart"
+#LASTSUBDIR=null
+LASTSUBDIR=/work/jgflemin/asgs3087/2022010406
 
 # Scenario package 
 
@@ -101,6 +101,7 @@ case $si in
 -1)
    # do nothing ... this is not a forecast
    ENSTORM=nowcast
+   OPENDAPNOTIFY="null"
    ;;
 0)
    ENSTORM=namforecastWind10m

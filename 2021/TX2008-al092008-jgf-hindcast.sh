@@ -24,52 +24,50 @@
 # You should have received a copy of the GNU General Public License along with
 # the ASGS.  If not, see <http://www.gnu.org/licenses/>.
 #-------------------------------------------------------------------
-# The defaults for parameters that can be reset in this config file 
-# are preset in the following scripts:
-# {SCRIPTDIR/platforms.sh               # also contains Operator-specific info
-# {SCRIPTDIR/config/config_defaults.sh
-# {SCRIPTDIR/config/mesh_defaults.sh
-# {SCRIPTDIR/config/forcing_defaults.sh
-# {SCRIPTDIR/config/io_defaults.sh
-# {SCRIPTDIR/config/operator_defaults.sh
-#-------------------------------------------------------------------
 
-# Fundamental
+INSTANCENAME=TX2008-al092008-jgf-hindcast     # "name" of this ASGS process
 
-INSTANCENAME=HSOFS_nam_jgf  # "name" of this ASGS process
+# Initial conditions
+
+COLDSTARTDATE=2008081100
+HOTORCOLD=coldstart
+LASTSUBDIR=null
 
 # Input files and templates
 
-GRIDNAME=HSOFS
+GRIDNAME=TX2008
 source $SCRIPTDIR/config/mesh_defaults.sh
+STORM=09              # storm number, e.g. 05=ernesto in 2006
+YEAR=2008             # year of the storm
+TRIGGER=rssembedded
+RSSSITE=filesystem
+FTPSITE=$RSSSITE
+FDIR=$WORK/storm-archive/ike
+HDIR=$FDIR
+PSEUDOSTORM=yes
 
-# Physical forcing (defaults set in config/forcing_defaults)
+# Physical forcing (defaults set in config/forcing_defaults.sh)
 
-TIDEFAC=on            # tide factor recalc
-HINDCASTLENGTH=30.0   # length of initial hindcast, from cold (days)
-BACKGROUNDMET=on      # NAM download/forcing
-FORECASTCYCLE="06"
-   forecastSelection="strict"
-TROPICALCYCLONE=off   # tropical cyclone forcing
-STORM=05             # storm number, e.g. 05=ernesto in 2006
-YEAR=2021            # year of the storm
-WAVES=on            # wave forcing
-#STATICOFFSET=0.1524
-REINITIALIZESWAN=no   # used to bounce the wave solution
-VARFLUX=off           # variable river flux forcing
-CYCLETIMELIMIT="99:00:00"
+TIDEFAC=on               # tide factor recalc
+   HINDCASTLENGTH=30.0   # length of initial hindcast, from cold (days)
+BACKGROUNDMET=off        # NAM download/forcing
+   FORECASTCYCLE="06,12,18,00"
+TROPICALCYCLONE=on       # tropical cyclone forcing
+WAVES=on                 # wave forcing
+   REINITIALIZESWAN=no   # used to bounce the wave solution
+VARFLUX=off              # variable river flux forcing
 
 # Computational Resources (related defaults set in platforms.sh)
 
-NCPU=959                     # number of compute CPUs for all simulations
-NUMWRITERS=1
-NCPUCAPACITY=9999
+NCPU=959           # number of compute CPUs for all simulations
+NUMWRITERS=1       # number of writers, usually 1
+NCPUCAPACITY=9999  # total max number of CPUs used concurrently
 
 # Post processing and publication
 
-INTENDEDAUDIENCE=general    # can also be "developers-only" or "professional"
+INTENDEDAUDIENCE=general    # "general" | "developers-only" | "professional"
 POSTPROCESS=( includeWind10m.sh createOPeNDAPFileList.sh opendap_post.sh )
-OPENDAPNOTIFY="asgs.cera.lsu@gmail.com"
+OPENDAPNOTIFY="null"
 hooksScripts[FINISH_SPINUP_SCENARIO]=" output/createOPeNDAPFileList.sh output/opendap_post.sh "
 hooksScripts[FINISH_NOWCAST_SCENARIO]=" output/createOPeNDAPFileList.sh output/opendap_post.sh "
 
@@ -81,37 +79,24 @@ enablePostStatus="no"
 enableStatusNotify="no"
 statusNotify="null"
 
-# Initial state (overridden by STATEFILE after ASGS gets going)
-
-COLDSTARTDATE=2021121500
-HOTORCOLD=coldstart      # "hotstart" or "coldstart"
-LASTSUBDIR=null
-
-# Scenario package 
+# Scenario package
 
 #PERCENT=default
-SCENARIOPACKAGESIZE=2  # nowcast only 
+SCENARIOPACKAGESIZE=0 # <-<< will not run any forecasts
 case $si in
- -2)
-   ENSTORM=hindcast
-   OPENDAPNOTIFY="null"
-   ;;
--1)
-   # do nothing ... this is not a forecast
-   ENSTORM=nowcast
-   OPENDAPNOTIFY="null"
-   ;;
- 0)
-   ENSTORM=namforecastWind10m
-   source $SCRIPTDIR/config/io_defaults.sh # sets met-only mode based on "Wind10m" suffix
-   ;;
-1)
-   ENSTORM=namforecast
-   ;;
-*)
-   echo "CONFIGRATION ERROR: Unknown scenario number: '$si'."
-   ;;
+   -2)
+       ENSTORM=hindcast
+       ;;
+   -1)
+       # do nothing ... this is not a forecast
+       ENSTORM=nowcast
+       ;;
+    0)
+       ENSTORM=namforecast
+       ;;
+    *)
+       echo "CONFIGRATION ERROR: Unknown ensemble member number: '$si'."
+      ;;
 esac
-
 PREPPEDARCHIVE=prepped_${GRIDNAME}_${INSTANCENAME}_${NCPU}.tar.gz
 HINDCASTARCHIVE=prepped_${GRIDNAME}_hc_${INSTANCENAME}_${NCPU}.tar.gz
