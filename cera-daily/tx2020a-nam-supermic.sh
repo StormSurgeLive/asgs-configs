@@ -81,7 +81,7 @@ TDS=( lsu_tds )
 
 # Initial state (overridden by STATEFILE after ASGS gets going)
 
-COLDSTARTDATE=2020070800
+COLDSTARTDATE=$(get-coldstart-date)
 HOTORCOLD=coldstart
 LASTSUBDIR=null
 #
