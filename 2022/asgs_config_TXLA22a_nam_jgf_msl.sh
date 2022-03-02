@@ -36,12 +36,14 @@
 
 # Fundamental
 
-INSTANCENAME=TX2022a_nam_jgf  # "name" of this ASGS process
+INSTANCENAME=TXLA22a_nam_jgf_msl  # "name" of this ASGS process
 
 # Input files and templates
 
-GRIDNAME=TX2022a
+GRIDNAME=TXLA22a
 source $SCRIPTDIR/config/mesh_defaults.sh
+CONTROLTEMPLATE=TXLA22a_msl_fort.15.template
+NAPROPERTIES=TXLA22a_msl.13.properties
 
 # Physical forcing (defaults set in config/forcing_defaults)
 
@@ -61,7 +63,7 @@ CYCLETIMELIMIT="99:00:00"
 
 # Computational Resources (related defaults set in platforms.sh)
 
-NCPU=239              # number of compute CPUs for all simulations
+NCPU=959              # number of compute CPUs for all simulations
 NUMWRITERS=1
 NCPUCAPACITY=9999
 
@@ -70,10 +72,20 @@ NCPUCAPACITY=9999
 INTENDEDAUDIENCE=general    # can also be "developers-only" or "professional"
 POSTPROCESS=( includeWind10m.sh createOPeNDAPFileList.sh opendap_post.sh )
 OPENDAPNOTIFY="asgs.cera.lsu@gmail.com"
+hooksScripts[FINISH_SPINUP_SCENARIO]=" output/createOPeNDAPFileList.sh output/opendap_post.sh "
+hooksScripts[FINISH_NOWCAST_SCENARIO]=" output/createOPeNDAPFileList.sh output/opendap_post.sh "
+
+# Monitoring
+
+RMQMessaging_Enable="off"
+RMQMessaging_Transmit="off"
+enablePostStatus="yes"
+enableStatusNotify="no"
+statusNotify="null"
 
 # Initial state (overridden by STATEFILE after ASGS gets going)
 
-COLDSTARTDATE=2022010800
+COLDSTARTDATE=2022012400
 HOTORCOLD=coldstart      # "hotstart" or "coldstart"
 LASTSUBDIR=null
 
