@@ -87,7 +87,7 @@ statusNotify="null"
 
 COLDSTARTDATE=auto
 HOTORCOLD=hotstart      # "hotstart" or "coldstart"
-LASTSUBDIR=https://fortytwo.cct.lsu.edu/thredds/fileServer/2022/nam/2022020606/LAv20a/qbc.loni.org/LAv20a_nam_jgf_10kcms/namforecast
+LASTSUBDIR=https://fortytwo.cct.lsu.edu/thredds/fileServer/2022/nam/2022022806/LAv20a/qbc.loni.org/LAv20a_nam_jgf_10kcms/namforecast
 
 # Scenario package 
 
