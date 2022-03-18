@@ -71,7 +71,7 @@ NOTIFY_SCRIPT=cera_notify.sh
 TDS=( lsu_tds )
 
 # Initial state (overridden by STATEFILE after ASGS gets going)
-
+HINDCASTLENGTH=30.0
 COLDSTARTDATE=$(get-coldstart-date)
 HOTORCOLD=coldstart
 LASTSUBDIR=null
