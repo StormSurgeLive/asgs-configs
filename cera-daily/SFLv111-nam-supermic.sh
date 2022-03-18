@@ -27,11 +27,10 @@
 
 # Fundamental
 
-INSTANCENAME=TX2020a-nam-supermic-replay-test
+INSTANCENAME=SFLv111-nam-supermic-bde
 ASGSADMIN="asgsnotifications@opayq.com"
 
 ACCOUNT=hpc_cera_2021
-#QUEUENAME=priority # same as SLURM partition
 QUEUENAME=workq
 SERQUEUE=single
 PPN=20
@@ -41,53 +40,33 @@ RMQMessaging_Transmit="off"
 
 # Input files and templates
 
-GRIDNAME=TX2020a
+GRIDNAME=SFLv111
 source $SCRIPTDIR/config/mesh_defaults.sh
 
-#FTPSITE=ftp.nhc-replay.stormsurge.email
-#RSSSITE=nhc-replay.stormsurge.email
-
 # Physical forcing (defaults set in config/forcing_defaults.sh)
-
 TIDEFAC=on               # tide factor recalc
-   HINDCASTLENGTH=30.0   # length of initial hindcast, from cold (days)
-
-#--- start ASGS config ---
-BACKGROUNDMET=off
-TROPICALCYCLONE=on
-  STORM=5
-  YEAR=2022
-TRIGGER=rssembedded # required mode
-  FTPSITE=stormreplay.com
-  HDIR=/atcf/btk/c74d97b01eae257e44aa9d5bade97baf
-  RSSSITE=stormreplay.com:443/rss/c74d97b01eae257e44aa9d5bade97baf
-#--- end ASGS config ---j
-
-#BACKGROUNDMET=on         # NAM download/forcing
-#   FORECASTCYCLE="06"
-#   forecastSelection="strict"
-#TROPICALCYCLONE=off      # tropical cyclone forcing
-#   STORM=03              # storm number, e.g. 05=ernesto in 2006
-#   YEAR=2020             # year of the storm
+BACKGROUNDMET=on         # NAM download/forcing
+   FORECASTCYCLE="06"
+   forecastSelection="strict"
+TROPICALCYCLONE=off     # tropical cyclone forcing
+   STORM=05              # storm number, e.g. 05=ernesto in 2006
+   YEAR=2022             # year of the storm
 WAVES=off                # wave forcing
    REINITIALIZESWAN=no   # used to bounce the wave solution
 VARFLUX=off              # variable river flux forcing
-#STATICOFFSET=0.30
-#
 CYCLETIMELIMIT="99:00:00"
 
 # Computational Resources (related defaults set in platforms.sh)
 
 NCPU=999                    # number of compute CPUs for all simulations
-NCPUCAPACITY=9999
 NUMWRITERS=1
+NCPUCAPACITY=9999
 
 # Post processing and publication
 
 INTENDEDAUDIENCE=general    # "general" | "developers-only" | "professional"
-#POSTPROCESS=( accumulateMinMax.sh createMaxCSV.sh cpra_slide_deck_post.sh includeWind10m.sh createOPeNDAPFileList.sh opendap_post.sh )
 POSTPROCESS=( createMaxCSV.sh includeWind10m.sh createOPeNDAPFileList.sh opendap_post.sh )
-OPENDAPNOTIFY="asgs.cera.lsu@gmail.com,jason.g.fleming@gmail.com,asgsnotifications@opayq.com,rluettich1@gmail.com,asgsnotes4ian@gmail.com,cera.asgs.tk@gmail.com"
+OPENDAPNOTIFY="asgs.cera.lsu@coastalrisk.live,asgsnotifications@opayq.com"
 NOTIFY_SCRIPT=cera_notify.sh
 TDS=( lsu_tds )
 
