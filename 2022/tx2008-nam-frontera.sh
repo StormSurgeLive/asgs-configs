@@ -45,8 +45,8 @@ COLDSTARTDATE=$(get-coldstart-date)
 HOTORCOLD=coldstart
 LASTSUBDIR=null
 
-RMQMessaging_Enable="on"
-RMQMessaging_Transmit="on"
+RMQMessaging_Enable="off"
+RMQMessaging_Transmit="off"
 
 # Physical forcing (defaults set in config/forcing_defaults.sh)
 
@@ -60,16 +60,12 @@ TROPICALCYCLONE=off      # tropical cyclone forcing
 WAVES=off                 # wave forcing
    REINITIALIZESWAN=no   # used to bounce the wave solution
 VARFLUX=off              # variable river flux forcing
-#STATICOFFSET=0.30
-#
 CYCLETIMELIMIT="99:00:00"
 
 # Computational Resources (related defaults set in platforms.sh)
-
 NCPU=2015                # number of compute CPUs for all simulations
 NCPUCAPACITY=9999
 NUMWRITERS=1
-
 
 enablePostStatus="yes"
 enableStatusNotify="yes"
@@ -77,10 +73,11 @@ statusNotify="jason.g.fleming@gmail.com,jason.fleming@seahorsecoastal.com,asgsno
 
 # Post processing and publication
 
+EMAILNOTIFY=yes
 INTENDEDAUDIENCE=general    # "general" | "developers-only" | "professional"
-OPENDAPPOST=opendap_post.sh
+OPENDAPPOST=opendap_post2.sh
 POSTPROCESS=( createMaxCSV.sh includeWind10m.sh createOPeNDAPFileList.sh $OPENDAPPOST )
-OPENDAPNOTIFY="asgs.cera.lsu@coastalrisk.live,jason.g.fleming@gmail.com,asgsnotifications@opayq.com,asgsnotifications@opayq.com"
+OPENDAPNOTIFY="asgs.cera.lsu@coastalrisk.live,jason.g.fleming@gmail.com,asgsnotifications@opayq.com"
 NOTIFY_SCRIPT=cera_notify.sh
 TDS=( tacc_tds2 )
 
