@@ -68,7 +68,8 @@ NCPUCAPACITY=9999
 # Post processing and publication
 
 INTENDEDAUDIENCE=general    # can also be "developers-only" or "professional"
-POSTPROCESS=( includeWind10m.sh createOPeNDAPFileList.sh opendap_post.sh )
+OPENDAPPOST=opendap_post2.sh
+POSTPROCESS=( includeWind10m.sh createOPeNDAPFileList.sh $OPENDAPPOST )
 OPENDAPNOTIFY="asgs.cera.lsu@gmail.com,kheirkhahan@gmail.com"
 #hooksScripts[FINISH_SPINUP_SCENARIO]=" output/createOPeNDAPFileList.sh output/opendap_post.sh "
 #hooksScripts[FINISH_NOWCAST_SCENARIO]=" output/createOPeNDAPFileList.sh output/opendap_post.sh "
@@ -85,7 +86,7 @@ statusNotify="null"
 
 COLDSTARTDATE=auto
 HOTORCOLD=hotstart      # "hotstart" or "coldstart"
-LASTSUBDIR=https://fortytwo.cct.lsu.edu/thredds/fileServer/2022/nam/2022030106/HSOFS/qbc.loni.org/HSOFS_nam_jgf/namforecast
+LASTSUBDIR=https://fortytwo.cct.lsu.edu/thredds/fileServer/2022/nam/2022060906/HSOFS/qbc.loni.org/HSOFS_nam_akheir/namforecast
 
 # Scenario package 
 
