@@ -102,11 +102,11 @@ case $si in
    OPENDAPNOTIFY="null"
    ;;
  0)
-   ENSTORM=namforecastWind10m
+   ENSTORM=gfsforecastWind10m
    source $SCRIPTDIR/config/io_defaults.sh # sets met-only mode based on "Wind10m" suffix
    ;;
 1)
-   ENSTORM=namforecast
+   ENSTORM=gfsforecast
    ;;
 *)
    echo "CONFIGRATION ERROR: Unknown scenario number: '$si'."
