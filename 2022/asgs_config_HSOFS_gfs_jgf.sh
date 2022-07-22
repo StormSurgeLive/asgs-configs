@@ -8,7 +8,7 @@
 # etc)
 #-------------------------------------------------------------------
 #
-# Copyright(C) 2021 Jason Fleming
+# Copyright(C) 2022 Jason Fleming
 #
 # This file is part of the ADCIRC Surge Guidance System (ASGS).
 #
@@ -47,20 +47,19 @@ source $SCRIPTDIR/config/mesh_defaults.sh
 
 TIDEFAC=on            # tide factor recalc
 HINDCASTLENGTH=30.0   # length of initial hindcast, from cold (days)
-BACKGROUNDMET=GFS      # NAM download/forcing
+BACKGROUNDMET=GFS     # NAM download/forcing
 FORECASTCYCLE="06"
 TROPICALCYCLONE=off   # tropical cyclone forcing
-STORM=05             # storm number, e.g. 05=ernesto in 2006
-YEAR=2022            # year of the storm
-WAVES=off            # wave forcing
-#STATICOFFSET=0.1524
+STORM=05              # storm number, e.g. 05=ernesto in 2006
+YEAR=2022             # year of the storm
+WAVES=on              # wave forcing
 REINITIALIZESWAN=no   # used to bounce the wave solution
 VARFLUX=off           # variable river flux forcing
 CYCLETIMELIMIT="99:00:00"
 
 # Computational Resources (related defaults set in platforms.sh)
 
-NCPU=959                     # number of compute CPUs for all simulations
+NCPU=959              # number of compute CPUs for all simulations
 NUMWRITERS=1
 NCPUCAPACITY=9999
 
@@ -77,15 +76,15 @@ hooksScripts[FINISH_NOWCAST_SCENARIO]=" output/createOPeNDAPFileList.sh output/$
 
 RMQMessaging_Enable="off"
 RMQMessaging_Transmit="off"
-enablePostStatus="no"
+enablePostStatus="yes"
 enableStatusNotify="no"
 statusNotify="null"
 
 # Initial state (overridden by STATEFILE after ASGS gets going)
 
-COLDSTARTDATE=auto
-HOTORCOLD=hotstart      # "hotstart" or "coldstart"
-LASTSUBDIR=https://fortytwo.cct.lsu.edu/thredds/fileServer/2022/nam/2022061706/HSOFS/qbc.loni.org/HSOFS_nam_akheir/namforecast
+COLDSTARTDATE=2022061900
+HOTORCOLD=coldstart      # "hotstart" or "coldstart"
+LASTSUBDIR=null
 
 # Scenario package 
 
