@@ -36,11 +36,11 @@
 
 # Fundamental
 
-INSTANCENAME=LAERDCv5i_nam_jgf_10kcms  # "name" of this ASGS process
+INSTANCENAME=LAERDCv5j_nam_jgf_10kcms  # "name" of this ASGS process
 
 # Input files and templates
 
-GRIDNAME=LAERDCv5i
+GRIDNAME=LAERDCv5j
 source $SCRIPTDIR/config/mesh_defaults.sh
 
 # Physical forcing (defaults set in config/forcing_defaults)
@@ -76,13 +76,13 @@ hooksScripts[FINISH_NOWCAST_SCENARIO]=" output/createOPeNDAPFileList.sh output/o
 
 RMQMessaging_Enable="off"
 RMQMessaging_Transmit="off"
-enablePostStatus="no"
+enablePostStatus="yes"
 enableStatusNotify="yes"
 statusNotify="null"
 
 # Initial state (overridden by STATEFILE after ASGS gets going)
 
-COLDSTARTDATE=2022051500
+COLDSTARTDATE=2022061000
 HOTORCOLD=coldstart      # "hotstart" or "coldstart"
 LASTSUBDIR=null
 
