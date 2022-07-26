@@ -36,11 +36,11 @@
 
 # Fundamental
 
-INSTANCENAME=SABv20a_nam_jgf  # "name" of this ASGS process
+INSTANCENAME=SFLv111_nam_jgf  # "name" of this ASGS process
 
 # Input files and templates
 
-GRIDNAME=SABv20a
+GRIDNAME=SFLv111
 source $SCRIPTDIR/config/mesh_defaults.sh
 
 # Physical forcing (defaults set in config/forcing_defaults)

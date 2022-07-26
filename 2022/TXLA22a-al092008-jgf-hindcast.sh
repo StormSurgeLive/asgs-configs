@@ -8,7 +8,7 @@
 # etc)
 #-------------------------------------------------------------------
 #
-# Copyright(C) 2021 Jason Fleming
+# Copyright(C) 2022 Jason Fleming
 #
 # This file is part of the ADCIRC Surge Guidance System (ASGS).
 #
@@ -25,7 +25,7 @@
 # the ASGS.  If not, see <http://www.gnu.org/licenses/>.
 #-------------------------------------------------------------------
 
-INSTANCENAME=TX2008-al092008-jgf-hindcast     # "name" of this ASGS process
+INSTANCENAME=TXLA22a-al092008-jgf-hindcast     # "name" of this ASGS process
 
 # Initial conditions
 
@@ -35,7 +35,7 @@ LASTSUBDIR=null
 
 # Input files and templates
 
-GRIDNAME=TX2008
+GRIDNAME=TXLA22a
 source $SCRIPTDIR/config/mesh_defaults.sh
 STORM=09              # storm number, e.g. 05=ernesto in 2006
 YEAR=2008             # year of the storm
@@ -53,7 +53,7 @@ TIDEFAC=on               # tide factor recalc
 BACKGROUNDMET=off        # NAM download/forcing
    FORECASTCYCLE="06,12,18,00"
 TROPICALCYCLONE=on       # tropical cyclone forcing
-WAVES=on                 # wave forcing
+WAVES=off                # wave forcing
    REINITIALIZESWAN=no   # used to bounce the wave solution
 VARFLUX=off              # variable river flux forcing
 
