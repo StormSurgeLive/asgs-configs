@@ -65,7 +65,7 @@ NCPUCAPACITY=9999
 
 # Post processing and publication
 
-INTENDEDAUDIENCE=developers-only    # can also be "developers-only" or "professional"
+INTENDEDAUDIENCE=general    # can also be "developers-only" or "professional"
 OPENDAPPOST=opendap_post2.sh
 POSTPROCESS=( includeWind10m.sh createOPeNDAPFileList.sh $OPENDAPPOST )
 OPENDAPNOTIFY="asgs.cera.lsu@gmail.com"
