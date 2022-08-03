@@ -36,11 +36,11 @@
 
 # Fundamental
 
-INSTANCENAME=HSOFS_nam_jgf  # "name" of this ASGS process
+INSTANCENAME=EGOMv20b_nam_jgf_mike3  # "name" of this ASGS process
 
 # Input files and templates
 
-GRIDNAME=HSOFS
+GRIDNAME=EGOMv20b
 source $SCRIPTDIR/config/mesh_defaults.sh
 
 # Physical forcing (defaults set in config/forcing_defaults)
@@ -51,7 +51,7 @@ BACKGROUNDMET=on      # NAM download/forcing
 FORECASTCYCLE="06"
 TROPICALCYCLONE=off   # tropical cyclone forcing
 STORM=05              # storm number, e.g. 05=ernesto in 2006
-YEAR=2022             # year of the storm
+YEAR=2021             # year of the storm
 WAVES=on              # wave forcing
 REINITIALIZESWAN=no   # used to bounce the wave solution
 VARFLUX=off           # variable river flux forcing
@@ -67,10 +67,10 @@ NCPUCAPACITY=9999
 
 INTENDEDAUDIENCE=general    # can also be "developers-only" or "professional"
 OPENDAPPOST=opendap_post2.sh
-POSTPROCESS=( createMaxCSV.sh includeWind10m.sh createOPeNDAPFileList.sh $OPENDAPPOST )
+POSTPROCESS=( includeWind10m.sh createOPeNDAPFileList.sh $OPENDAPPOST )
 OPENDAPNOTIFY="asgs.cera.lsu@gmail.com"
-hooksScripts[FINISH_SPINUP_SCENARIO]=" output/createOPeNDAPFileList.sh output/$OPENDAPPOST "
-hooksScripts[FINISH_NOWCAST_SCENARIO]=" output/createOPeNDAPFileList.sh output/$OPENDAPPOST "
+hooksScripts[FINISH_SPINUP_SCENARIO]=" output/createOPeNDAPFileList.sh output/opendap_post.sh "
+hooksScripts[FINISH_NOWCAST_SCENARIO]=" output/createOPeNDAPFileList.sh output/opendap_post.sh "
 
 # Monitoring
 
@@ -89,7 +89,7 @@ LASTSUBDIR=null
 # Scenario package 
 
 #PERCENT=default
-SCENARIOPACKAGESIZE=2  # nowcast only 
+SCENARIOPACKAGESIZE=2 
 case $si in
  -2)
    ENSTORM=hindcast

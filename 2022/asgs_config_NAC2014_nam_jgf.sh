@@ -36,11 +36,11 @@
 
 # Fundamental
 
-INSTANCENAME=HSOFS_nam_jgf  # "name" of this ASGS process
+INSTANCENAME=NAC2014_nam_jgf  # "name" of this ASGS process
 
 # Input files and templates
 
-GRIDNAME=HSOFS
+GRIDNAME=NAC2014
 source $SCRIPTDIR/config/mesh_defaults.sh
 
 # Physical forcing (defaults set in config/forcing_defaults)
@@ -82,7 +82,7 @@ statusNotify="null"
 
 # Initial state (overridden by STATEFILE after ASGS gets going)
 
-COLDSTARTDATE=2022061900
+COLDSTARTDATE=2022063000
 HOTORCOLD=coldstart      # "hotstart" or "coldstart"
 LASTSUBDIR=null
 

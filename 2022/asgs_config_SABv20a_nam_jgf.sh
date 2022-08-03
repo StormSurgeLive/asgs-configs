@@ -36,11 +36,11 @@
 
 # Fundamental
 
-INSTANCENAME=HSOFS_nam_jgf  # "name" of this ASGS process
+INSTANCENAME=SABv20a_nam_jgf  # "name" of this ASGS process
 
 # Input files and templates
 
-GRIDNAME=HSOFS
+GRIDNAME=SABv20a
 source $SCRIPTDIR/config/mesh_defaults.sh
 
 # Physical forcing (defaults set in config/forcing_defaults)
