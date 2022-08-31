@@ -48,12 +48,12 @@ source $SCRIPTDIR/config/mesh_defaults.sh
 TIDEFAC=on            # tide factor recalc
 HINDCASTLENGTH=30   # length of initial hindcast, from cold (days)
 BACKGROUNDMET=on      # NAM download/forcing
-FORECASTCYCLE="06"
+FORECASTCYCLE="00,06,12,18"
    forecastSelection="strict"
 TROPICALCYCLONE=off   # tropical cyclone forcing
 STORM=05             # storm number, e.g. 05=ernesto in 2006
 YEAR=2021            # year of the storm
-WAVES=on            # wave forcing
+WAVES=on             # wave forcing
 #STATICOFFSET=0.1524
 REINITIALIZESWAN=no   # used to bounce the wave solution
 VARFLUX=off           # variable river flux forcing
@@ -71,8 +71,8 @@ INTENDEDAUDIENCE=general    # can also be "developers-only" or "professional"
 OPENDAPPOST=opendap_post2.sh
 POSTPROCESS=( includeWind10m.sh createOPeNDAPFileList.sh $OPENDAPPOST )
 OPENDAPNOTIFY="asgs.cera.lsu@gmail.com,kheirkhahan@gmail.com"
-#hooksScripts[FINISH_SPINUP_SCENARIO]=" output/createOPeNDAPFileList.sh output/opendap_post.sh "
-#hooksScripts[FINISH_NOWCAST_SCENARIO]=" output/createOPeNDAPFileList.sh output/opendap_post.sh "
+hooksScripts[FINISH_SPINUP_SCENARIO]=" output/createOPeNDAPFileList.sh output/$OPENDAPPOST "
+hooksScripts[FINISH_NOWCAST_SCENARIO]=" output/createOPeNDAPFileList.sh output/$OPENDAPPOST "
 
 # Monitoring
 
@@ -83,11 +83,14 @@ enableStatusNotify="no"
 statusNotify="null"
 
 # Initial state (overridden by STATEFILE after ASGS gets going)
+COLDSTARTDATE=2022070600
+HOTORCOLD=coldstart      # "hotstart" or "coldstart"
+LASTSUBDIR=null
 
-COLDSTARTDATE=auto
-HOTORCOLD=hotstart      # "hotstart" or "coldstart"
-LASTSUBDIR=https://fortytwo.cct.lsu.edu/thredds/fileServer/2022/nam/2022080106/HSOFS/qbc.loni.org/HSOFS_nam_akheir/namforecast
-#	   https://fortytwo.cct.lsu.edu/thredds/fileServer/2022/nam/2022060906/HSOFS/qbc.loni.org/HSOFS_nam_akheir/namforecast
+#COLDSTARTDATE=auto
+#HOTORCOLD=hotstart      # "hotstart" or "coldstart"
+#LASTSUBDIR=https://fortytwo.cct.lsu.edu/thredds/fileServer/2022/nam/2022080606/HSOFS/qbc.loni.org/HSOFS_nam_akheir/namforecast
+#	    https://fortytwo.cct.lsu.edu/thredds/fileServer/2022/nam/2022060906/HSOFS/qbc.loni.org/HSOFS_nam_akheir/namforecast
 
 # Scenario package 
 
