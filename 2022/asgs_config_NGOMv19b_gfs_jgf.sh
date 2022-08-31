@@ -69,7 +69,6 @@ NCPUCAPACITY=9999
 # io
 
 HOTSTARTFORMAT=netcdf3
-#HOTSTARTCOMP=subdomain
 
 # Post processing and publication
 
@@ -97,7 +96,7 @@ LASTSUBDIR=null
 # Scenario package 
 
 PERCENT=default
-SCENARIOPACKAGESIZE=2 # number of storms in the ensemble
+SCENARIOPACKAGESIZE=0
 case $si in
  -2)
    ENSTORM=hindcast
