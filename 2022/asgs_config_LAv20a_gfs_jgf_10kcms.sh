@@ -91,7 +91,7 @@ LASTSUBDIR=https://fortytwo.cct.lsu.edu/thredds/fileServer/2022/nam/2022072006/L
 # Scenario package 
 
 #PERCENT=default
-SCENARIOPACKAGESIZE=2 # <====<<!!TWO TOTAL!! # number of scenarios
+SCENARIOPACKAGESIZE=0 
 case $si in
  -2)
    ENSTORM=hindcast
