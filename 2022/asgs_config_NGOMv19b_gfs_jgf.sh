@@ -68,8 +68,8 @@ NCPUCAPACITY=9999
 
 # io
 
-HOTSTARTFORMAT=binary
-HOTSTARTCOMP=subdomain
+HOTSTARTFORMAT=netcdf3
+#HOTSTARTCOMP=subdomain
 
 # Post processing and publication
 
@@ -90,7 +90,7 @@ statusNotify="null"
 
 # Initial state (overridden by STATEFILE after ASGS gets going)
 
-COLDSTARTDATE=2022063000
+COLDSTARTDATE=2022072500
 HOTORCOLD=coldstart      # "hotstart" or "coldstart"
 LASTSUBDIR=null
 
@@ -111,14 +111,6 @@ case $si in
 0)
    ENSTORM=gfsforecastWind10m
    source $SCRIPTDIR/config/io_defaults.sh # sets met-only mode based on "Wind10m" suffix
-   # the following parameters get reset by io_defaults.sh so we
-   # have to set them back ... when using subdomain hotstart files
-   # we can't change the number of CPUs because there is no code in place
-   # to compose a fulldomain hotstart file and redecompose onto a different
-   # number of processors
-   HOTSTARTFORMAT=binary
-   HOTSTARTCOMP=subdomain
-   NCPU=959
    ;;
 1)
    ENSTORM=gfsforecast
