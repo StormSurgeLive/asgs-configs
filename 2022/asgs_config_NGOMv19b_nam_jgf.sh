@@ -65,7 +65,7 @@ CYCLETIMELIMIT="99:00:00"
 NCPU=959               # number of compute CPUs for all simulations
 NUMWRITERS=1
 NCPUCAPACITY=9999 
-#
+
 # Post processing and publication
 
 INTENDEDAUDIENCE=general    # can also be "developers-only" or "professional"
@@ -85,14 +85,14 @@ statusNotify="null"
 
 # Initial state (overridden by STATEFILE after ASGS gets going)
 
-COLDSTARTDATE=2022061900
+COLDSTARTDATE=2022072500
 HOTORCOLD=coldstart      # "hotstart" or "coldstart"
 LASTSUBDIR=null
 
 # Scenario package 
 
 PERCENT=default
-SCENARIOPACKAGESIZE=2 # number of storms in the ensemble
+SCENARIOPACKAGESIZE=0
 case $si in
  -2)
    ENSTORM=hindcast

@@ -67,7 +67,7 @@ NCPUCAPACITY=9999
 
 INTENDEDAUDIENCE=general    # can also be "developers-only" or "professional"
 OPENDAPPOST=opendap_post2.sh
-POSTPROCESS=( createMaxCSV.sh includeWind10m.sh createOPeNDAPFileList.sh $OPENDAPPOST )
+POSTPROCESS=( includeWind10m.sh createOPeNDAPFileList.sh $OPENDAPPOST )
 OPENDAPNOTIFY="asgs.cera.lsu@gmail.com"
 hooksScripts[FINISH_SPINUP_SCENARIO]=" output/createOPeNDAPFileList.sh output/$OPENDAPPOST "
 hooksScripts[FINISH_NOWCAST_SCENARIO]=" output/createOPeNDAPFileList.sh output/$OPENDAPPOST "
@@ -82,14 +82,14 @@ statusNotify="null"
 
 # Initial state (overridden by STATEFILE after ASGS gets going)
 
-COLDSTARTDATE=2022061900
-HOTORCOLD=coldstart      # "hotstart" or "coldstart"
-LASTSUBDIR=null
+COLDSTARTDATE=auto
+HOTORCOLD=hotstart      # "hotstart" or "coldstart"
+LASTSUBDIR=http://chg-1.oden.tacc.utexas.edu/thredds/fileServer/asgs/2022/GFS/2022081606/SFLv111/stampede2.tacc.utexas.edu/SFLv111_gfs_jgf/gfsforecast
 
 # Scenario package 
 
 #PERCENT=default
-SCENARIOPACKAGESIZE=2  # nowcast only 
+SCENARIOPACKAGESIZE=0
 case $si in
  -2)
    ENSTORM=hindcast

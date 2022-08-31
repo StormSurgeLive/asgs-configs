@@ -82,14 +82,14 @@ statusNotify="null"
 
 # Initial state (overridden by STATEFILE after ASGS gets going)
 
-COLDSTARTDATE=2022061900
+COLDSTARTDATE=2022072500
 HOTORCOLD=coldstart      # "hotstart" or "coldstart"
 LASTSUBDIR=null
 
 # Scenario package 
 
 #PERCENT=default
-SCENARIOPACKAGESIZE=2 
+SCENARIOPACKAGESIZE=0
 case $si in
  -2)
    ENSTORM=hindcast
