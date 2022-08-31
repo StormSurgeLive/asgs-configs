@@ -89,7 +89,7 @@ LASTSUBDIR=null
 # Scenario package 
 
 #PERCENT=default
-SCENARIOPACKAGESIZE=2 
+SCENARIOPACKAGESIZE=0
 case $si in
  -2)
    ENSTORM=hindcast
