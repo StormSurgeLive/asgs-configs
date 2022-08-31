@@ -71,7 +71,6 @@ POSTPROCESS=( createMaxCSV.sh includeWind10m.sh createOPeNDAPFileList.sh $OPENDA
 OPENDAPNOTIFY="null"
 hooksScripts[FINISH_SPINUP_SCENARIO]=" output/createOPeNDAPFileList.sh output/$OPENDAPPOST "
 hooksScripts[FINISH_NOWCAST_SCENARIO]=" output/createOPeNDAPFileList.sh output/$OPENDAPPOST "
-TDS=( lsu_tds ) 
 
 # Monitoring
  
@@ -84,9 +83,9 @@ statusNotify="null"
 
 # Initial state (overridden by STATEFILE after the first cycle)
 
-COLDSTARTDATE=2022071800
+COLDSTARTDATE=auto
 HOTORCOLD=hotstart        # "hotstart" or "coldstart"
-LASTSUBDIR=/home/jason/scratch/asgs769147/2022081506
+LASTSUBDIR=https://fortytwo.cct.lsu.edu/thredds/fileServer/2022/GFS/2022081706/ec95d/desktop.seahorsecoastal.com/EC95d_gfs_jgf/gfsforecast
 
 # Scenario package 
 
