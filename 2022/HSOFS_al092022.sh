@@ -28,22 +28,22 @@
 # Fundamental
 
 # "name" of this ASGS process
-INSTANCENAME=TX2008-nam-frontera
+INSTANCENAME=HSOFS_al092022
 ACCOUNT=ADCIRC
 #QOS=vippj_p3000 # for priority during a storm
-PPN=48
+PPN=128
 ASGSADMIN="asgsnotifications@opayq.com"
 
 # Input files and templates
 
-GRIDNAME=TX2008
+GRIDNAME=HSOFS
 source $SCRIPTDIR/config/mesh_defaults.sh
 
 # Initial state (overridden by STATEFILE after ASGS gets going)
 
 COLDSTARTDATE=$(get-coldstart-date)
-HOTORCOLD=coldstart
-LASTSUBDIR=null
+HOTORCOLD=hotstart
+LASTSUBDIR=https://fortytwo.cct.lsu.edu/thredds/fileServer/2022/ian/02/HSOFS/mike.hpc.lsu.edu/HSOFS_al092022/nhcConsensus
 
 RMQMessaging_Enable="off"
 RMQMessaging_Transmit="off"
@@ -52,24 +52,24 @@ RMQMessaging_Transmit="off"
 
 TIDEFAC=on               # tide factor recalc
    HINDCASTLENGTH=30.0   # length of initial hindcast, from cold (days)
-BACKGROUNDMET=on         # NAM download/forcing
+BACKGROUNDMET=off        # NAM download/forcing
    FORECASTCYCLE="06"
-TROPICALCYCLONE=off      # tropical cyclone forcing
-   STORM=07              # storm number, e.g. 05=ernesto in 2006
-   YEAR=2021             # year of the storm
-WAVES=off                 # wave forcing
+TROPICALCYCLONE=on      # tropical cyclone forcing
+   STORM=09              # storm number, e.g. 05=ernesto in 2006
+   YEAR=2022             # year of the storm
+WAVES=on                 # wave forcing
    REINITIALIZESWAN=no   # used to bounce the wave solution
-VARFLUX=on              # variable river flux forcing
+VARFLUX=off              # variable river flux forcing
 CYCLETIMELIMIT="99:00:00"
 
 # Computational Resources (related defaults set in platforms.sh)
-NCPU=2015                # number of compute CPUs for all simulations
+NCPU=959                 # number of compute CPUs for all simulations
 NCPUCAPACITY=9999
 NUMWRITERS=1
 
 enablePostStatus="yes"
 enableStatusNotify="yes"
-statusNotify="jason.g.fleming@gmail.com,jason.fleming@seahorsecoastal.com,asgsnotifications@opayq.com"
+statusNotify="asgs.cera.lsu@coastalrisk.live,jason.g.fleming@gmail.com,jason.fleming@seahorsecoastal.com,asgsnotifications@opayq.com"
 
 # Post processing and publication
 
@@ -85,7 +85,7 @@ TDS=( tacc_tds3 )
 # Scenario package
 #
 #PERCENT=default
-SCENARIOPACKAGESIZE=2
+SCENARIOPACKAGESIZE=6
 case $si in
    -2)
        ENSTORM=hindcast
@@ -95,10 +95,26 @@ case $si in
        ENSTORM=nowcast
        ;;
     0)
-       ENSTORM=namforecastWind10m
+       ENSTORM=nhcConsensusWind10m
        ;;
     1)
-       ENSTORM=namforecast
+       ENSTORM=nhcConsensus
+       ;;
+    2)
+       ENSTORM=veerLeftWind10m
+       PERCENT=-100
+       ;;
+    3)
+       ENSTORM=veerLeft
+       PERCENT=-100
+       ;;
+    4)
+       ENSTORM=veerRightWind10m
+       PERCENT=100
+       ;;
+    5)
+       ENSTORM=veerRight
+       PERCENT=100
        ;;
     *)
        echo "CONFIGURATION ERROR: Unknown ensemble member number: '$si'."
