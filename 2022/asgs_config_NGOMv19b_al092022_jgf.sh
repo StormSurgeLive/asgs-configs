@@ -8,7 +8,7 @@
 # etc)
 #-------------------------------------------------------------------
 #
-# Copyright(C) 2022 Jason Fleming
+# Copyright(C) 2021 Jason Fleming
 #
 # This file is part of the ADCIRC Surge Guidance System (ASGS).
 #
@@ -36,32 +36,39 @@
 
 # Fundamental
 
-INSTANCENAME=EGOMv20b_al092022_jgf_mike3  # "name" of this ASGS process
+INSTANCENAME=NGOMv19b_al092022  # "name" of this ASGS process
 
 # Input files and templates
 
-GRIDNAME=EGOMv20b
+GRIDNAME=NGOMv19b
 source $SCRIPTDIR/config/mesh_defaults.sh
+
+#jgf20200721 : new template file with Matt's boundary condition
+CONTROLTEMPLATE=NGOM_RT_v19b.15.template_13kcms # <---<<< default is NGOM_RT_v19b.15.template_18kcms in $SCRIPTDIR/config/mesh_defaults.sh
 
 # Physical forcing (defaults set in config/forcing_defaults)
 
 TIDEFAC=on            # tide factor recalc
 HINDCASTLENGTH=30.0   # length of initial hindcast, from cold (days)
-BACKGROUNDMET=off     # synoptic download/forcing
+BACKGROUNDMET=off     # NAM download/forcing
 FORECASTCYCLE="06"
 TROPICALCYCLONE=on    # tropical cyclone forcing
 STORM=09              # storm number, e.g. 05=ernesto in 2006
 YEAR=2022             # year of the storm
-WAVES=on              # wave forcing
+WAVES=off             # wave forcing
 REINITIALIZESWAN=no   # used to bounce the wave solution
 VARFLUX=off           # variable river flux forcing
 CYCLETIMELIMIT="99:00:00"
 
 # Computational Resources (related defaults set in platforms.sh)
 
-NCPU=959                     # number of compute CPUs for all simulations
+NCPU=959               # number of compute CPUs for all simulations
 NUMWRITERS=1
-NCPUCAPACITY=9999
+NCPUCAPACITY=9999 
+
+# io
+
+HOTSTARTFORMAT=netcdf3
 
 # Post processing and publication
 
@@ -82,16 +89,16 @@ statusNotify="null"
 
 # Initial state (overridden by STATEFILE after ASGS gets going)
 
-COLDSTARTDATE=2022072500
+COLDSTARTDATE=auto
 HOTORCOLD=hotstart      # "hotstart" or "coldstart"
-LASTSUBDIR=/work/jgflemin/asgs2445767/2022092300
+LASTSUBDIR=/scratch/jgflemin/asgs11028/2022092406
 
 # Scenario package 
 
-#PERCENT=default
-SCENARIOPACKAGESIZE=10
+PERCENT=default
+SCENARIOPACKAGESIZE=2
 case $si in
--2)
+ -2)
    ENSTORM=hindcast
    OPENDAPNOTIFY="null"
    ;;
@@ -100,48 +107,14 @@ case $si in
    ENSTORM=nowcast
    OPENDAPNOTIFY="null"
    ;;
- 0)
-   ENSTORM=nhcConsensusWind10m
-   source $SCRIPTDIR/config/io_defaults.sh # sets met-only mode based on "Wind10m" suffix
-   ;;
- 1)
-   ENSTORM=nhcConsensus
-   ;;
- 2)
-   ENSTORM=veerRight100Wind10m
-   source $SCRIPTDIR/config/io_defaults.sh # sets met-only mode based on "Wind10m" suffix
-   PERCENT=100
-   ;;
- 3)
-   ENSTORM=veerRight100
-   PERCENT=100
-   ;;
- 4)
+0)
    ENSTORM=veerLeft100Wind10m
    source $SCRIPTDIR/config/io_defaults.sh # sets met-only mode based on "Wind10m" suffix
    PERCENT=-100
    ;;
- 5)
+1)
    ENSTORM=veerLeft100
    PERCENT=-100
-   ;;
- 6)
-   ENSTORM=veerRight50Wind10m
-   source $SCRIPTDIR/config/io_defaults.sh # sets met-only mode based on "Wind10m" suffix
-   PERCENT=50
-   ;;
- 7)
-   ENSTORM=veerRight50
-   PERCENT=50
-   ;;
- 8)
-   ENSTORM=veerLeft50Wind10m
-   source $SCRIPTDIR/config/io_defaults.sh # sets met-only mode based on "Wind10m" suffix
-   PERCENT=-50
-   ;;
- 9)
-   ENSTORM=veerLeft50
-   PERCENT=-50
    ;;
 *)
    echo "CONFIGRATION ERROR: Unknown scenario number: '$si'."
