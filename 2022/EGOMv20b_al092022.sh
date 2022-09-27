@@ -85,7 +85,7 @@ TDS=( tacc_tds3 )
 # Scenario package
 #
 #PERCENT=default
-SCENARIOPACKAGESIZE=2
+SCENARIOPACKAGESIZE=10
 case $si in
    -2)
        ENSTORM=hindcast
