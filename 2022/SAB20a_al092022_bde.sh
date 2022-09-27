@@ -30,7 +30,7 @@
 # "name" of this ASGS process
 INSTANCENAME=SABv20a_al092022
 ACCOUNT=ADCIRC
-#QOS=vippj_p3000 # for priority during a storm
+QOS=vippj_p3000 # for priority during a storm
 PPN=128 # ls6
 ASGSADMIN="asgsnotifications@opayq.com"
 
