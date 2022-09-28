@@ -85,7 +85,7 @@ TDS=( tacc_tds3 )
 # Scenario package
 #
 #PERCENT=default
-SCENARIOPACKAGESIZE=10
+SCENARIOPACKAGESIZE=6
 case $si in
    -2)
        ENSTORM=hindcast
@@ -101,34 +101,18 @@ case $si in
        ENSTORM=nhcConsensus
        ;;
     2)
-       ENSTORM=veerLeft50Wind10m
-       PERCENT=-50
-       ;;
-    3)
-       ENSTORM=veerLeft50
-       PERCENT=-50
-       ;;
-    4)
-       ENSTORM=veerRight50Wind10m
-       PERCENT=50
-       ;;
-    5)
-       ENSTORM=veerRight50
-       PERCENT=50
-       ;;
-    6)
        ENSTORM=veerLeft100Wind10m
        PERCENT=-100
        ;;
-    7)
+    3)
        ENSTORM=veerLeft100
        PERCENT=-100
        ;;
-    8)
+    4)
        ENSTORM=veerRight100Wind10m
        PERCENT=100
        ;;
-    9)
+    5)
        ENSTORM=veerRight100
        PERCENT=100
        ;;
