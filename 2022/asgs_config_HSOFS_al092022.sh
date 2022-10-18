@@ -108,7 +108,6 @@ case $si in
  1)
    ENSTORM=nhcConsensus
    ;;
-
  2)
    ENSTORM=veerRight100Wind10m
    source $SCRIPTDIR/config/io_defaults.sh # sets met-only mode based on "Wind10m" suffix
@@ -118,7 +117,6 @@ case $si in
    ENSTORM=veerRight100
    PERCENT=100
    ;;
-
  4)
    ENSTORM=veerLeft100Wind10m
    source $SCRIPTDIR/config/io_defaults.sh # sets met-only mode based on "Wind10m" suffix

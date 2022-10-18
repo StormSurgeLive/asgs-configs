@@ -89,7 +89,7 @@ LASTSUBDIR=/work/jgflemin/asgs2445767/2022092300
 # Scenario package 
 
 #PERCENT=default
-SCENARIOPACKAGESIZE=10
+SCENARIOPACKAGESIZE=0
 case $si in
 -2)
    ENSTORM=hindcast
@@ -106,42 +106,6 @@ case $si in
    ;;
  1)
    ENSTORM=nhcConsensus
-   ;;
- 2)
-   ENSTORM=veerRight100Wind10m
-   source $SCRIPTDIR/config/io_defaults.sh # sets met-only mode based on "Wind10m" suffix
-   PERCENT=100
-   ;;
- 3)
-   ENSTORM=veerRight100
-   PERCENT=100
-   ;;
- 4)
-   ENSTORM=veerLeft100Wind10m
-   source $SCRIPTDIR/config/io_defaults.sh # sets met-only mode based on "Wind10m" suffix
-   PERCENT=-100
-   ;;
- 5)
-   ENSTORM=veerLeft100
-   PERCENT=-100
-   ;;
- 6)
-   ENSTORM=veerRight50Wind10m
-   source $SCRIPTDIR/config/io_defaults.sh # sets met-only mode based on "Wind10m" suffix
-   PERCENT=50
-   ;;
- 7)
-   ENSTORM=veerRight50
-   PERCENT=50
-   ;;
- 8)
-   ENSTORM=veerLeft50Wind10m
-   source $SCRIPTDIR/config/io_defaults.sh # sets met-only mode based on "Wind10m" suffix
-   PERCENT=-50
-   ;;
- 9)
-   ENSTORM=veerLeft50
-   PERCENT=-50
    ;;
 *)
    echo "CONFIGRATION ERROR: Unknown scenario number: '$si'."
