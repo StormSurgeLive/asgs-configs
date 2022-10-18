@@ -101,19 +101,19 @@ case $si in
        ENSTORM=nhcConsensus
        ;;
     2)
-       ENSTORM=veerLeftWind10m
+       ENSTORM=veerLeft100Wind10m
        PERCENT=-100
        ;;
     3)
-       ENSTORM=veerLeft
+       ENSTORM=veerLeft100
        PERCENT=-100
        ;;
     4)
-       ENSTORM=veerRightWind10m
+       ENSTORM=veerRight100Wind10m
        PERCENT=100
        ;;
     5)
-       ENSTORM=veerRight
+       ENSTORM=veerRight100
        PERCENT=100
        ;;
     *)

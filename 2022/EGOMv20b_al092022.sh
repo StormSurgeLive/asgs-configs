@@ -28,7 +28,7 @@
 # Fundamental
 
 # "name" of this ASGS process
-INSTANCENAME=SABv20a_al092022
+INSTANCENAME=EGOMv20b_al092022
 ACCOUNT=ADCIRC
 QOS=vippj_p3000 # for priority during a storm
 PPN=128 # ls6
@@ -36,14 +36,14 @@ ASGSADMIN="asgsnotifications@opayq.com"
 
 # Input files and templates
 
-GRIDNAME=SABv20a
+GRIDNAME=EGOMv20b
 source $SCRIPTDIR/config/mesh_defaults.sh
 
 # Initial state (overridden by STATEFILE after ASGS gets going)
 
 COLDSTARTDATE=$(get-coldstart-date)
-HOTORCOLD=coldstart
-LASTSUBDIR=null
+HOTORCOLD=hotstart
+LASTSUBDIR=https://fortytwo.cct.lsu.edu/thredds/fileServer/2022/al09/01/EGOMv20b/mike.hpc.lsu.edu/EGOMv20b_al092022_jgf_mike3/nhcConsensus
 
 RMQMessaging_Enable="off"
 RMQMessaging_Transmit="off"
@@ -54,16 +54,16 @@ TIDEFAC=on               # tide factor recalc
    HINDCASTLENGTH=30.0   # length of initial hindcast, from cold (days)
 BACKGROUNDMET=off        # NAM download/forcing
    FORECASTCYCLE="06"
-TROPICALCYCLONE=on       # tropical cyclone forcing
+TROPICALCYCLONE=on      # tropical cyclone forcing
    STORM=09              # storm number, e.g. 05=ernesto in 2006
    YEAR=2022             # year of the storm
 WAVES=on                 # wave forcing
-   REINITIALIZESWAN=yes   # used to bounce the wave solution
+   REINITIALIZESWAN=no   # used to bounce the wave solution
 VARFLUX=off              # variable river flux forcing
 CYCLETIMELIMIT="99:00:00"
 
 # Computational Resources (related defaults set in platforms.sh)
-NCPU=1919                 # number of compute CPUs for all simulations
+NCPU=959                 # number of compute CPUs for all simulations
 NCPUCAPACITY=9999
 NUMWRITERS=1
 
