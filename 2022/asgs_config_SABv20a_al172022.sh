@@ -36,7 +36,7 @@
 
 # Fundamental
 
-INSTANCENAME=SABv20a_nam_jgf  # "name" of this ASGS process
+INSTANCENAME=SABv20a_al172022  # "name" of this ASGS process
 
 # Input files and templates
 
@@ -47,10 +47,10 @@ source $SCRIPTDIR/config/mesh_defaults.sh
 
 TIDEFAC=on            # tide factor recalc
 HINDCASTLENGTH=15.0   # length of initial hindcast, from cold (days)
-BACKGROUNDMET=on      # NAM download/forcing
+BACKGROUNDMET=off     # NAM download/forcing
 FORECASTCYCLE="06"
-TROPICALCYCLONE=off   # tropical cyclone forcing
-STORM=05              # storm number, e.g. 05=ernesto in 2006
+TROPICALCYCLONE=on    # tropical cyclone forcing
+STORM=17              # storm number, e.g. 05=ernesto in 2006
 YEAR=2022             # year of the storm
 WAVES=on              # wave forcing
 REINITIALIZESWAN=no   # used to bounce the wave solution
@@ -83,8 +83,8 @@ statusNotify="null"
 # Initial state (overridden by STATEFILE after ASGS gets going)
 
 COLDSTARTDATE=2022102218
-HOTORCOLD=coldstart      # "hotstart" or "coldstart"
-LASTSUBDIR=null
+HOTORCOLD=hotstart      # "hotstart" or "coldstart"
+LASTSUBDIR=http://chg-1.oden.tacc.utexas.edu/thredds/fileServer/asgs/2022/nam/2022110706/SABv20a/ls6.tacc.utexas.edu/SABv20a_nam_jgf/namforecast
 
 # Scenario package 
 
@@ -101,11 +101,11 @@ case $si in
    OPENDAPNOTIFY="null"
    ;;
  0)
-   ENSTORM=namforecastWind10m
+   ENSTORM=nhcConsensusWind10m
    source $SCRIPTDIR/config/io_defaults.sh # sets met-only mode based on "Wind10m" suffix
    ;;
 1)
-   ENSTORM=namforecast
+   ENSTORM=nhcConsensus
    ;;
 *)
    echo "CONFIGRATION ERROR: Unknown scenario number: '$si'."
