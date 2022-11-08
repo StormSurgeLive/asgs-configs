@@ -30,7 +30,7 @@
 # "name" of this ASGS process
 INSTANCENAME=HSOFS_al092022
 ACCOUNT=ADCIRC
-#QOS=vippj_p3000 # for priority during a storm
+QOS=vippj_p3000 # for priority during a storm
 PPN=128 # ls6
 ASGSADMIN="asgsnotifications@opayq.com"
 
@@ -43,7 +43,7 @@ source $SCRIPTDIR/config/mesh_defaults.sh
 
 COLDSTARTDATE=$(get-coldstart-date)
 HOTORCOLD=hotstart
-LASTSUBDIR=https://fortytwo.cct.lsu.edu/thredds/fileServer/2022/ian/02/HSOFS/mike.hpc.lsu.edu/HSOFS_al092022/nhcConsensus
+LASTSUBDIR=http://chg-1.oden.tacc.utexas.edu/thredds/fileServer/asgs/2022/al09/20/HSOFS/ls6.tacc.utexas.edu/HSOFS_al092022/nhcConsensus
 
 RMQMessaging_Enable="off"
 RMQMessaging_Transmit="off"
