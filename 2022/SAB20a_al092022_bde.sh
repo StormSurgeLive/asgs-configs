@@ -42,8 +42,8 @@ source $SCRIPTDIR/config/mesh_defaults.sh
 # Initial state (overridden by STATEFILE after ASGS gets going)
 
 COLDSTARTDATE=$(get-coldstart-date)
-HOTORCOLD=coldstart
-LASTSUBDIR=null
+HOTORCOLD=hotstart
+LASTSUBDIR=http://chg-1.oden.tacc.utexas.edu/thredds/fileServer/asgs/2022/al09/24/SABv20a/ls6.tacc.utexas.edu/SABv20a_al092022/nhcConsensus
 
 RMQMessaging_Enable="off"
 RMQMessaging_Transmit="off"
@@ -58,7 +58,7 @@ TROPICALCYCLONE=on       # tropical cyclone forcing
    STORM=09              # storm number, e.g. 05=ernesto in 2006
    YEAR=2022             # year of the storm
 WAVES=on                 # wave forcing
-   REINITIALIZESWAN=yes   # used to bounce the wave solution
+   REINITIALIZESWAN=no   # used to bounce the wave solution
 VARFLUX=off              # variable river flux forcing
 CYCLETIMELIMIT="99:00:00"
 
