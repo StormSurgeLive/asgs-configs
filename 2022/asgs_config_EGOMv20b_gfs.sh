@@ -36,22 +36,22 @@
 
 # Fundamental
 
-INSTANCENAME=SABv20a_nam_jgf  # "name" of this ASGS process
+INSTANCENAME=EGOMv20b_gfs  # "name" of this ASGS process
 
 # Input files and templates
 
-GRIDNAME=SABv20a
+GRIDNAME=EGOMv20b
 source $SCRIPTDIR/config/mesh_defaults.sh
 
 # Physical forcing (defaults set in config/forcing_defaults)
 
 TIDEFAC=on            # tide factor recalc
 HINDCASTLENGTH=15.0   # length of initial hindcast, from cold (days)
-BACKGROUNDMET=on      # NAM download/forcing
+BACKGROUNDMET=GFS     # NAM download/forcing
 FORECASTCYCLE="00,06,12,18"
 TROPICALCYCLONE=off   # tropical cyclone forcing
 STORM=05              # storm number, e.g. 05=ernesto in 2006
-YEAR=2022             # year of the storm
+YEAR=2021             # year of the storm
 WAVES=on              # wave forcing
 REINITIALIZESWAN=no   # used to bounce the wave solution
 VARFLUX=off           # variable river flux forcing
@@ -59,7 +59,7 @@ CYCLETIMELIMIT="99:00:00"
 
 # Computational Resources (related defaults set in platforms.sh)
 
-NCPU=1919                     # number of compute CPUs for all simulations
+NCPU=959                     # number of compute CPUs for all simulations
 NUMWRITERS=1
 NCPUCAPACITY=9999
 
@@ -101,11 +101,11 @@ case $si in
    OPENDAPNOTIFY="null"
    ;;
  0)
-   ENSTORM=namforecastWind10m
+   ENSTORM=gfsforecastWind10m
    source $SCRIPTDIR/config/io_defaults.sh # sets met-only mode based on "Wind10m" suffix
    ;;
 1)
-   ENSTORM=namforecast
+   ENSTORM=gfsforecast
    ;;
 *)
    echo "CONFIGRATION ERROR: Unknown scenario number: '$si'."
