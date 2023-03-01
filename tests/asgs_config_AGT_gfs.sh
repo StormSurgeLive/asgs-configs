@@ -42,11 +42,13 @@ INSTANCENAME=AGT_gfs  # "name" of this ASGS process
 
 GRIDNAME=AGT
 source $SCRIPTDIR/config/mesh_defaults.sh
+MESHURL="scp://lsu_tds/meshes"
+NODALATTRIBUTESURL="scp://lsu_tds/nodal-attributes"
+LOADTIDEURL="scp://lsu_tds/tides"
 
 # Physical forcing (defaults set in config/forcing_defaults)
 
 TIDEFAC=on            # tide factor recalc
-HINDCASTLENGTH=20.0   # length of initial hindcast, from cold (days)
 BACKGROUNDMET=GFS     # synoptic meteorology download/forcing
    FORECASTCYCLE="06"
    GFSBACKDIR="/pub/data/nccf/com/gfs/v16.3"
@@ -83,7 +85,8 @@ INTENDEDAUDIENCE=developers-only    # can also be "developers-only" or "professi
 OPENDAPPOST=opendap_post2.sh
 #POSTPROCESS=( includeWind10m.sh createOPeNDAPFileList.sh $OPENDAPPOST )
 POSTPROCESS=( includeWind10m.sh  )
-OPENDAPNOTIFY="null"
+OPENDAPNOTIFY="jason.fleming@stormsurge.live"
+TDS=( lsu_tds ) 
 #hooksScripts[FINISH_SPINUP_SCENARIO]=" output/createOPeNDAPFileList.sh output/$OPENDAPPOST "
 #hooksScripts[FINISH_NOWCAST_SCENARIO]=" output/createOPeNDAPFileList.sh output/$OPENDAPPOST "
 
@@ -97,14 +100,15 @@ statusNotify="null"
 
 # Initial state (overridden by STATEFILE after ASGS gets going)
 
-COLDSTARTDATE=2022121200
+HINDCASTLENGTH=20.0   # length of initial hindcast, from cold (days)
+COLDSTARTDATE=2023020100
 HOTORCOLD=coldstart      # "hotstart" or "coldstart"
 LASTSUBDIR=null
 
 # Scenario package
 
 #PERCENT=default
-SCENARIOPACKAGESIZE=2  # nowcast only
+SCENARIOPACKAGESIZE=2  
 case $si in
  -2)
    ENSTORM=hindcast
