@@ -8,7 +8,7 @@
 # etc)
 #-------------------------------------------------------------------
 #
-# Copyright(C) 2020 Jason Fleming
+# Copyright(C) 2023 Jason Fleming
 #
 # This file is part of the ADCIRC Surge Guidance System (ASGS).
 #
@@ -27,8 +27,7 @@
 
 # Fundamental
 
-# "name" of this ASGS process
-INSTANCENAME="TX2008-gfs"
+INSTANCENAME="TX2008-gfs" # "name" of this ASGS process
 
 # Input files and templates
 
@@ -69,7 +68,7 @@ OPENDAPPOST=opendap_post2.sh
 POSTPROCESS=( createMaxCSV.sh includeWind10m.sh createOPeNDAPFileLit.sh $OPENDAPPOST )
 hooksScripts[FINISH_SPINUP_SCENARIO]=" output/createOPeNDAPFileList.sh output/$OPENDAPPOST "
 hooksScripts[FINISH_NOWCAST_SCENARIO]=" output/createOPeNDAPFileList.sh output/$OPENDAPPOST "
- 
+
 # Monitoring
 
 OPENDAPNOTIFY="null"
