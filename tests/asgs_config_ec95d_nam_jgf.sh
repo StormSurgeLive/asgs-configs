@@ -8,7 +8,7 @@
 # etc)
 #-------------------------------------------------------------------
 #
-# Copyright(C) 2018--2019 Jason Fleming
+# Copyright(C) 2018--2023 Jason Fleming
 #
 # This file is part of the ADCIRC Surge Guidance System (ASGS).
 #
@@ -36,7 +36,7 @@
 
 # set instancename based on mesh, forcing, and operator
 
-INSTANCENAME=ec95d_nam_jgf   # "op" nickname set in config/operator_defaults.sh
+INSTANCENAME=EC95d_nam   # "op" nickname set in config/operator_defaults.sh
 
 # Input files and templates
 
@@ -51,7 +51,7 @@ BACKGROUNDMET=on      # NAM download/forcing
 TROPICALCYCLONE=off   # tropical cyclone forcing
  STORM=05             # storm number, e.g. 05=ernesto in 2006
  YEAR=2019            # year of the storm
-WAVES=on              # wave forcing
+WAVES=off             # wave forcing
 REINITIALIZESWAN=no   # used to bounce the wave solution
 VARFLUX=off           # variable river flux forcing
 CYCLETIMELIMIT="99:00:00"
@@ -65,18 +65,19 @@ NCPUCAPACITY=3600
 # Post processing and publication
 
 INTENDEDAUDIENCE=developers-only    # can also be "developers-only" or "professional"
-POSTPROCESS=( createMaxCSV.sh includeWind10m.sh createOPeNDAPFileList.sh opendap_post.sh )
+#POSTPROCESS=( createMaxCSV.sh includeWind10m.sh createOPeNDAPFileList.sh opendap_post.sh )
+POSTPROCESS=( includeWind10m.sh )
 
 # Initial state (overridden by STATEFILE after the first cycle)
 
-COLDSTARTDATE=auto
-HOTORCOLD=hotstart        # "hotstart" or "coldstart"
-LASTSUBDIR=http://fortytwo.cct.lsu.edu:8080/thredds/fileServer/2019/nam/2019082506/ec95d/supermic.hpc.lsu.edu/ec95d_jgf_nam/namforecast
+COLDSTARTDATE=2023033000
+HOTORCOLD=coldstart        # "hotstart" or "coldstart"
+LASTSUBDIR=null
 
 # Scenario package 
 
 #PERCENT=default
-SCENARIOPACKAGESIZE=2 # number of storms in the ensemble
+SCENARIOPACKAGESIZE=2 # number of scenarios
 case $si in
 -2) 
    ENSTORM=hindcast
