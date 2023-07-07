@@ -42,6 +42,7 @@ INSTANCENAME=LAERDCv5k_nam_jgf_10kcms  # "name" of this ASGS process
 
 GRIDNAME=LAERDCv5k
 source $SCRIPTDIR/config/mesh_defaults.sh
+HOTSTARTFORMAT=netcdf3
 
 # Physical forcing (defaults set in config/forcing_defaults)
 
@@ -68,7 +69,7 @@ NCPUCAPACITY=9999
 INTENDEDAUDIENCE=general    # can also be "developers-only" or "professional"
 OPENDAPPOST=opendap_post2.sh
 POSTPROCESS=( includeWind10m.sh createOPeNDAPFileList.sh $OPENDAPPOST )
-OPENDAPNOTIFY="asgs.cera.lsu@gmail.com"
+OPENDAPNOTIFY="coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,jason.fleming@seahorsecoastal.com"
 hooksScripts[FINISH_SPINUP_SCENARIO]=" output/createOPeNDAPFileList.sh output/$OPENDAPPOST "
 hooksScripts[FINISH_NOWCAST_SCENARIO]=" output/createOPeNDAPFileList.sh output/$OPENDAPPOST "
 
@@ -80,9 +81,9 @@ statusNotify="null"
 
 # Initial state (overridden by STATEFILE after ASGS gets going)
 
-COLDSTARTDATE=auto
-HOTORCOLD=hotstart      # "hotstart" or "coldstart"
-LASTSUBDIR=https://fortytwo.cct.lsu.edu/thredds/fileServer/2023/nam/2023061706/LAERDCv5k/mike.hpc.lsu.edu/LAERDCv5k_nam_jgf_10kcms/namforecast/
+COLDSTARTDATE=2023060100
+HOTORCOLD=coldstart      # "hotstart" or "coldstart"
+LASTSUBDIR=null
 
 # Scenario package
 
