@@ -36,7 +36,7 @@
 
 # Fundamental
 
-INSTANCENAME=CPRA23v01c_nam_jgf_10kcms  # "name" of this ASGS process
+INSTANCENAME=CPRA23v01c_nam_jgf_5kcms  # "name" of this ASGS process
 
 # Input files and templates
 
