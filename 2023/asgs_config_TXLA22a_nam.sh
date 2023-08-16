@@ -32,7 +32,7 @@ INSTANCENAME=TXLA22a_nam_bde-ls6
 ACCOUNT=ADCIRC
 #QOS=vippj_p3000 # for priority during a storm
 PPN=128
-ASGSADMIN="asgsnotifications@opayq.com"
+ASGSADMIN="asgsnotifications@memenesia.net"
 
 # Input files and templates
 
@@ -54,9 +54,9 @@ BACKGROUNDMET=on         # NAM download/forcing
 TROPICALCYCLONE=off      # tropical cyclone forcing
    STORM=07              # storm number, e.g. 05=ernesto in 2006
    YEAR=2021             # year of the storm
-WAVES=off                 # wave forcing
+WAVES=on                 # wave forcing
    REINITIALIZESWAN=no   # used to bounce the wave solution
-VARFLUX=on              # variable river flux forcing
+VARFLUX=off              # variable river flux forcing
 CYCLETIMELIMIT="99:00:00"
 
 # Computational Resources (related defaults set in platforms.sh)
