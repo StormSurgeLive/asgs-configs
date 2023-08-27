@@ -36,23 +36,20 @@
 
 # Fundamental
 
-INSTANCENAME=CPRA23v01c_nam_jgf_5kcms  # "name" of this ASGS process
+INSTANCENAME=EGOMv20b_nam_jgf   # "name" of this ASGS process
 
 # Input files and templates
 
-GRIDNAME=CPRA23v01c
+GRIDNAME=EGOMv20b
 source $SCRIPTDIR/config/mesh_defaults.sh
 HOTSTARTFORMAT=netcdf3
-ELEVSTATIONS=combined_stations_20230824.txt
-VELSTATIONS=$ELEVSTATIONS
-METSTATIONS=$ELEVSTATIONS
 
 # Physical forcing (defaults set in config/forcing_defaults)
 
 TIDEFAC=on            # tide factor recalc
 HINDCASTLENGTH=30.0   # length of initial hindcast, from cold (days)
 BACKGROUNDMET=on      # NAM download/forcing
-FORECASTCYCLE="06"
+FORECASTCYCLE="00,06,12,18"
 TROPICALCYCLONE=off   # tropical cyclone forcing
 STORM=09              # storm number, e.g. 05=ernesto in 2006
 YEAR=2021             # year of the storm
@@ -84,7 +81,7 @@ statusNotify="null"
 
 # Initial state (overridden by STATEFILE after ASGS gets going)
 
-COLDSTARTDATE=2023061000
+COLDSTARTDATE=2023072200
 HOTORCOLD=coldstart      # "hotstart" or "coldstart"
 LASTSUBDIR=null
 
