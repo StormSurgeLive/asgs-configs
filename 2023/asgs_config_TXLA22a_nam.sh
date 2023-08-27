@@ -28,7 +28,7 @@
 # Fundamental
 
 # "name" of this ASGS process
-INSTANCENAME=TXLA22a_nam_bde-ls6
+INSTANCENAME=TXLA22a_nam_bde
 ACCOUNT=ADCIRC
 #QOS=vippj_p3000 # for priority during a storm
 PPN=128
@@ -50,7 +50,7 @@ LASTSUBDIR=null
 TIDEFAC=on               # tide factor recalc
    HINDCASTLENGTH=30.0   # length of initial hindcast, from cold (days)
 BACKGROUNDMET=on         # NAM download/forcing
-   FORECASTCYCLE="06"
+   FORECASTCYCLE="00,06,12,18"
 TROPICALCYCLONE=off      # tropical cyclone forcing
    STORM=07              # storm number, e.g. 05=ernesto in 2006
    YEAR=2021             # year of the storm
@@ -76,7 +76,7 @@ OPENDAPPOST=opendap_post2.sh
 POSTPROCESS=( createMaxCSV.sh includeWind10m.sh createOPeNDAPFileList.sh $OPENDAPPOST )
 OPENDAPNOTIFY="jason.g.fleming@gmail.com,coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asgsnotify@memenesia.net"
 NOTIFY_SCRIPT=cera_notify.sh
-TDS=( tacc_tds3 )
+TDS=( lsu_tds tacc_tds3 )
 
 #
 # Scenario package
