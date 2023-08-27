@@ -8,7 +8,7 @@
 # etc)
 #-------------------------------------------------------------------
 #
-# Copyright(C) 2022 Jason Fleming
+# Copyright(C) 2023 Jason Fleming
 #
 # This file is part of the ADCIRC Surge Guidance System (ASGS).
 #
@@ -36,12 +36,13 @@
 
 # Fundamental
 
-INSTANCENAME=PRVI15_nam  # "name" of this ASGS process
+INSTANCENAME=NGOMv19b_nam_jgf   # "name" of this ASGS process
 
 # Input files and templates
 
-GRIDNAME=PRVI15
+GRIDNAME=NGOMv19b
 source $SCRIPTDIR/config/mesh_defaults.sh
+HOTSTARTFORMAT=netcdf3
 
 # Physical forcing (defaults set in config/forcing_defaults)
 
@@ -52,7 +53,7 @@ FORECASTCYCLE="00,06,12,18"
 TROPICALCYCLONE=off   # tropical cyclone forcing
 STORM=09              # storm number, e.g. 05=ernesto in 2006
 YEAR=2021             # year of the storm
-WAVES=on              # wave forcing
+WAVES=on             # wave forcing
 REINITIALIZESWAN=no   # used to bounce the wave solution
 VARFLUX=off           # variable river flux forcing
 CYCLETIMELIMIT="99:00:00"
@@ -65,26 +66,24 @@ NCPUCAPACITY=9999
 
 # Post processing and publication
 
-INTENDEDAUDIENCE=general   # can also be "developers-only" or "professional"
+INTENDEDAUDIENCE=general    # can also be "developers-only" or "professional"
 OPENDAPPOST=opendap_post2.sh
 POSTPROCESS=( includeWind10m.sh createOPeNDAPFileList.sh $OPENDAPPOST )
-OPENDAPNOTIFY="asgs.cera.lsu@gmail.com"
+OPENDAPNOTIFY="coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,jason.fleming@seahorsecoastal.com,jason.fleming@stormsurge.live"
 hooksScripts[FINISH_SPINUP_SCENARIO]=" output/createOPeNDAPFileList.sh output/$OPENDAPPOST "
 hooksScripts[FINISH_NOWCAST_SCENARIO]=" output/createOPeNDAPFileList.sh output/$OPENDAPPOST "
 
 # Monitoring
 
-RMQMessaging_Enable="off"
-RMQMessaging_Transmit="off"
 enablePostStatus="yes"
 enableStatusNotify="no"
 statusNotify="null"
 
 # Initial state (overridden by STATEFILE after ASGS gets going)
 
-COLDSTARTDATE=auto
-HOTORCOLD=hotstart      # "hotstart" or "coldstart"
-LASTSUBDIR=http://chg-1.oden.tacc.utexas.edu/thredds/fileServer/asgs/2022/GFS/2022091806/PRVI15/frontera.tacc.utexas.edu/PRVI15_gfs/nowcast
+COLDSTARTDATE=2023072200
+HOTORCOLD=coldstart      # "hotstart" or "coldstart"
+LASTSUBDIR=null
 
 # Scenario package
 

@@ -43,6 +43,9 @@ INSTANCENAME=CPRA23v01c_nam_jgf_5kcms  # "name" of this ASGS process
 GRIDNAME=CPRA23v01c
 source $SCRIPTDIR/config/mesh_defaults.sh
 HOTSTARTFORMAT=netcdf3
+ELEVSTATIONS=combined_stations_20230824.txt
+VELSTATIONS=$ELEVSTATIONS
+METSTATIONS=$ELEVSTATIONS
 
 # Physical forcing (defaults set in config/forcing_defaults)
 

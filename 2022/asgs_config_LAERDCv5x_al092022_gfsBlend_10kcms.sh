@@ -36,22 +36,22 @@
 
 # Fundamental
 
-INSTANCENAME=PRVI15_nam  # "name" of this ASGS process
+INSTANCENAME=LAERDCv5k_al092022_gfsBlend_10kcms  # "name" of this ASGS process
 
 # Input files and templates
 
-GRIDNAME=PRVI15
+GRIDNAME=LAERDCv5k
 source $SCRIPTDIR/config/mesh_defaults.sh
 
 # Physical forcing (defaults set in config/forcing_defaults)
 
 TIDEFAC=on            # tide factor recalc
 HINDCASTLENGTH=30.0   # length of initial hindcast, from cold (days)
-BACKGROUNDMET=on      # NAM download/forcing
-FORECASTCYCLE="00,06,12,18"
-TROPICALCYCLONE=off   # tropical cyclone forcing
+BACKGROUNDMET=gfsBlend     # synoptic download/forcing
+FORECASTCYCLE="06"
+TROPICALCYCLONE=on    # tropical cyclone forcing
 STORM=09              # storm number, e.g. 05=ernesto in 2006
-YEAR=2021             # year of the storm
+YEAR=2022             # year of the storm
 WAVES=on              # wave forcing
 REINITIALIZESWAN=no   # used to bounce the wave solution
 VARFLUX=off           # variable river flux forcing
@@ -84,12 +84,12 @@ statusNotify="null"
 
 COLDSTARTDATE=auto
 HOTORCOLD=hotstart      # "hotstart" or "coldstart"
-LASTSUBDIR=http://chg-1.oden.tacc.utexas.edu/thredds/fileServer/asgs/2022/GFS/2022091806/PRVI15/frontera.tacc.utexas.edu/PRVI15_gfs/nowcast
+LASTSUBDIR=https://fortytwo.cct.lsu.edu/thredds/fileServer/2022/nam/2022092406/LAERDCv5k/mike.hpc.lsu.edu/LAERDCv5k_nam_akheir_10kcms/namforecast
 
 # Scenario package
 
 #PERCENT=default
-SCENARIOPACKAGESIZE=2 # <====<<!!TWO TOTAL!! # number of scenarios
+SCENARIOPACKAGESIZE=2 # <====<< number of scenarios
 case $si in
  -2)
    ENSTORM=hindcast
@@ -101,11 +101,11 @@ case $si in
    OPENDAPNOTIFY="null"
    ;;
 0)
-   ENSTORM=namforecastWind10m
+   ENSTORM=nhcConsensusWind10m
    source $SCRIPTDIR/config/io_defaults.sh # sets met-only mode based on "Wind10m" suffix
    ;;
 1)
-   ENSTORM=namforecast
+   ENSTORM=nhcConsensus
    ;;
 *)
    echo "CONFIGRATION ERROR: Unknown scenario number: '$si'."
