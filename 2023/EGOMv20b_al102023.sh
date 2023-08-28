@@ -29,8 +29,7 @@
 
 # "name" of this ASGS process
 INSTANCENAME=EGOMv20b_al102023_bde
-ACCOUNT=ADCIRC
-#QOS=vippj_p3000 # for priority during a storm
+#QOS=vippj_p3000 # for at TACC priority during a storm
 ASGSADMIN="asgsnotifications@memenesia.net"
 
 # Input files and templates
@@ -42,7 +41,8 @@ source $SCRIPTDIR/config/mesh_defaults.sh
 
 COLDSTARTDATE=$(get-coldstart-date)
 HOTORCOLD=hotstart
-LASTSUBDIR=https://fortytwo.cct.lsu.edu/thredds/fileServer/2023/al10/02/EGOMv20b/mike.hpc.lsu.edu/EGOMv20b_al102023_jgf/nhcConsensus/
+LASTSUBDIR=https://fortytwo.cct.lsu.edu/thredds/fileServer/2023/al10/07/EGOMv20b/mike.hpc.lsu.edu/EGOMv20b_al102023_jgf/nhcConsensus/
+#https://fortytwo.cct.lsu.edu/thredds/fileServer/2023/nam/2023082618/EGOMv20b/supermic.hpc.lsu.edu/EGOMv20b_nam_jgf/nowcast
 
 # Physical forcing (defaults set in config/forcing_defaults.sh)
 
@@ -75,13 +75,13 @@ OPENDAPPOST=opendap_post2.sh
 POSTPROCESS=( createMaxCSV.sh includeWind10m.sh createOPeNDAPFileList.sh $OPENDAPPOST )
 OPENDAPNOTIFY="jason.g.fleming@gmail.com,coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asgsnotify@memenesia.net"
 NOTIFY_SCRIPT=cera_notify.sh
-TDS=( tacc_tds3 )
+TDS=( lsu_tds )
 
 #
 # Scenario package
 #
 #PERCENT=default
-SCENARIOPACKAGESIZE=4
+SCENARIOPACKAGESIZE=6
 case $si in
    -2)
        ENSTORM=hindcast
@@ -97,12 +97,20 @@ case $si in
        ENSTORM=nhcConsensus
        ;;
     2)
-       ENSTORM=veerRightWind10m
+       ENSTORM=veerRight100Wind10m
        PERCENT=100
        ;;
     3)
-       ENSTORM=veerRight
+       ENSTORM=veerRight100
        PERCENT=100
+       ;;
+    4)
+       ENSTORM=veerRight50Wind10m
+       PERCENT=50
+       ;;
+    5)
+       ENSTORM=veerRight50
+       PERCENT=50
        ;;
     *)
        echo "CONFIGURATION ERROR: Unknown ensemble member number: '$si'."
