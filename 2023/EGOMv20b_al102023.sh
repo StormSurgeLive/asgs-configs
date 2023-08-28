@@ -41,8 +41,8 @@ source $SCRIPTDIR/config/mesh_defaults.sh
 # Initial state (overridden by STATEFILE after ASGS gets going)
 
 COLDSTARTDATE=$(get-coldstart-date)
-HOTORCOLD=coldstart
-LASTSUBDIR=null
+HOTORCOLD=hotstart
+LASTSUBDIR=https://fortytwo.cct.lsu.edu/thredds/fileServer/2023/al10/02/EGOMv20b/mike.hpc.lsu.edu/EGOMv20b_al102023_jgf/nhcConsensus/
 
 # Physical forcing (defaults set in config/forcing_defaults.sh)
 
