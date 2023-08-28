@@ -97,7 +97,7 @@ LASTSUBDIR=null
 # Scenario package 
 
 #PERCENT=default
-SCENARIOPACKAGESIZE=2  # nowcast only 
+SCENARIOPACKAGESIZE=0  # nowcast only 
 case $si in
  -2)
    ENSTORM=hindcast
