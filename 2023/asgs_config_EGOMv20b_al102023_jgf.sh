@@ -88,7 +88,7 @@ LASTSUBDIR=https://fortytwo.cct.lsu.edu/thredds/fileServer/2023/nam/2023082618/E
 # Scenario package
 
 #PERCENT=default
-SCENARIOPACKAGESIZE=4 # <====<<!!TWO TOTAL!! # number of scenarios
+SCENARIOPACKAGESIZE=6 # <====<<!!TWO TOTAL!! # number of scenarios
 case $si in
  -2)
    ENSTORM=hindcast
@@ -107,13 +107,22 @@ case $si in
    ENSTORM=nhcConsensus
    ;;
 2)
-   ENSTORM=veerRightWind10m
+   ENSTORM=veerRight100Wind10m
    PERCENT=100
    source $SCRIPTDIR/config/io_defaults.sh # sets met-only mode based on "Wind10m" suffix
    ;;
 3)
    ENSTORM=veerRight100
    PERCENT=100
+   ;;
+4)
+   ENSTORM=veerLeft100Wind10m
+   PERCENT=-100
+   source $SCRIPTDIR/config/io_defaults.sh # sets met-only mode based on "Wind10m" suffix
+   ;;
+5)
+   ENSTORM=veerLeft100
+   PERCENT=-100
    ;;
 *)
    echo "CONFIGRATION ERROR: Unknown scenario number: '$si'."
