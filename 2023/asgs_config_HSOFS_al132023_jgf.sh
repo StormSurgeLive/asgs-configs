@@ -52,7 +52,7 @@ FORECASTCYCLE="00,06,12,18"
 TROPICALCYCLONE=on      # tropical cyclone forcing
 STORM=13                # storm number, e.g. 05=ernesto in 2006
 YEAR=2023               # year of the storm
-WAVES=off               # wave forcing
+WAVES=on                # wave forcing
 REINITIALIZESWAN=no     # used to bounce the wave solution
 VARFLUX=off             # variable river flux forcing
 CYCLETIMELIMIT="99:00:00"
