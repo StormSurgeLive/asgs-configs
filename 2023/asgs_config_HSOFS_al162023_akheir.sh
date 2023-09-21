@@ -36,7 +36,7 @@
 
 # Fundamental
 
-INSTANCENAME=HSOFS_al132023_akheir  # "name" of this ASGS process
+INSTANCENAME=HSOFS_al162023_akheir  # "name" of this ASGS process
 
 # Input files and templates
 
@@ -47,10 +47,10 @@ source $SCRIPTDIR/config/mesh_defaults.sh
 
 TIDEFAC=on              # tide factor recalc
 HINDCASTLENGTH=30.0     # length of initial hindcast, from cold (days)
-BACKGROUNDMET=gfsBlend  # NAM download/forcing
+BACKGROUNDMET=off       # NAM download/forcing
 FORECASTCYCLE="00,06,12,18"
 TROPICALCYCLONE=on      # tropical cyclone forcing
-STORM=13                # storm number, e.g. 05=ernesto in 2006
+STORM=16                # storm number, e.g. 05=ernesto in 2006
 YEAR=2023               # year of the storm
 WAVES=on                # wave forcing
 REINITIALIZESWAN=no     # used to bounce the wave solution
@@ -59,7 +59,7 @@ CYCLETIMELIMIT="99:00:00"
 
 # Computational Resources (related defaults set in platforms.sh)
 
-NCPU=959               # number of compute CPUs for all simulations
+NCPU=479               # number of compute CPUs for all simulations
 NUMWRITERS=1
 NCPUCAPACITY=9999
 
@@ -82,12 +82,12 @@ statusNotify="null"
 
 COLDSTARTDATE=auto
 HOTORCOLD=hotstart      # "hotstart" or "coldstart"
-LASTSUBDIR=https://fortytwo.cct.lsu.edu/thredds/fileServer/2023/nam/2023091406/HSOFS/mike.hpc.lsu.edu/HSOFS_nam_akheir/namforecast
+LASTSUBDIR=https://fortytwo.cct.lsu.edu/thredds/fileServer/2023/nam/2023092112/HSOFS/mike.hpc.lsu.edu/HSOFS_nam_akheir/namforecast
 
 # Scenario package
 
 #PERCENT=default
-SCENARIOPACKAGESIZE=4 # <====<<!!TWO TOTAL!! # number of scenarios
+SCENARIOPACKAGESIZE=6 # <====<<!!TWO TOTAL!! # number of scenarios
 case $si in
  -2)
    ENSTORM=hindcast
@@ -113,6 +113,15 @@ case $si in
 3)
    ENSTORM=veerLeft100
    PERCENT=-100
+   ;;
+4)
+   ENSTORM=veerRight100Wind10m
+   PERCENT=100
+   source $SCRIPTDIR/config/io_defaults.sh # sets met-only mode based on "Wind10m" suffix
+   ;;
+3)
+   ENSTORM=veerRight100
+   PERCENT=100
    ;;
 *)
    echo "CONFIGRATION ERROR: Unknown scenario number: '$si'."
