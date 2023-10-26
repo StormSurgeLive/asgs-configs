@@ -36,7 +36,7 @@ source $SCRIPTDIR/config/mesh_defaults.sh
 
 # Initial condition
 
-COLDSTARTDATE=2023100500  # calendar year month day hour YYYYMMDDHH24
+COLDSTARTDATE=2023101800  # calendar year month day hour YYYYMMDDHH24
 HOTORCOLD=coldstart       # "hotstart" or "coldstart"
 LASTSUBDIR=null           # path to previous execution (if HOTORCOLD=hotstart)
 
