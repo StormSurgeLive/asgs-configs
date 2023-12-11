@@ -36,7 +36,7 @@ source $SCRIPTDIR/config/mesh_defaults.sh
 
 # Initial condition
 
-COLDSTARTDATE=2023101800  # calendar year month day hour YYYYMMDDHH24
+COLDSTARTDATE=2023102300  # calendar year month day hour YYYYMMDDHH24
 HOTORCOLD=coldstart       # "hotstart" or "coldstart"
 LASTSUBDIR=null           # path to previous execution (if HOTORCOLD=hotstart)
 
@@ -46,6 +46,7 @@ TIDEFAC=on              # tide factor recalc
    HINDCASTLENGTH=5.0      # length of initial hindcast, from cold (days)
 BACKGROUNDMET=GFS       # synoptic download/forcing
    FORECASTCYCLE="06"
+   GFSFORECASTLENGTH=24
 TROPICALCYCLONE=off     # tropical cyclone forcing
    STORM=05             # storm number, e.g. 05=ernesto in 2006
    YEAR=2022            # year of the storm
