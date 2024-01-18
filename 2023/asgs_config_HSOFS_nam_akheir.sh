@@ -85,7 +85,7 @@ enableStatusNotify="no"
 statusNotify="null"
 
 # Initial state (overridden by STATEFILE after ASGS gets going)
-COLDSTARTDATE=2023080100
+COLDSTARTDATE=2023090200
 HOTORCOLD=coldstart      # "hotstart" or "coldstart"
 LASTSUBDIR=null
 
