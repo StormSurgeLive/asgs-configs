@@ -27,7 +27,7 @@
 
 # Fundamental
 
-INSTANCENAME=shinnecock-gfs-parameters   # "name" of this ASGS process
+INSTANCENAME=shinnecock-al102023-alt   # "name" of this ASGS process
 
 # Input files and templates
 
@@ -36,25 +36,37 @@ source $SCRIPTDIR/config/mesh_defaults.sh
 
 # Initial condition
 
-COLDSTARTDATE=2024020500  # calendar year month day hour YYYYMMDDHH24
+COLDSTARTDATE=2023082500  # calendar year month day hour YYYYMMDDHH24
 HOTORCOLD=coldstart       # "hotstart" or "coldstart"
 LASTSUBDIR=null           # path to previous execution (if HOTORCOLD=hotstart)
 
-# Physical forcing
+# Forcing
 
 TIDEFAC=on              # tide factor recalc
-   HINDCASTLENGTH=5.0      # length of initial hindcast, from cold (days)
-BACKGROUNDMET=GFS       # synoptic download/forcing
+   HINDCASTLENGTH=5.0   # length of initial hindcast, from cold (days)
+BACKGROUNDMET=off       # synoptic download/forcing
    FORECASTCYCLE="06"
    GFSFORECASTLENGTH=24
-TROPICALCYCLONE=off     # tropical cyclone forcing
-   STORM=05             # storm number, e.g. 05=ernesto in 2006
-   YEAR=2022            # year of the storm
+TROPICALCYCLONE=on      # tropical cyclone forcing
+   STORM=10             # storm number, e.g. 05=ernesto in 2006
+   YEAR=2023            # year of the storm
    VORTEXMODEL=GAHM     # default is GAHM (NWS20); ASYMMETRIC (NWS19) possible
+   RSSSITE=filesystem
+   FTPSITE=filesystem
+   FDIR=~/scratch/al102023
+   HDIR=$FDIR
 WAVES=on                # wave forcing
    REINITIALIZESWAN=no  # used to bounce the wave solution
    SWANHSFULL=no        # don't create a fulldomain swan hotstart file
 VARFLUX=off             # variable river flux forcing
+
+# Physics
+bottom_friction_limit=0.003                #<--<< ADCIRC Parameter
+advection="on"                             #<--<< ADCIRC Parameter
+metControl["WindDragLimit"]="0.0020"       #<--<< ADCIRC Parameter
+
+# Nodal Attributes
+nodal_attribute_default_values["sea_surface_height_above_geoid"]="0.001" #<--<< ADCIRC Parameter
 
 # Computational Resources
 
@@ -72,28 +84,20 @@ POSTPROCESS=( includeWind10m.sh  )
 OPENDAPNOTIFY="null"
 #hooksScripts[FINISH_SPINUP_SCENARIO]=" output/createOPeNDAPFileList.sh output/$OPENDAPPOST "
 #hooksScripts[FINISH_NOWCAST_SCENARIO]=" output/createOPeNDAPFileList.sh output/$OPENDAPPOST "
+#
+netcdf_metadata["NCHOST"]="frontera.tacc.utexas.edu"           #<--<< ADCIRC Parameter
+netcdf_metadata["NCCONT"]="jason.fleming@seahorsecoastal.com"  #<--<< ADCIRC Parameter
 
-# Monitoring
+# Monitoring and Logging
 
 OPENDAPNOTIFY="null"
 NOTIFY_SCRIPT=null_notify.sh
 enablePostStatus="no"
 enableStatusNotify="no"
 statusNotify="null"
-
-# Parameter package
-
-PARAMETERPACKAGESIZE=2
-case $pp in
-"lowWaterStart" |"0")
-
-   ;;
-"highWaterStart"|"1")
-   ;;
-*)
-   # the default parameters will be used
-   ;;
-esac
+#
+nfover="1 19.0 1 99 30.0"  #<--<< ADCIRC Parameter: nonfatal override; warnelev and errorelev
+log_level="ECHO"           #<--<< ADCIRC Parameter: NABOUT (DEBUG=-1, ECHO=0, INFO=1, WARNING=2, ERROR=3)
 
 # Scenario package
 
@@ -110,11 +114,11 @@ case $si in
    OPENDAPNOTIFY="null"
    ;;
  0)
-   ENSTORM=gfsforecastWind10m
+   ENSTORM=nhcConsensusWind10m
    source $SCRIPTDIR/config/io_defaults.sh # sets met-only mode based on "Wind10m" suffix
    ;;
 1)
-   ENSTORM=gfsforecast
+   ENSTORM=nhcConsensus
    ;;
 *)
    echo "CONFIGRATION ERROR: Unknown scenario number: '$si'."
