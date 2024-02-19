@@ -8,7 +8,7 @@
 # etc)
 #-------------------------------------------------------------------
 #
-# Copyright(C) 2023 Jason Fleming
+# Copyright(C) 2024 Jason Fleming
 #
 # This file is part of the ADCIRC Surge Guidance System (ASGS).
 #
@@ -27,16 +27,16 @@
 
 # Fundamental
 
-INSTANCENAME=shinnecock-gfs-test   # "name" of this ASGS process
+INSTANCENAME=shinnecock-gfs-parameters   # "name" of this ASGS process
 
 # Input files and templates
 
-GRIDNAME=Shinnecock
+GRIDNAME=Shinnecock-parameters
 source $SCRIPTDIR/config/mesh_defaults.sh
 
 # Initial condition
 
-COLDSTARTDATE=2024020100  # calendar year month day hour YYYYMMDDHH24
+COLDSTARTDATE=2024020500  # calendar year month day hour YYYYMMDDHH24
 HOTORCOLD=coldstart       # "hotstart" or "coldstart"
 LASTSUBDIR=null           # path to previous execution (if HOTORCOLD=hotstart)
 
@@ -80,6 +80,20 @@ NOTIFY_SCRIPT=null_notify.sh
 enablePostStatus="no"
 enableStatusNotify="no"
 statusNotify="null"
+
+# Parameter package
+
+PARAMETERPACKAGESIZE=2
+case $pp in
+"lowWaterStart" |"0")
+
+   ;;
+"highWaterStart"|"1")
+   ;;
+*)
+   # the default parameters will be used
+   ;;
+esac
 
 # Scenario package
 

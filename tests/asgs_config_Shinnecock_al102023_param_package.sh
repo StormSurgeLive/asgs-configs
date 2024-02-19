@@ -8,7 +8,7 @@
 # etc)
 #-------------------------------------------------------------------
 #
-# Copyright(C) 2023 Jason Fleming
+# Copyright(C) 2024 Jason Fleming
 #
 # This file is part of the ADCIRC Surge Guidance System (ASGS).
 #
@@ -27,30 +27,34 @@
 
 # Fundamental
 
-INSTANCENAME=shinnecock-gfs-test   # "name" of this ASGS process
+INSTANCENAME=shinnecock-al102023-parameters   # "name" of this ASGS process
 
 # Input files and templates
 
-GRIDNAME=Shinnecock
+GRIDNAME=Shinnecock-parameters
 source $SCRIPTDIR/config/mesh_defaults.sh
 
 # Initial condition
 
-COLDSTARTDATE=2024020100  # calendar year month day hour YYYYMMDDHH24
+COLDSTARTDATE=2023082500  # calendar year month day hour YYYYMMDDHH24
 HOTORCOLD=coldstart       # "hotstart" or "coldstart"
 LASTSUBDIR=null           # path to previous execution (if HOTORCOLD=hotstart)
 
 # Physical forcing
 
 TIDEFAC=on              # tide factor recalc
-   HINDCASTLENGTH=5.0      # length of initial hindcast, from cold (days)
-BACKGROUNDMET=GFS       # synoptic download/forcing
+   HINDCASTLENGTH=5.0   # length of initial hindcast, from cold (days)
+BACKGROUNDMET=off       # synoptic download/forcing
    FORECASTCYCLE="06"
    GFSFORECASTLENGTH=24
-TROPICALCYCLONE=off     # tropical cyclone forcing
-   STORM=05             # storm number, e.g. 05=ernesto in 2006
-   YEAR=2022            # year of the storm
+TROPICALCYCLONE=on      # tropical cyclone forcing
+   STORM=10             # storm number, e.g. 05=ernesto in 2006
+   YEAR=2023            # year of the storm
    VORTEXMODEL=GAHM     # default is GAHM (NWS20); ASYMMETRIC (NWS19) possible
+   RSSSITE=filesystem
+   FTPSITE=filesystem
+   FDIR=~/scratch/al102023
+   HDIR=$FDIR
 WAVES=on                # wave forcing
    REINITIALIZESWAN=no  # used to bounce the wave solution
    SWANHSFULL=no        # don't create a fulldomain swan hotstart file
@@ -81,6 +85,20 @@ enablePostStatus="no"
 enableStatusNotify="no"
 statusNotify="null"
 
+# Parameter package
+
+PARAMETERPACKAGESIZE=2
+case $pp in
+"lowWaterStart" |"0")
+
+   ;;
+"highWaterStart"|"1")
+   ;;
+*)
+   # the default parameters will be used
+   ;;
+esac
+
 # Scenario package
 
 #PERCENT=default
@@ -96,11 +114,11 @@ case $si in
    OPENDAPNOTIFY="null"
    ;;
  0)
-   ENSTORM=gfsforecastWind10m
+   ENSTORM=nhcConsensusWind10m
    source $SCRIPTDIR/config/io_defaults.sh # sets met-only mode based on "Wind10m" suffix
    ;;
 1)
-   ENSTORM=gfsforecast
+   ENSTORM=nhcConsensus
    ;;
 *)
    echo "CONFIGRATION ERROR: Unknown scenario number: '$si'."
