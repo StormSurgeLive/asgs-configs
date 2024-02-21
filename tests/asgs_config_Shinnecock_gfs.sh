@@ -27,7 +27,7 @@
 
 # Fundamental
 
-INSTANCENAME=Shinnecock-gfs   # "name" of this ASGS process
+INSTANCENAME=shinnecock-gfs-test   # "name" of this ASGS process
 
 # Input files and templates
 
@@ -36,7 +36,7 @@ source $SCRIPTDIR/config/mesh_defaults.sh
 
 # Initial condition
 
-COLDSTARTDATE=2023102300  # calendar year month day hour YYYYMMDDHH24
+COLDSTARTDATE=2024020100  # calendar year month day hour YYYYMMDDHH24
 HOTORCOLD=coldstart       # "hotstart" or "coldstart"
 LASTSUBDIR=null           # path to previous execution (if HOTORCOLD=hotstart)
 
