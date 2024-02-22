@@ -8,7 +8,7 @@
 # etc)
 #-------------------------------------------------------------------
 #
-# Copyright(C) 2023 Jason Fleming
+# Copyright(C) 2024 Jason Fleming
 #
 # This file is part of the ADCIRC Surge Guidance System (ASGS).
 #
@@ -40,6 +40,7 @@ TIDEFAC=on               # tide factor recalc
    HINDCASTLENGTH=10.0   # length of initial hindcast, from cold (days)
 BACKGROUNDMET=GFS        # GFS download/forcing
    FORECASTCYCLE="06"
+   GFSFORECASTLENGTH=24
 TROPICALCYCLONE=off      # tropical cyclone forcing
    STORM=08              # storm number, e.g. 05=ernesto in 2006
    YEAR=2021             # year of the storm
@@ -81,7 +82,7 @@ LASTSUBDIR=null
 # Scenario package
 #
 #PERCENT=default
-SCENARIOPACKAGESIZE=2
+SCENARIOPACKAGESIZE=1
 case $si in
    -2)
        ENSTORM=hindcast
@@ -91,10 +92,6 @@ case $si in
        ENSTORM=nowcast
        ;;
     0)
-       ENSTORM=gfsforecastWind10m
-       source $SCRIPTDIR/config/io_defaults.sh # sets met-only mode based on "Wind10m" suffix
-       ;;
-    1)
        ENSTORM=gfsforecast
        ;;
     *)
