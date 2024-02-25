@@ -47,14 +47,13 @@ TROPICALCYCLONE=off      # tropical cyclone forcing
 WAVES=off                # wave forcing
    REINITIALIZESWAN=no   # used to bounce the wave solution
 VARFLUX=default              # variable river flux forcing
-#
-CYCLETIMELIMIT="99:00:00"
 
 # Computational Resources (related defaults set in platforms.sh)
 
 NCPU=15                 # number of compute CPUs for all simulations
 NCPUCAPACITY=9999
 NUMWRITERS=1
+CYCLETIMELIMIT="99:00:00"
 
 # Post processing and publication
 
