@@ -37,7 +37,7 @@ source $SCRIPTDIR/config/mesh_defaults.sh
 # Physical forcing (defaults set in config/forcing_defaults.sh)
 
 TIDEFAC=on               # tide factor recalc
-   HINDCASTLENGTH=10.0   # length of initial hindcast, from cold (days)
+   HINDCASTLENGTH=20.0   # length of initial hindcast, from cold (days)
 BACKGROUNDMET=GFS        # GFS download/forcing
    FORECASTCYCLE="06"
    GFSFORECASTLENGTH=24
@@ -54,6 +54,11 @@ NCPU=15                 # number of compute CPUs for all simulations
 NCPUCAPACITY=9999
 NUMWRITERS=1
 CYCLETIMELIMIT="99:00:00"
+
+# Numerics
+
+solver_time_integration="implicit"
+time_weighting_coefficients="0.35 0.3 0.35"
 
 # Post processing and publication
 
