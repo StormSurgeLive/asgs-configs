@@ -27,11 +27,11 @@
 
 # Fundamental
 
-INSTANCENAME=shinnecock-gfs-test   # "name" of this ASGS process
+INSTANCENAME=shinnecock-gfs-test-parameters   # "name" of this ASGS process
 
 # Input files and templates
 
-GRIDNAME=Shinnecock
+GRIDNAME=Shinnecock-parameters
 source $SCRIPTDIR/config/mesh_defaults.sh
 
 # Initial condition
