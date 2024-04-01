@@ -37,48 +37,70 @@ declare -a nodalAttributesActiveLists # empty list, list not including canopy/ro
 #
 # Specify parameter values
 GRIDNAMEs=( "Shinnecock" "Shinnecock-parameters" )
-nodalAttributesActiveLists=( "null" "sea_surface_height_above_geoid" "sea_surface_height_above_geoid;surface_directional_effective_roughness_length;surface_canopy_coefficient" )
+nodalAttributesActiveLists=( "null" "sea_surface_height_above_geoid" "sea_surface_height_above_geoid,surface_directional_effective_roughness_length,surface_canopy_coefficient" )
 NAFILEs=( "null" "shinnecock_nodal_attributes.template" )
 COLDSTARTDATEs=( "2024032400" )
 BACKGROUNDMETs=( "GFS" )
 WAVESs=( "on" )
 addWind10mScenario=( "no" "yes" )
-createWind10mLayer=( "yes" "no" )
+addWind10mLayer=( "yes" "no" )
 #
 # Set derived parameters whose values are based on combination of
 # parameters above
 INSTANCENAME=""
 SCENARIOPACKAGESIZE=""
 declare -a scenarioNames
-declare -a scenarioSettings=""
+declare -a scenarioSettings
 #
 # Calculate the number of config files to be generated
-numFiles=$(expr ${#GRIDNAMEs[@]} \* ${#nodalAttributesActiveLists[@]} \* ${#NAFILEs[@]} \* ${#COLDSTARTDATEs[@]} \* ${#BACKGROUNDMETs[@]} \* ${#WAVESs[@]} \* ${#addWind10mScenario[@]} \* ${#createWind10mLayer[@]} )
+numFiles=$(expr ${#GRIDNAMEs[@]} \* ${#nodalAttributesActiveLists[@]} \* ${#NAFILEs[@]} \* ${#COLDSTARTDATEs[@]} \* ${#BACKGROUNDMETs[@]} \* ${#WAVESs[@]} \* ${#addWind10mScenario[@]} \* ${#addWind10mLayer[@]} )
 echo "numFiles is $numFiles"
 configFile=0
-for mesh in ${GRIDNAMEs[@]}; do
+for GRIDNAME in ${GRIDNAMEs[@]}; do
     for naList in ${nodalAttributesActiveLists[@]}; do
-        for naFile in ${NAFILEs[@]}; do
-            for csDate in ${COLDSTARTDATEs[@]}; do
-                for met in ${BACKGROUNDMETs[@]}; do
-                    for waves in ${WAVESs[@]}; do
+        for NAFILE in ${NAFILEs[@]}; do
+            for COLDSTARTDATE in ${COLDSTARTDATEs[@]}; do
+                for BACKGROUNDMET in ${BACKGROUNDMETs[@]}; do
+                    for WAVES in ${WAVESs[@]}; do
                         for wind10mScenario in ${addWind10mScenario[@]}; do
-                            for wind10mLayer in ${createWind10mLayer[@]}; do
+                            for createWind10mLayer in ${addWind10mLayer[@]}; do
                                 INSTANCENAME=${instanceBase}_$(printf %03d $configFile)
                                 SCENARIOPACKAGESIZE=1
-                                scenarioNames=( gfsforecast )
-                                scenarioSettings=( null )
-                                configFileName=${configTemplate//template/$(printf %03d $configFile)}
+                                scenarioNames=( gfsforecast gfsforecastWind10m )
+                                scenarioSettings=( '# no scenario settings' 'source $SCRIPTDIR/config/io_defaults.sh' )
+                                configFileName=$(basename ${configTemplate//template/$(printf %03d $configFile)})
                                 #echo $configFileName
                                 if [[ $wind10mScenario == "yes" ]]; then
                                     SCENARIOPACKAGESIZE=2
-                                    scenarioNames+=( ${scenarioNames[0]}Wind10m )
-                                    scenarioSettings+=( "source $SCRIPTDIR/config/io_defaults.sh" )
                                 fi
                                 #echo "${mesh}_${naList}_${naFile}_${csDate}_${met}_${waves}_${wind10mScenario}_${wind10mLayer}"
-                                echo $INSTANCENAME $SCENARIOPACKAGESIZE ${scenarioNames[@]} ${scenarioSettings[@]}
+                                #echo $INSTANCENAME $SCENARIOPACKAGESIZE ${scenarioNames[@]} ${scenarioSettings[@]}
                                 # nodal attributes
+                                nodal_attribute_activate=( ${naList//,/ } )
+                                if [[ $naList == "null" ]]; then
+                                    nodal_attribute_activate=( )
+                                fi
                                 configFile=$(expr $configFile + 1)
+                                echo $configFileName
+                                sed \
+                                    -e "s/%INSTANCENAME%/$INSTANCENAME/" \
+                                    -e "s/%GRIDNAME%/$GRIDNAME/" \
+                                    -e "s/%nodalAttributeActivateList%/${nodal_attribute_activate[*]}/" \
+                                    -e "s/%NAFILE%/$NAFILE/" \
+                                    -e "s/%COLDSTARTDATE%/$COLDSTARTDATE/" \
+                                    -e "s/%BACKGROUNDMET%/$BACKGROUNDMET/" \
+                                    -e "s/%WAVES%/$WAVES/" \
+                                    -e "s/%createWind10mLayer%/$createWind10mLayer/" \
+                                    -e "s/%SCENARIOPACKAGESIZE%/$SCENARIOPACKAGESIZE/" \
+                                    -e "s/%SCENARIO000%/${scenarioNames[0]}/" \
+                                    -e "s?%SCENARIO000_settings%?${scenarioSettings[0]}?" \
+                                    -e "s/%SCENARIO001%/${scenarioNames[1]}/" \
+                                    -e "s?%SCENARIO001_settings%?${scenarioSettings[1]}?" \
+                                     < $configTemplate \
+                                     > $configFileName
+                                if [[ $? != 0 ]]; then
+                                    echo "config_driver: Failed to fill in ASGS configuration file template  with sed."
+                                fi
                             done
                         done
                     done
@@ -88,12 +110,3 @@ for mesh in ${GRIDNAMEs[@]}; do
     done
 done
 
-#sed \
-#    -e "s/%NULLGETGFSTEMPLATEFILE%/$gfsTemplateName/" \
-#    -e "s/%NULLGETGFSTEMPLATEFILLEDFILE%/$filledGfsTemplateName/" \
-#    -e "s/%NULLLASTUPDATETIME%/$DATETIME/" \
-#     < $SCRIPTDIR/$gfsTemplateName \
-#     > "part_$filledGfsTemplateName"
-#if [[ $? != 0 ]]; then
-#    echo "$THIS: Failed to fill in GFS data request template with sed."
-#fi

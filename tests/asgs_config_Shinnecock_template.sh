@@ -33,7 +33,7 @@ INSTANCENAME="%INSTANCENAME%"    # "name" of this ASGS process
 
 GRIDNAME="%GRIDNAME%"            # e.g., Shinnecock-parameters
 source $SCRIPTDIR/config/mesh_defaults.sh
-nodal_attribute_activate=( "%nodalAttributeActivateList%" )  # replace value from config/mesh_defaults.sh
+nodal_attribute_activate=( %nodalAttributeActivateList% )  # replace value from config/mesh_defaults.sh
 NAFILE="%NAFILE%"                                            # replace value from config/mesh_defaults.sh
 
 # Initial condition
@@ -99,12 +99,12 @@ case $si in
    OPENDAPNOTIFY="null"
    ;;
 0)
-   ENSTORM="%SCENARIO000%"
-   "%SCENARIO000_settings%"  # e.g., set met-only mode based on "Wind10m" suffix
+   ENSTORM=%SCENARIO000%
+   %SCENARIO000_settings%  # e.g., set met-only mode based on "Wind10m" suffix
    ;;
 1)
-   ENSTORM="%SCENARIO001%"
-   "%SCENARIO001_settings%"  # e.g., set met-only mode based on "Wind10m" suffix
+   ENSTORM=%SCENARIO001%
+   %SCENARIO001_settings%  # e.g., set met-only mode based on "Wind10m" suffix
    ;;
 *)
    echo "CONFIGRATION ERROR: Unknown scenario number: '$si'."
