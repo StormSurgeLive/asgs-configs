@@ -1,0 +1,13 @@
+diff --git a/tests/asgs_config_Shinnecock_gfs.sh b/tests/asgs_config_Shinnecock_gfs.sh
+index 4e68e6b..5db4eb6 100755
+--- a/tests/asgs_config_Shinnecock_gfs.sh
++++ b/tests/asgs_config_Shinnecock_gfs.sh
+@@ -36,7 +36,7 @@ source $SCRIPTDIR/config/mesh_defaults.sh
+ 
+ # Initial condition
+ 
+-COLDSTARTDATE=2024020100  # calendar year month day hour YYYYMMDDHH24
++COLDSTARTDATE=2024031500  # calendar year month day hour YYYYMMDDHH24
+ HOTORCOLD=coldstart       # "hotstart" or "coldstart"
+ LASTSUBDIR=null           # path to previous execution (if HOTORCOLD=hotstart)
+ 

@@ -23,7 +23,7 @@
 #
 # set which ASGS config file template is to be used
 configTemplate=~/Campaigns/Development/asgs-configs/tests/asgs_config_Shinnecock_template.sh
-instanceBase="asgs_config_shinnecock_test"
+instanceBase="shinnecock_test"
 #
 # Declare arrays of parameters to be used in the ASGS config file template.
 declare -a GRIDNAMEs             # Shinnecock|Shinnecock-parameters
@@ -34,14 +34,16 @@ declare -a WAVESs                # off
 declare -a addWind10mScenario    # yes|no
 declare -a createWind10mLayers   # yes|no
 declare -a nodalAttributesActiveLists # empty list, list not including canopy/roughness, list incl. canopy/roughness
+declare -a POSTPROCESS
 #
 # Specify parameter values
 GRIDNAMEs=( "Shinnecock" "Shinnecock-parameters" )
 nodalAttributesActiveLists=( "null" "sea_surface_height_above_geoid" "sea_surface_height_above_geoid,surface_directional_effective_roughness_length,surface_canopy_coefficient" )
 NAFILEs=( "null" "shinnecock_nodal_attributes.template" )
-COLDSTARTDATEs=( "2024032400" )
+COLDSTARTDATEs=( "2024032900" )
+TRIGGER="auto"
 BACKGROUNDMETs=( "GFS" )
-WAVESs=( "on" )
+WAVESs=( "off" )
 addWind10mScenario=( "no" "yes" )
 addWind10mLayer=( "yes" "no" )
 #
@@ -65,6 +67,7 @@ for GRIDNAME in ${GRIDNAMEs[@]}; do
                         for wind10mScenario in ${addWind10mScenario[@]}; do
                             for createWind10mLayer in ${addWind10mLayer[@]}; do
                                 INSTANCENAME=${instanceBase}_$(printf %03d $configFile)
+                                POSTPROCESS=( )
                                 SCENARIOPACKAGESIZE=1
                                 scenarioNames=( gfsforecast gfsforecastWind10m )
                                 scenarioSettings=( '# no scenario settings' 'source $SCRIPTDIR/config/io_defaults.sh' )
@@ -72,6 +75,7 @@ for GRIDNAME in ${GRIDNAMEs[@]}; do
                                 #echo $configFileName
                                 if [[ $wind10mScenario == "yes" ]]; then
                                     SCENARIOPACKAGESIZE=2
+                                    POSTPROCESS=( includeWind10m.sh )
                                 fi
                                 #echo "${mesh}_${naList}_${naFile}_${csDate}_${met}_${waves}_${wind10mScenario}_${wind10mLayer}"
                                 #echo $INSTANCENAME $SCENARIOPACKAGESIZE ${scenarioNames[@]} ${scenarioSettings[@]}
@@ -88,9 +92,11 @@ for GRIDNAME in ${GRIDNAMEs[@]}; do
                                     -e "s/%nodalAttributeActivateList%/${nodal_attribute_activate[*]}/" \
                                     -e "s/%NAFILE%/$NAFILE/" \
                                     -e "s/%COLDSTARTDATE%/$COLDSTARTDATE/" \
+                                    -e "s/%TRIGGER%/$TRIGGER/" \
                                     -e "s/%BACKGROUNDMET%/$BACKGROUNDMET/" \
                                     -e "s/%WAVES%/$WAVES/" \
                                     -e "s/%createWind10mLayer%/$createWind10mLayer/" \
+                                    -e "s/%POSTPROCESS%/${POSTPROCESS[*]}/" \
                                     -e "s/%SCENARIOPACKAGESIZE%/$SCENARIOPACKAGESIZE/" \
                                     -e "s/%SCENARIO000%/${scenarioNames[0]}/" \
                                     -e "s?%SCENARIO000_settings%?${scenarioSettings[0]}?" \

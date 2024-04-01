@@ -27,33 +27,34 @@
 
 # Fundamental
 
-INSTANCENAME="%INSTANCENAME%"    # "name" of this ASGS process
+INSTANCENAME=%INSTANCENAME%    # "name" of this ASGS process
 
 # Input files and templates
 
-GRIDNAME="%GRIDNAME%"            # e.g., Shinnecock-parameters
+GRIDNAME=%GRIDNAME%            # e.g., Shinnecock-parameters
 source $SCRIPTDIR/config/mesh_defaults.sh
 nodal_attribute_activate=( %nodalAttributeActivateList% )  # replace value from config/mesh_defaults.sh
-NAFILE="%NAFILE%"                                            # replace value from config/mesh_defaults.sh
+NAFILE=%NAFILE%                                            # replace value from config/mesh_defaults.sh
 
 # Initial condition
 
-COLDSTARTDATE="%COLDSTARTDATE%"  # calendar year month day hour YYYYMMDDHH24
+COLDSTARTDATE=%COLDSTARTDATE%  # calendar year month day hour YYYYMMDDHH24
 HOTORCOLD=coldstart       # "hotstart" or "coldstart"
 LASTSUBDIR=null           # path to previous execution (if HOTORCOLD=hotstart)
+TRIGGER=%TRIGGER%         # "auto" to exit after one nowcast/forecast cycle
 
 # Physical forcing
 
 TIDEFAC=on              # tide factor recalc
-   HINDCASTLENGTH=5.0   # length of initial hindcast, from cold (days)
-BACKGROUNDMET="%BACKGROUNDMET%"   # synoptic download/forcing
+   HINDCASTLENGTH=2.0   # length of initial hindcast, from cold (days)
+BACKGROUNDMET=%BACKGROUNDMET%   # synoptic download/forcing
    FORECASTCYCLE="06"
    GFSFORECASTLENGTH=24
 TROPICALCYCLONE=off     # tropical cyclone forcing
    STORM=05             # storm number, e.g. 05=ernesto in 2006
    YEAR=2022            # year of the storm
    VORTEXMODEL=GAHM     # default is GAHM (NWS20); ASYMMETRIC (NWS19) possible
-WAVES="%WAVES%"         # wave forcing
+WAVES=%WAVES%         # wave forcing
    REINITIALIZESWAN=no  # used to bounce the wave solution
    SWANHSFULL=no        # don't create a fulldomain swan hotstart file
 VARFLUX=off             # variable river flux forcing
@@ -67,14 +68,11 @@ CYCLETIMELIMIT="99:00:00"
 
 # Post processing and publication
 
-createWind10mLayer="%createWind10mLayer%"
+createWind10mLayer=%createWind10mLayer%
 INTENDEDAUDIENCE=developers-only
 OPENDAPPOST=opendap_post2.sh
-#POSTPROCESS=( includeWind10m.sh createOPeNDAPFileList.sh $OPENDAPPOST )
-POSTPROCESS=( includeWind10m.sh  )
+POSTPROCESS=( %POSTPROCESS% )
 OPENDAPNOTIFY="null"
-#hooksScripts[FINISH_SPINUP_SCENARIO]=" output/createOPeNDAPFileList.sh output/$OPENDAPPOST "
-#hooksScripts[FINISH_NOWCAST_SCENARIO]=" output/createOPeNDAPFileList.sh output/$OPENDAPPOST "
 
 # Monitoring
 
@@ -87,7 +85,7 @@ statusNotify="null"
 # Scenario package
 
 #PERCENT=default
-SCENARIOPACKAGESIZE="%SCENARIOPACKAGESIZE%" # number of scenarios
+SCENARIOPACKAGESIZE=%SCENARIOPACKAGESIZE% # number of scenarios
 case $si in
 -2)
    ENSTORM=hindcast
