@@ -21,6 +21,9 @@
 # the ASGS.  If not, see <http://www.gnu.org/licenses/>.
 #-------------------------------------------------------------------
 #
+# sample script:
+# for num in $(seq 0 31); do save profile shinnecock_test_$(printf %03d $num) ; define config ~/Campaigns/Development/2024/test-issue-1251/asgs_config_Shinnecock_$(printf %03d $num).sh ; rl ; run ; done
+#
 # set which ASGS config file template is to be used
 configTemplate=~/Campaigns/Development/asgs-configs/tests/asgs_config_Shinnecock_template.sh
 instanceBase="shinnecock_test"
@@ -34,13 +37,12 @@ declare -a WAVESs                # off
 declare -a addWind10mScenario    # yes|no
 declare -a createWind10mLayers   # yes|no
 declare -a nodalAttributesActiveLists # empty list, list not including canopy/roughness, list incl. canopy/roughness
-declare -a POSTPROCESS
 #
 # Specify parameter values
 GRIDNAMEs=( "Shinnecock" "Shinnecock-parameters" )
 nodalAttributesActiveLists=( "null" "sea_surface_height_above_geoid" "sea_surface_height_above_geoid,surface_directional_effective_roughness_length,surface_canopy_coefficient" )
 NAFILEs=( "null" "shinnecock_nodal_attributes.template" )
-COLDSTARTDATEs=( "2024032900" )
+COLDSTARTDATEs=( "2024033000" )
 TRIGGER="auto"
 BACKGROUNDMETs=( "GFS" )
 WAVESs=( "off" )
@@ -53,6 +55,7 @@ INSTANCENAME=""
 SCENARIOPACKAGESIZE=""
 declare -a scenarioNames
 declare -a scenarioSettings
+declare -a POSTPROCESS
 #
 configFileNum=0
 for GRIDNAME in ${GRIDNAMEs[@]}; do
@@ -64,7 +67,7 @@ for GRIDNAME in ${GRIDNAMEs[@]}; do
                         for wind10mScenario in ${addWind10mScenario[@]}; do
                             for createWind10mLayer in ${addWind10mLayer[@]}; do
                                 configFileName=$(basename ${configTemplate//template/$(printf %03d $configFileNum)})
-                                INSTANCENAME=${instanceBase}_$(printf %03d $configFile)
+                                INSTANCENAME=${instanceBase}_$(printf %03d $configFileNum)
                                 SCENARIOPACKAGESIZE=1
                                 scenarioNames=( gfsforecast unreachableScenario )
                                 scenarioSettings=( '# no scenario settings' '# unreachable settings' )
