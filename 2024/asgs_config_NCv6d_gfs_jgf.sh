@@ -8,7 +8,7 @@
 # etc)
 #-------------------------------------------------------------------
 #
-# Copyright(C) 2019-2020 Jason Fleming
+# Copyright(C) 2024 Jason Fleming
 #
 # This file is part of the ADCIRC Surge Guidance System (ASGS).
 #
@@ -27,62 +27,76 @@
 
 # Fundamental
 
-INSTANCENAME=LAv20a_gfs_jgf     # "name" of this ASGS process
+INSTANCENAME=NCv6d_gfs_jgf # "name" of this ASGS process
 
 # Input files and templates
 
-GRIDNAME=LA_v20a-WithUpperAtch_chk
+GRIDNAME=NCv6d
 source $SCRIPTDIR/config/mesh_defaults.sh
 
 # Physical forcing (defaults set in config/forcing_defaults.sh)
 
-TIDEFAC=on             # tide factor recalc
-   HINDCASTLENGTH=30.0 # length of initial hindcast, from cold (days)
-BACKGROUNDMET=GFS      # synoptic download/forcing
+TIDEFAC=on               # tide factor recalc
+   HINDCASTLENGTH=20.0   # length of initial hindcast, from cold (days)
+BACKGROUNDMET=GFS        # GFS download/forcing
    FORECASTCYCLE="06"
-TROPICALCYCLONE=off    # tropical cyclone forcing
-   STORM=99            # storm number, e.g. 05=ernesto in 2006
-   YEAR=2016           # year of the storm
-WAVES=on               # wave forcing
+   GFSFORECASTLENGTH=24
+TROPICALCYCLONE=off      # tropical cyclone forcing
+   STORM=08              # storm number, e.g. 05=ernesto in 2006
+   YEAR=2021             # year of the storm
+WAVES=off                # wave forcing
+   REINITIALIZESWAN=no   # used to bounce the wave solution
+VARFLUX=default              # variable river flux forcing
 
 # Computational Resources (related defaults set in platforms.sh)
 
-NCPU=959               # number of compute CPUs for all simulations
+NCPU=159                 # number of compute CPUs for all simulations
 NCPUCAPACITY=9999
 NUMWRITERS=1
 CYCLETIMELIMIT="99:00:00"
 
 # Post processing and publication
 
-INTENDEDAUDIENCE=general    # can also be "developers-only" or "professional"
+INTENDEDAUDIENCE=developers-only    # "general" | "developers-only" | "professional"
 OPENDAPPOST=opendap_post2.sh
-POSTPROCESS=( createOPeNDAPFileList.sh $OPENDAPPOST )
-OPENDAPNOTIFY="jason.fleming@seahorsecoastal.com"
+POSTPROCESS=( null_post.sh )
+#POSTPROCESS=( includeWind10m.sh createOPeNDAPFileLit.sh $OPENDAPPOST )
+#OPENDAPNOTIFY="coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,jason.fleming@seahorsecoastal.com,jason.fleming@stormsurge.live"
+#hooksScripts[FINISH_SPINUP_SCENARIO]=" output/createOPeNDAPFileList.sh output/$OPENDAPPOST "
+#hooksScripts[FINISH_NOWCAST_SCENARIO]=" output/createOPeNDAPFileList.sh output/$OPENDAPPOST "
+
+# Monitoring
+
+enablePostStatus="no"
+enableStatusNotify="no"
+statusNotify="null"
 
 # Initial state (overridden by STATEFILE after ASGS gets going)
 
-COLDSTARTDATE=2024012500   # calendar year month day hour YYYYMMDDHH24
-HOTORCOLD=coldstart        # "hotstart" or "coldstart"
+COLDSTARTDATE=2024020500
+HOTORCOLD=coldstart
 LASTSUBDIR=null
 
+#
+# Scenario package
+#
 #PERCENT=default
-SCENARIOPACKAGESIZE=1 
+SCENARIOPACKAGESIZE=1
 case $si in
-   -2) 
+   -2)
        ENSTORM=hindcast
        ;;
-   -1)      
+   -1)
        # do nothing ... this is not a forecast
        ENSTORM=nowcast
        ;;
     0)
        ENSTORM=gfsforecast
        ;;
-    *)   
-       echo "CONFIGRATION ERROR: Unknown ensemble member number: '$si'."
+    *)
+       echo "CONFIGURATION ERROR: Unknown ensemble member number: '$si'."
       ;;
 esac
-
+#
 PREPPEDARCHIVE=prepped_${GRIDNAME}_${INSTANCENAME}_${NCPU}.tar.gz
 HINDCASTARCHIVE=prepped_${GRIDNAME}_hc_${INSTANCENAME}_${NCPU}.tar.gz
-
