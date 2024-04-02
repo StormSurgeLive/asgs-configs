@@ -60,6 +60,11 @@ NCPUCAPACITY=9999
 NUMWRITERS=1
 CYCLETIMELIMIT="99:00:00"
 
+# Numerics
+
+solver_time_integration="implicit"
+time_weighting_coefficients="0.35 0.3 0.35"
+
 # Post processing and publication
 
 INTENDEDAUDIENCE=developers-only    # "general" | "developers-only" | "professional"

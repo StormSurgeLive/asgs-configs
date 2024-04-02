@@ -1,0 +1,25 @@
+diff --git a/2024/asgs_config_NCv6d_gfs.sh b/2024/asgs_config_NCv6d_gfs.sh
+index 329415c..c3f3cf3 100644
+--- a/2024/asgs_config_NCv6d_gfs.sh
++++ b/2024/asgs_config_NCv6d_gfs.sh
+@@ -37,7 +37,7 @@ source $SCRIPTDIR/config/mesh_defaults.sh
+ # Physical forcing (defaults set in config/forcing_defaults.sh)
+ 
+ TIDEFAC=on               # tide factor recalc
+-   HINDCASTLENGTH=10.0   # length of initial hindcast, from cold (days)
++   HINDCASTLENGTH=20.0   # length of initial hindcast, from cold (days)
+ BACKGROUNDMET=GFS        # GFS download/forcing
+    FORECASTCYCLE="06"
+    GFSFORECASTLENGTH=24
+@@ -55,6 +55,11 @@ NCPUCAPACITY=9999
+ NUMWRITERS=1
+ CYCLETIMELIMIT="99:00:00"
+ 
++# Numerics
++
++solver_time_integration="implicit"
++time_weighting_coefficients="0.35 0.3 0.35"
++
+ # Post processing and publication
+ 
+ INTENDEDAUDIENCE=developers-only    # "general" | "developers-only" | "professional"
