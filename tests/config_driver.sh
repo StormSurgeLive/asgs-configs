@@ -54,10 +54,7 @@ SCENARIOPACKAGESIZE=""
 declare -a scenarioNames
 declare -a scenarioSettings
 #
-# Calculate the number of config files to be generated
-numFiles=$(expr ${#GRIDNAMEs[@]} \* ${#nodalAttributesActiveLists[@]} \* ${#NAFILEs[@]} \* ${#COLDSTARTDATEs[@]} \* ${#BACKGROUNDMETs[@]} \* ${#WAVESs[@]} \* ${#addWind10mScenario[@]} \* ${#addWind10mLayer[@]} )
-echo "numFiles is $numFiles"
-configFile=0
+configFileNum=0
 for GRIDNAME in ${GRIDNAMEs[@]}; do
     for naList in ${nodalAttributesActiveLists[@]}; do
         for NAFILE in ${NAFILEs[@]}; do
@@ -66,25 +63,30 @@ for GRIDNAME in ${GRIDNAMEs[@]}; do
                     for WAVES in ${WAVESs[@]}; do
                         for wind10mScenario in ${addWind10mScenario[@]}; do
                             for createWind10mLayer in ${addWind10mLayer[@]}; do
+                                configFileName=$(basename ${configTemplate//template/$(printf %03d $configFileNum)})
                                 INSTANCENAME=${instanceBase}_$(printf %03d $configFile)
-                                POSTPROCESS=( )
                                 SCENARIOPACKAGESIZE=1
-                                scenarioNames=( gfsforecast gfsforecastWind10m )
-                                scenarioSettings=( '# no scenario settings' 'source $SCRIPTDIR/config/io_defaults.sh' )
-                                configFileName=$(basename ${configTemplate//template/$(printf %03d $configFile)})
-                                #echo $configFileName
+                                scenarioNames=( gfsforecast unreachableScenario )
+                                scenarioSettings=( '# no scenario settings' '# unreachable settings' )
+                                POSTPROCESS=( )
                                 if [[ $wind10mScenario == "yes" ]]; then
                                     SCENARIOPACKAGESIZE=2
+                                    scenarioNames=( gfsforecastWind10m gfsforecast )
+                                    scenarioSettings=( 'source $SCRIPTDIR/config/io_defaults.sh' '# no scenario settings' )
                                     POSTPROCESS=( includeWind10m.sh )
                                 fi
-                                #echo "${mesh}_${naList}_${naFile}_${csDate}_${met}_${waves}_${wind10mScenario}_${wind10mLayer}"
-                                #echo $INSTANCENAME $SCENARIOPACKAGESIZE ${scenarioNames[@]} ${scenarioSettings[@]}
                                 # nodal attributes
                                 nodal_attribute_activate=( ${naList//,/ } )
                                 if [[ $naList == "null" ]]; then
                                     nodal_attribute_activate=( )
+                                else
+                                    # if a nonzero list of nodal attributes was specified to be activated
+                                    # in the fort.15 there must be a nodal attributes file to supply them
+                                    if [[ $NAFILE == "null" ]]; then
+                                        continue
+                                    fi
                                 fi
-                                configFile=$(expr $configFile + 1)
+                                configFileNum=$(expr $configFileNum + 1)
                                 echo $configFileName
                                 sed \
                                     -e "s/%INSTANCENAME%/$INSTANCENAME/" \
