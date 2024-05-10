@@ -61,7 +61,7 @@ INTENDEDAUDIENCE=general    # "general" | "developers-only" | "professional"
 OPENDAPPOST=opendap_post2.sh
 #POSTPROCESS=( null_post.sh )
 POSTPROCESS=( includeWind10m.sh createOPeNDAPFileList.sh $OPENDAPPOST )
-OPENDAPNOTIFY="coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,jason.fleming@stormsurge.live"
+OPENDAPNOTIFY="coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asgs.cera.pub.lsu@coastalrisk.live,asgs.cera.lsu@coastalrisk.live,jason.fleming@stormsurge.live"
 hooksScripts[FINISH_SPINUP_SCENARIO]=" output/createOPeNDAPFileList.sh output/$OPENDAPPOST "
 hooksScripts[FINISH_NOWCAST_SCENARIO]=" output/createOPeNDAPFileList.sh output/$OPENDAPPOST "
 
