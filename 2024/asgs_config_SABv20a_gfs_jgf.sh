@@ -85,10 +85,12 @@ SCENARIOPACKAGESIZE=2
 case $si in
    -2)
        ENSTORM=hindcast
+       OPENDAPNOTIFY="jason.fleming@stormsurge.live"  # <--<< do not notify CERA of the results of this scenario
        ;;
    -1)
        # do nothing ... this is not a forecast
        ENSTORM=nowcast
+       OPENDAPNOTIFY="jason.fleming@stormsurge.live"  # <--<< do not notify CERA of the results of this scenario
        ;;
     0)
        ENSTORM=gfsforecastWind10m
