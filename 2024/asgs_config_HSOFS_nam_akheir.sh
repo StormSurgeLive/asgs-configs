@@ -90,7 +90,7 @@ statusNotify="null"
 # Initial state (overridden by STATEFILE after ASGS gets going)
 HINDCASTLENGTH=30.0
 COLDSTARTDATE=$(get-coldstart-date)
-#COLDSTARTDATE=2023090200
+#COLDSTARTDATE=2024021800
 HOTORCOLD=coldstart      # "hotstart" or "coldstart"
 LASTSUBDIR=null
 
