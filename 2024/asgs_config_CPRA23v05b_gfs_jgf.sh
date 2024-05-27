@@ -27,7 +27,7 @@
 
 # Fundamental
 
-INSTANCENAME=CPRA23v05b_gfs_jgf # "name" of this ASGS process
+INSTANCENAME=CPRA23v05b_gfs_qbc_jgf # "name" of this ASGS process
 
 # Input files and templates
 
@@ -73,7 +73,7 @@ statusNotify="null"
 
 # Initial state (overridden by STATEFILE after ASGS gets going)
 
-COLDSTARTDATE=2024041800
+COLDSTARTDATE=2024050400
 HOTORCOLD=coldstart
 LASTSUBDIR=null
 
@@ -85,12 +85,12 @@ SCENARIOPACKAGESIZE=2
 case $si in
    -2)
        ENSTORM=hindcast
-       OPENDAPNOTIFY="jason.fleming@stormsurge.live"  # <-<< do not notify CERA 
+       OPENDAPNOTIFY="null"  # <-<< do not notify CERA 
        ;;
    -1)
        # do nothing ... this is not a forecast
        ENSTORM=nowcast
-       OPENDAPNOTIFY="jason.fleming@stormsurge.live"  # <-<< do not notify CERA 
+       OPENDAPNOTIFY="null"  # <-<< do not notify CERA 
        ;;
     0)
        ENSTORM=gfsforecastWind10m
