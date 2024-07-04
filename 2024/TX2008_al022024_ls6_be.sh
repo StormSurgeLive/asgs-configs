@@ -62,7 +62,7 @@ NCPUCAPACITY=9999
 NUMWRITERS=1
 
 enablePostStatus="yes"
-enableStatusNotify="yes"
+enableStatusNotify="no"
 statusNotify="jason.g.fleming@gmail.com,coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asgs.cera.pub.lsu@coastalrisk.live,asgs.cera.lsu@coastalrisk.live,asgsnotify@memenesia.net"
 
 # Post processing and publication
