@@ -89,12 +89,12 @@ case $si in
        OPENDAPNOTIFY="jason.g.fleming@gmail.com,asgsnotify@memenesia.net"
        ;;
     0)
-       ENSTORM=nhcConsensusWind10m
-       OPENDAPNOTIFY="jason.g.fleming@gmail.com,asgsnotify@memenesia.net"
-       ;;
-    1)
        ENSTORM=nhcConsensus
        OPENDAPNOTIFY="jason.g.fleming@gmail.com,coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asgs.cera.pub.lsu@coastalrisk.live,asgs.cera.lsu@coastalrisk.live,asgsnotify@memenesia.net"
+       ;;
+    1)
+       ENSTORM=nhcConsensusWind10m
+       OPENDAPNOTIFY="jason.g.fleming@gmail.com,asgsnotify@memenesia.net"
        ;;
     2)
        ENSTORM=veerRight100
