@@ -78,7 +78,7 @@ TDS=( tacc_tds3 )
 # Scenario package
 #
 #PERCENT=default
-SCENARIOPACKAGESIZE=1
+SCENARIOPACKAGESIZE=2
 case $si in
    -2)
        ENSTORM=hindcast
@@ -92,10 +92,10 @@ case $si in
        ENSTORM=nhcConsensus
        OPENDAPNOTIFY="jason.g.fleming@gmail.com,coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asgs.cera.pub.lsu@coastalrisk.live,asgs.cera.lsu@coastalrisk.live,asgsnotify@memenesia.net"
        ;;
-#    1)
-#       ENSTORM=nhcConsensusWind10m
-#       OPENDAPNOTIFY="jason.g.fleming@gmail.com,asgsnotify@memenesia.net"
-#       ;;
+    1)
+       ENSTORM=veerRight100
+       PERCENT=100
+       OPENDAPNOTIFY="jason.g.fleming@gmail.com,coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asgs.cera.pub.lsu@coastalrisk.live,asgs.cera.lsu@coastalrisk.live,asgsnotify@memenesia.net"
     *)
        echo "CONFIGURATION ERROR: Unknown ensemble member number: '$si'."
       ;;
