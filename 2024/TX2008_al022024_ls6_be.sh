@@ -63,14 +63,14 @@ NUMWRITERS=1
 
 enablePostStatus="yes"
 enableStatusNotify="no"
-statusNotify="jason.g.fleming@gmail.com,coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asgs.cera.pub.lsu@coastalrisk.live,asgs.cera.lsu@coastalrisk.live,asgsnotify@memenesia.net"
+statusNotify="jason.g.fleming@gmail.com,coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asgs.cera.pub.lsu@coastalrisk.live,asgs.cera.lsu@coastalrisk.live,asgsnotify@memenesia.net,carlosd@tacc.utexas.edu"
 
 # Post processing and publication
 EMAILNOTIFY=yes
 INTENDEDAUDIENCE=general    # "general" | "developers-only
 OPENDAPPOST=opendap_post2.sh
 POSTPROCESS=( createMaxCSV.sh includeWind10m.sh createOPeNDAPFileList.sh $OPENDAPPOST )
-OPENDAPNOTIFY="jason.g.fleming@gmail.com,coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asgs.cera.pub.lsu@coastalrisk.live,asgs.cera.lsu@coastalrisk.live,asgsnotify@memenesia.net"
+OPENDAPNOTIFY="jason.g.fleming@gmail.com,coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asgs.cera.pub.lsu@coastalrisk.live,asgs.cera.lsu@coastalrisk.live,asgsnotify@memenesia.net,carlosd@tacc.utexas.edu"
 NOTIFY_SCRIPT=cera_notify.sh
 TDS=( tacc_tds3 )
 
@@ -90,7 +90,7 @@ case $si in
        ;;
     0)
        ENSTORM=nhcConsensus
-       OPENDAPNOTIFY="jason.g.fleming@gmail.com,coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asgs.cera.pub.lsu@coastalrisk.live,asgs.cera.lsu@coastalrisk.live,asgsnotify@memenesia.net"
+       OPENDAPNOTIFY="jason.g.fleming@gmail.com,coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asgs.cera.pub.lsu@coastalrisk.live,asgs.cera.lsu@coastalrisk.live,asgsnotify@memenesia.net,carlosd@tacc.utexas.edu"
        ;;
     1)
        ENSTORM=nhcConsensusWind10m
@@ -99,7 +99,7 @@ case $si in
     2)
        ENSTORM=veerRight100
        PERCENT=100
-       OPENDAPNOTIFY="jason.g.fleming@gmail.com,coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asgs.cera.pub.lsu@coastalrisk.live,asgs.cera.lsu@coastalrisk.live,asgsnotify@memenesia.net"
+       OPENDAPNOTIFY="jason.g.fleming@gmail.com,coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asgs.cera.pub.lsu@coastalrisk.live,asgs.cera.lsu@coastalrisk.live,asgsnotify@memenesia.net,carlosd@tacc.utexas.edu"
        ;;
     3)
        ENSTORM=veerRight100Wind10m
