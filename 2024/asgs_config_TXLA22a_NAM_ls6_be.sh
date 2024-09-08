@@ -60,7 +60,7 @@ TIDEFAC=on
 BACKGROUNDMET=on           
 # download/ meteorological forcing from an upstream source
 
-FORECASTCYCLE=00,06,12,18        
+FORECASTCYCLE="00,06,12,18"
 # used when BACKGROUNDMET is turned on ("on", "NAM", "GFS", etc)
 
 TROPICALCYCLONE=off       
