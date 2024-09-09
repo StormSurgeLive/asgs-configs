@@ -20,7 +20,7 @@ ASGSADMIN=asgsnotify@memenesia.net
 ACCOUNT=TG-DMS080016N
 # used on HPC's to specify allocation account
 
-QOS=vipPJ_P3000
+#QOS=vipPJ_P3000
 # used for priority access at TACC
 
 #-------------------------------------------------------------------
