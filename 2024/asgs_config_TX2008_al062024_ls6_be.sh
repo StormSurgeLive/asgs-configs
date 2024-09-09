@@ -1,5 +1,5 @@
 #!/bin/sh
-#-- created on 2024-09-09 02:53:39 UTC, https://tools.adcirc.live --#
+#-- created on 2024-09-09 03:09:36 UTC, https://tools.adcirc.live --#
 
 # Copyright(C) 2024 Jason Fleming <jason.fleming@adcirc.live>
 # Copyright(C) 2024 Brett Estrade <brett.estrade@adcirc.live>
@@ -11,7 +11,7 @@
 #-------------------------------------------------------------------
 #
 
-INSTANCENAME=TX2008_GFS_ls6_be
+INSTANCENAME=TX2008_al062024_ls6_be
 # "name" of this ASGS process
 
 ASGSADMIN=asgsnotify@memenesia.net
@@ -57,15 +57,23 @@ LASTSUBDIR=null
 TIDEFAC=on
 # tide factor recalc
 
-BACKGROUNDMET=GFS
+BACKGROUNDMET=off
 # download/ meteorological forcing from an upstream source
 
-FORECASTCYCLE="06"
+FORECASTCYCLE=""
 # used when BACKGROUNDMET is turned on ("on", "NAM", "GFS", etc)
 
-TROPICALCYCLONE=off
+TROPICALCYCLONE=on
 # tropical cyclone forcing (mutually exclusive with BACKGROUNDMET in most cases)
 
+   STORM=06
+   # storm number, e.g. 05=ernesto in 2006
+
+   YEAR=2024
+   # year of the storm
+
+   BASIN=al
+   # ocean basin, e.g., AL (Atlantic), EP (East Pacific)
 WAVES=on
 # wave forcing via built-in SWAN coupling (adcswan/padcswan)
 
@@ -86,7 +94,7 @@ CYCLETIMELIMIT=99:00:00
 PPN=128
 # platform specific, processors-per-node
 
-NCPU=959
+NCPU=1919
 # number of compute CPUs for all simulations, should be a set in consideration of PPN
 
 NUMWRITERS=1
@@ -137,32 +145,42 @@ TDS=( tacc_tds3 lsu_tds )
 #HINDCASTONCE_AND_EXIT=
 #PERCENT=default
 
-SCENARIOPACKAGESIZE=2
-# define scenarios to run,
-#1 and
-#2 below (doesn't affect -2, -1)
+SCENARIOPACKAGESIZE=4
+
 case $si in
  -2)
    ENSTORM=hindcast
    # initial ramp up during a coldstart
-
    OPENDAPNOTIFY="coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asgs.cera.lsu@coastalrisk.live,asgs.cera.pub.lsu@coastalrisk.live,asgsnotify@memenesia.net,jasongfleming@gmail.com,cdelcastillo21@gmail.com"
    ;;
 -1)
    ENSTORM=nowcast
    # do nothing ... this is "catch up", not a forecast
-
    OPENDAPNOTIFY="null"
    ;;
 0)
-   ENSTORM=gfsforecastWind10m
-   # generates winds and writes them to a fort.22, very fast running
-
+   ENSTORM=nhcConsensus
+   PERCENT=0
+   OPENDAPNOTIFY="coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asgs.cera.lsu@coastalrisk.live,asgs.cera.pub.lsu@coastalrisk.live,asgsnotify@memenesia.net,jasongfleming@gmail.com,cdelcastillo21@gmail.com"
    source $SCRIPTDIR/config/io_defaults.sh
-   # sets met-only mode based on "Wind10m" suffix
    ;;
 1)
-   ENSTORM=gfsforecast
+   ENSTORM=nhcConsensusWind10m
+   PERCENT=0
+   OPENDAPNOTIFY="asgsnotify@memenesia.net,jasongfleming@gmail.com"
+   source $SCRIPTDIR/config/io_defaults.sh
+   ;;
+2)
+   ENSTORM=veerLeft100
+   PERCENT=-100
+   OPENDAPNOTIFY="coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asgs.cera.lsu@coastalrisk.live,asgs.cera.pub.lsu@coastalrisk.live,asgsnotify@memenesia.net,jasongfleming@gmail.com,cdelcastillo21@gmail.com"
+   source $SCRIPTDIR/config/io_defaults.sh
+   ;;
+3)
+   ENSTORM=veerLeft100Wind10m
+   PERCENT=-100
+   OPENDAPNOTIFY="asgsnotify@memenesia.net,jasongfleming@gmail.com"
+   source $SCRIPTDIR/config/io_defaults.sh
    ;;
 *)
    echo "CONFIGRATION ERROR: Unknown scenario number: '$si'."
@@ -212,4 +230,5 @@ HINDCASTARCHIVE=prepped_${GRIDNAME}_hc_${INSTANCENAME}_${NCPU}.tar.gz
 # the ASGS.  If not, see <http://www.gnu.org/licenses/>.
 #-------------------------------------------------------------------
 
-#-- created on 2024-09-09 02:53:39 UTC, https://tools.adcirc.live --#
+#-- created on 2024-09-09 03:09:36 UTC, https://tools.adcirc.live --#
+
