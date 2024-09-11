@@ -1,5 +1,5 @@
 #!/bin/sh
-#-- created on 2024-09-09 05:21:50 UTC, https://tools.adcirc.live --#
+#-- created on 2024-09-11 02:07:16 UTC, https://tools.adcirc.live --#
 
 # Copyright(C) 2024 Jason Fleming <jason.fleming@adcirc.live>
 # Copyright(C) 2024 Brett Estrade <brett.estrade@adcirc.live>
@@ -11,7 +11,7 @@
 #-------------------------------------------------------------------
 #
 
-INSTANCENAME=TX2008_GFS_stampede3_be
+INSTANCENAME=HSOFS_al062024_stampede3_be
 # "name" of this ASGS process
 
 ASGSADMIN=asgsnotify@memenesia.net
@@ -20,15 +20,15 @@ ASGSADMIN=asgsnotify@memenesia.net
 ACCOUNT=TG-DMS080016N
 # used on HPC's to specify allocation account
 
-#QOS=vipPJ_P3000
+QOS=vipPJ_P3000
 # used for priority access at TACC
 
 #-------------------------------------------------------------------
-# Input Files and Templates
+# Input Files and Templates 
 #-------------------------------------------------------------------
 #
 
-GRIDNAME=TX2008
+GRIDNAME=HSOFS
 source $SCRIPTDIR/config/mesh_defaults.sh
 
 #-------------------------------------------------------------------
@@ -40,13 +40,13 @@ HOTORCOLD=hotstart
 # Note: Initial state (overridden by STATEFILE after ASGS gets going since
 # it's then a "hotstart")
 
-HINDCASTLENGTH=30
+HINDCASTLENGTH=30 
 # length of initial hindcast, from cold (days)
 
 COLDSTARTDATE=auto
-# already computes based on HINDCASTLENGTH (default is 30 days before TODAY)
+# ensures that COLDSTARTDATE is ignored, and it is gotten from the hotstart file
 
-LASTSUBDIR=http://chg-1.oden.tacc.utexas.edu/thredds/fileServer/asgs/2024/GFS/2024090818/TX2008/frontera.tacc.utexas.edu/TX2008_gfs_frontera_jgf/gfsforecast
+LASTSUBDIR=https://fortytwo.cct.lsu.edu/thredds/fileServer/2024/nam/2024062806/HSOFS/qbd.loni.org/HSOFS_nam_be/namforecast      
 # used when HOTORCOLD=hotstart
 
 #-------------------------------------------------------------------
@@ -54,28 +54,36 @@ LASTSUBDIR=http://chg-1.oden.tacc.utexas.edu/thredds/fileServer/asgs/2024/GFS/20
 #-------------------------------------------------------------------
 #
 
-TIDEFAC=on
+TIDEFAC=on                       
 # tide factor recalc
 
-BACKGROUNDMET=GFS
+BACKGROUNDMET=off           
 # download/ meteorological forcing from an upstream source
 
-FORECASTCYCLE="00,06,12,18"
+FORECASTCYCLE=""
 # used when BACKGROUNDMET is turned on ("on", "NAM", "GFS", etc)
 
-TROPICALCYCLONE=off
+TROPICALCYCLONE=on       
 # tropical cyclone forcing (mutually exclusive with BACKGROUNDMET in most cases)
 
-WAVES=on
+   STORM=06                        
+   # storm number, e.g. 05=ernesto in 2006
+
+   YEAR=2024                          
+   # year of the storm
+
+   BASIN=al                        
+   # ocean basin, e.g., AL (Atlantic), EP (East Pacific)
+WAVES=on                           
 # wave forcing via built-in SWAN coupling (adcswan/padcswan)
 
-   REINITIALIZESWAN=off
+   REINITIALIZESWAN=off  
    # used to bounce the wave solution (only used when WAVES=on)
 
-VARFLUX=off
+VARFLUX=off                       
 # variable river flux forcing
 
-CYCLETIMELIMIT=99:00:00
+CYCLETIMELIMIT=99:00:00         
 # max time, usually just 99:00:00
 
 #-------------------------------------------------------------------
@@ -83,16 +91,16 @@ CYCLETIMELIMIT=99:00:00
 #-------------------------------------------------------------------
 #
 
-PPN=48
+PPN=48                  
 # platform specific, processors-per-node
 
-NCPU=959
+NCPU=959                
 # number of compute CPUs for all simulations, should be a set in consideration of PPN
 
-NUMWRITERS=1
+NUMWRITERS=1    
 # usually just 1, total CPUs for the run is NCPU+NUMWRITERS
 
-QUEUESYS=SLURM
+QUEUESYS=SLURM  
 # platform specific, e.g., SLURM
 
 NCPUCAPACITY=9999
@@ -110,22 +118,22 @@ statusNotify="asgsnotify@memenesia.net"
 
 EMAILNOTIFY=yes
 
-INTENDEDAUDIENCE=general
+INTENDEDAUDIENCE=general             
 # Settings for CERA to help determine where to post results; "general" | "developers-only"
 
-OPENDAPPOST=opendap_post2.sh
+OPENDAPPOST=opendap_post2.sh                       
 # usually, "opendap_post2.sh"; for posting to OpenDAP/THREDDS servers via ssh
 
-POSTPROCESS=(  $OPENDAPPOST )
+POSTPROCESS=(  $OPENDAPPOST ) 
 # scripts to run during the POSTPROCESS ASGS hook
 # email list receiving alerts via bin/asgs-sendmail
 
 OPENDAPNOTIFY="coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asgs.cera.lsu@coastalrisk.live,asgs.cera.pub.lsu@coastalrisk.live,asgsnotify@memenesia.net,jasongfleming@gmail.com,cdelcastillo21@gmail.com"
 
-NOTIFY_SCRIPT=cera_notify.sh
-# notification used ...
+NOTIFY_SCRIPT=cera_notify.sh                   
+# notification used ... 
 
-TDS=( tacc_tds3 lsu_tds )
+TDS=( lsu_tds )                                   
 # servers receiving results via ssh
 
 hooksScripts[FINISH_SPINUP_SCENARIO]=" output/createOPeNDAPFileList.sh output/$OPENDAPPOST "
@@ -140,32 +148,54 @@ hooksScripts[FINISH_NOWCAST_SCENARIO]=" output/createOPeNDAPFileList.sh output/$
 #HINDCASTONCE_AND_EXIT=
 #PERCENT=default
 
-SCENARIOPACKAGESIZE=2
-# define scenarios to run,
-#1 and
-#2 below (doesn't affect -2, -1)
+SCENARIOPACKAGESIZE=6 
+
 case $si in
  -2)
-   ENSTORM=hindcast
+   ENSTORM=hindcast           
    # initial ramp up during a coldstart
-
    OPENDAPNOTIFY="coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asgs.cera.lsu@coastalrisk.live,asgs.cera.pub.lsu@coastalrisk.live,asgsnotify@memenesia.net,jasongfleming@gmail.com,cdelcastillo21@gmail.com"
    ;;
 -1)
-   ENSTORM=nowcast
-   # do nothing ... this is "catch up", not a forecast
-
+   ENSTORM=nowcast            
+   # do nothing ... this is "catch up", not a forecast 
    OPENDAPNOTIFY="null"
    ;;
 0)
-   ENSTORM=gfsforecastWind10m
-   # generates winds and writes them to a fort.22, very fast running
-
+   ENSTORM=nhcConsensus
+   PERCENT=0
+   OPENDAPNOTIFY="coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asgs.cera.lsu@coastalrisk.live,asgs.cera.pub.lsu@coastalrisk.live,asgsnotify@memenesia.net,jasongfleming@gmail.com,cdelcastillo21@gmail.com"
    source $SCRIPTDIR/config/io_defaults.sh
-   # sets met-only mode based on "Wind10m" suffix
    ;;
 1)
-   ENSTORM=gfsforecast
+   ENSTORM=nhcConsensusWind10m
+   PERCENT=0
+   OPENDAPNOTIFY="asgsnotify@memenesia.net"
+   source $SCRIPTDIR/config/io_defaults.sh
+   ;;
+2)
+   ENSTORM=veerRight100
+   PERCENT=100
+   OPENDAPNOTIFY="coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asgs.cera.lsu@coastalrisk.live,asgs.cera.pub.lsu@coastalrisk.live,asgsnotify@memenesia.net,jasongfleming@gmail.com,cdelcastillo21@gmail.com"
+   source $SCRIPTDIR/config/io_defaults.sh
+   ;;
+3)
+   ENSTORM=veerRight100Wind10m
+   PERCENT=100
+   OPENDAPNOTIFY="asgsnotify@memenesia.net"
+   source $SCRIPTDIR/config/io_defaults.sh
+   ;;
+4)
+   ENSTORM=veerLeft100
+   PERCENT=-100
+   OPENDAPNOTIFY="coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asgs.cera.lsu@coastalrisk.live,asgs.cera.pub.lsu@coastalrisk.live,asgsnotify@memenesia.net,jasongfleming@gmail.com,cdelcastillo21@gmail.com"
+   source $SCRIPTDIR/config/io_defaults.sh
+   ;;
+5)
+   ENSTORM=veerLeft100Wind10m
+   PERCENT=-100
+   OPENDAPNOTIFY="asgsnotify@memenesia.net"
+   source $SCRIPTDIR/config/io_defaults.sh
    ;;
 *)
    echo "CONFIGRATION ERROR: Unknown scenario number: '$si'."
@@ -215,5 +245,5 @@ HINDCASTARCHIVE=prepped_${GRIDNAME}_hc_${INSTANCENAME}_${NCPU}.tar.gz
 # the ASGS.  If not, see <http://www.gnu.org/licenses/>.
 #-------------------------------------------------------------------
 
-#-- created on 2024-09-09 05:21:50 UTC, https://tools.adcirc.live --#
+#-- created on 2024-09-11 02:07:16 UTC, https://tools.adcirc.live --#
 
