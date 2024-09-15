@@ -1,10 +1,12 @@
 #!/bin/sh
-#-- created on 2024-09-09 02:53:39 UTC, https://tools.adcirc.live --#
+#-- created on 2024-09-15 19:46:07 UTC, https://tools.adcirc.live --#
 
 # Copyright(C) 2024 Jason Fleming <jason.fleming@adcirc.live>
 # Copyright(C) 2024 Brett Estrade <brett.estrade@adcirc.live>
 
-# + additional Copyright and License info is at the bottom
+# All Copyright information must be retained when sharing, modifying,
+# or deriving works from this source code file; additional Copyright
+# and Licensing information should be at the bottom of this file.
 
 #-------------------------------------------------------------------
 # Instance and Operator Information
@@ -12,96 +14,93 @@
 #
 
 INSTANCENAME=TX2008_GFS_ls6_be
-# "name" of this ASGS process
-
+   # !! "name" of this ASGS process
 ASGSADMIN=asgsnotify@memenesia.net
-# email address of operator, HPCs need it
-
+   # !! email address of operator, HPCs need it
 ACCOUNT=ADCIRC
-# used on HPC's to specify allocation account
-
+   # !! used on HPC's to specify allocation account
 QOS=vipPJ_P3000
-# used for priority access at TACC
+   # !! used for priority access at TACC
 
 #-------------------------------------------------------------------
-# Input Files and Templates
+# Grid and Domain Settings 
 #-------------------------------------------------------------------
 #
 
 GRIDNAME=TX2008
+   # !! the "mesh"
 source $SCRIPTDIR/config/mesh_defaults.sh
+   # !! contains mesh defaults
+
+ADCIRCVERSION="v53.05"
+   # !! intended ADCIRC version (no impact as of 2024-09-15 19:46:07 UTC)
+
+#-------------------------------------------------------------------
+# Logging Settings 
+#-------------------------------------------------------------------
+#
+
+enablePostStatus=yes
+enableStatusNotify=no
+statusNotify="asgsnotify@memenesia.net"
+   # !! required for JSON Logging
 
 #-------------------------------------------------------------------
 # Start State Information
 #-------------------------------------------------------------------
 #
 
-HOTORCOLD=hotstart
-# Note: Initial state (overridden by STATEFILE after ASGS gets going since
-# it's then a "hotstart")
-
+HOTORCOLD=coldstart
+   # !! initial state (overridden by STATEFILE after ASGS gets going since it's then a "hotstart")
+COLDSTARTDATE=$(get-coldstart-date)
+   # !! already computes based on HINDCASTLENGTH (default is 30 days before TODAY)
+LASTSUBDIR=null
+   # !! used when HOTORCOLD=hotstart
 HINDCASTLENGTH=30
-# length of initial hindcast, from cold (days)
-
-COLDSTARTDATE=auto
-# already computes based on HINDCASTLENGTH (default is 30 days before TODAY)
-
-LASTSUBDIR=http://chg-1.oden.tacc.utexas.edu/thredds/fileServer/asgs/2024/GFS/2024090818/TX2008/frontera.tacc.utexas.edu/TX2008_gfs_frontera_jgf/gfsforecast
-# used when HOTORCOLD=hotstart
+   # !! length of initial hindcast, from cold (days)
 
 #-------------------------------------------------------------------
 # Physical Forcing (defaults set in config/forcing_defaults.sh)
 #-------------------------------------------------------------------
 #
 
-TIDEFAC=on
-# tide factor recalc
-
+# Meteorological (winds - NAM, GFS, etc)
 BACKGROUNDMET=GFS
-# download/ meteorological forcing from an upstream source
+   # !! download/ meteorological forcing from an upstream source
+  FORECASTCYCLE="00,06,12,18"
+   # !! !! used when BACKGROUNDMET is turned on (e.g., "00,06,12,18"), in UTC / "Z"
 
-FORECASTCYCLE="00,06,12,18"
-# used when BACKGROUNDMET is turned on ("on", "NAM", "GFS", etc)
-
+# Tropical/Hurricane (ATCF data for internal GAHM wind generation)
 TROPICALCYCLONE=off
-# tropical cyclone forcing (mutually exclusive with BACKGROUNDMET in most cases)
+   # !! tropical cyclone forcing (mutually exclusive with BACKGROUNDMET in most cases)
 
+# Other
+TIDEFAC=on
+   # !! tide factor recalc
 WAVES=on
-# wave forcing via built-in SWAN coupling (adcswan/padcswan)
-
+   # !! wave forcing via built-in SWAN coupling (adcswan/padcswan)
    REINITIALIZESWAN=off
-   # used to bounce the wave solution (only used when WAVES=on)
-
+   # !! !! used to bounce the wave solution (only used when WAVES=on)
 VARFLUX=off
-# variable river flux forcing
-
+   # !! variable river flux forcing
 CYCLETIMELIMIT=99:00:00
-# max time, usually just 99:00:00
+   # !! max time, usually just 99:00:00
 
 #-------------------------------------------------------------------
 # Computational Resources (related defaults set in ./platforms[.sh])
 #-------------------------------------------------------------------
 #
 
-PPN=128
-# platform specific, processors-per-node
-
-NCPU=959
-# number of compute CPUs for all simulations, should be a set in consideration of PPN
-
-NUMWRITERS=1
-# usually just 1, total CPUs for the run is NCPU+NUMWRITERS
-
 QUEUESYS=SLURM
-# platform specific, e.g., SLURM
-
+   # !! platform specific, e.g., SLURM
+PPN=128
+   # !! platform specific, processors-per-node
+NCPU=959
+   # !! number of compute CPUs for all simulations, should be a set in consideration of PPN
+NUMWRITERS=1
+   # !! usually just 1, total CPUs for the run is NCPU+NUMWRITERS
 NCPUCAPACITY=9999
-# max number of total CPUs to use
-
-enablePostStatus=yes
-enableStatusNotify=no
-statusNotify="asgsnotify@memenesia.net"
-# JSON Logging
+   # !! max number of total CPUs to use
 
 #-------------------------------------------------------------------
 # Post processing and publication
@@ -109,24 +108,23 @@ statusNotify="asgsnotify@memenesia.net"
 #
 
 EMAILNOTIFY=yes
-
+   # !! email notification master switch
 INTENDEDAUDIENCE=general
-# Settings for CERA to help determine where to post results; "general" | "developers-only"
-
+   # !! used by CERA to pick where to display result; "general" | "developers-only"
 OPENDAPPOST=opendap_post2.sh
-# usually, "opendap_post2.sh"; for posting to OpenDAP/THREDDS servers via ssh
-
+   # !! posts OpenDAP/THREDDS servers via ssh (default, opendap_post2.sh)
 POSTPROCESS=(  $OPENDAPPOST )
-# scripts to run during the POSTPROCESS ASGS hook
-# email list receiving alerts via bin/asgs-sendmail
-
+   # !! scripts to run during the POSTPROCESS ASGS hook
 OPENDAPNOTIFY="coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asgs.cera.lsu@coastalrisk.live,asgs.cera.pub.lsu@coastalrisk.live,asgsnotify@memenesia.net,jasongfleming@gmail.com,cdelcastillo21@gmail.com"
-
+   # !! main set of email addresses to notify
 NOTIFY_SCRIPT=cera_notify.sh
-# notification used ...
-
+   # !! notification used ...
 TDS=( tacc_tds3 lsu_tds )
-# servers receiving results via ssh
+   # !! servers receiving results via ssh
+
+hooksScripts[FINISH_SPINUP_SCENARIO]=" output/createOPeNDAPFileList.sh output/$OPENDAPPOST "
+hooksScripts[FINISH_NOWCAST_SCENARIO]=" output/createOPeNDAPFileList.sh output/$OPENDAPPOST "
+   # !! additional hook scripts, required for correctly posting data to CERA
 
 #-------------------------------------------------------------------
 # Scenario Package (Ensemble) Settings
@@ -135,12 +133,13 @@ TDS=( tacc_tds3 lsu_tds )
 
 # Used for Hindcast Only configurations
 #HINDCASTONCE_AND_EXIT=
+   # !! if set, will cause asgs_main.sh (main loop) to exit after the first hindcast
 #PERCENT=default
-
+   # !! default is the track as described by the ATCF data; veerRight is positive;
+   # !! veerLeft is negative. 100 is wrt the right most edge of the cone, -100 is
+   # !! wrt left most edge of the cone
 SCENARIOPACKAGESIZE=2
-# define scenarios to run,
-#1 and
-#2 below (doesn't affect -2, -1)
+   # !! GFS only has 2 actual scenarios, not including the hindcast and the nowcast
 case $si in
  -2)
    ENSTORM=hindcast
@@ -158,11 +157,15 @@ case $si in
    ENSTORM=gfsforecastWind10m
    # generates winds and writes them to a fort.22, very fast running
 
+   OPENDAPNOTIFY="asgsnotify@memenesia.net"
+
    source $SCRIPTDIR/config/io_defaults.sh
    # sets met-only mode based on "Wind10m" suffix
    ;;
 1)
    ENSTORM=gfsforecast
+
+   OPENDAPNOTIFY="coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asgs.cera.lsu@coastalrisk.live,asgs.cera.pub.lsu@coastalrisk.live,asgsnotify@memenesia.net,jasongfleming@gmail.com,cdelcastillo21@gmail.com"
    ;;
 *)
    echo "CONFIGRATION ERROR: Unknown scenario number: '$si'."
@@ -212,4 +215,5 @@ HINDCASTARCHIVE=prepped_${GRIDNAME}_hc_${INSTANCENAME}_${NCPU}.tar.gz
 # the ASGS.  If not, see <http://www.gnu.org/licenses/>.
 #-------------------------------------------------------------------
 
-#-- created on 2024-09-09 02:53:39 UTC, https://tools.adcirc.live --#
+#-- created on 2024-09-15 19:46:07 UTC, https://tools.adcirc.live --#
+
