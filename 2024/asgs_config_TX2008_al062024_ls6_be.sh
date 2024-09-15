@@ -137,6 +137,9 @@ NOTIFY_SCRIPT=cera_notify.sh
 TDS=( tacc_tds3 lsu_tds )
 # servers receiving results via ssh
 
+hooksScripts[FINISH_SPINUP_SCENARIO]=" output/createOPeNDAPFileList.sh output/$OPENDAPPOST "
+hooksScripts[FINISH_NOWCAST_SCENARIO]=" output/createOPeNDAPFileList.sh output/$OPENDAPPOST "
+
 #-------------------------------------------------------------------
 # Scenario Package (Ensemble) Settings
 #-------------------------------------------------------------------
