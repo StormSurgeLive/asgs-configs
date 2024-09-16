@@ -50,11 +50,11 @@ statusNotify="asgsnotify@memenesia.net"
 #-------------------------------------------------------------------
 #
 
-HOTORCOLD=coldstart
+HOTORCOLD=hotstart
    # !! initial state (overridden by STATEFILE after ASGS gets going since it's then a "hotstart")
-COLDSTARTDATE=$(get-coldstart-date)
+COLDSTARTDATE=auto
    # !! already computes based on HINDCASTLENGTH (default is 30 days before TODAY)
-LASTSUBDIR=null
+LASTSUBDIR=https://fortytwo.cct.lsu.edu/thredds/fileServer/2024/GFS/2024091512/HSOFS/mike.hpc.lsu.edu/HSOFS_gfs_mike_ak/gfsforecast
    # !! used when HOTORCOLD=hotstart
 HINDCASTLENGTH=30
    # !! length of initial hindcast, from cold (days)
@@ -73,7 +73,7 @@ BACKGROUNDMET=off
 # Tropical/Hurricane (ATCF data for internal GAHM wind generation)
 TROPICALCYCLONE=on
    # !! tropical cyclone forcing (mutually exclusive with BACKGROUNDMET in most cases)
-   STORM=01
+   STORM=08
    # !! !! storm number, e.g. 05=ernesto in 2006
    YEAR=2024
    # !! !! year of the storm
