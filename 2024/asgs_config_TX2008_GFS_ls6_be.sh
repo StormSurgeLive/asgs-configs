@@ -172,9 +172,6 @@ case $si in
    ;;
 esac
 
-source $SCRIPTDIR/config/io_defaults.sh
-# sets met-only mode based on "Wind10m" suffix
-
 PREPPEDARCHIVE=prepped_${GRIDNAME}_${INSTANCENAME}_${NCPU}.tar.gz
 HINDCASTARCHIVE=prepped_${GRIDNAME}_hc_${INSTANCENAME}_${NCPU}.tar.gz
 

@@ -97,10 +97,6 @@ CYCLETIMELIMIT=99:00:00
 #-------------------------------------------------------------------
 #
 
-QUEUESYS=SLURM
-   # !! platform specific, e.g., SLURM
-PPN=128
-   # !! platform specific, processors-per-node
 NCPU=959
    # !! number of compute CPUs for all simulations, should be a set in consideration of PPN
 NUMWRITERS=1
@@ -152,7 +148,7 @@ case $si in
  -2)
    ENSTORM=hindcast
    # initial ramp up during a coldstart
-   OPENDAPNOTIFY="coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asgs.cera.lsu@coastalrisk.live,asgs.cera.pub.lsu@coastalrisk.live,asgsnotify@memenesia.net,jasongfleming@gmail.com,cdelcastillo21@gmail.com"
+   OPENDAPNOTIFY="asgsnotify@memenesia.net"
    ;;
 -1)
    ENSTORM=nowcast
@@ -164,15 +160,12 @@ case $si in
    PERCENT=0
 
    OPENDAPNOTIFY="coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asgs.cera.lsu@coastalrisk.live,asgs.cera.pub.lsu@coastalrisk.live,asgsnotify@memenesia.net,jasongfleming@gmail.com,cdelcastillo21@gmail.com"
-
-   source $SCRIPTDIR/config/io_defaults.sh
-   # sets met-only mode based on "Wind10m" suffix
    ;;
 1)
    ENSTORM=nhcConsensusWind10m
    PERCENT=0
 
-   OPENDAPNOTIFY="coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asgs.cera.lsu@coastalrisk.live,asgs.cera.pub.lsu@coastalrisk.live,asgsnotify@memenesia.net,jasongfleming@gmail.com,cdelcastillo21@gmail.com"
+   OPENDAPNOTIFY="asgsnotify@memenesia.net"
 
    source $SCRIPTDIR/config/io_defaults.sh
    # sets met-only mode based on "Wind10m" suffix
@@ -181,9 +174,6 @@ case $si in
    echo "CONFIGRATION ERROR: Unknown scenario number: '$si'."
    ;;
 esac
-
-source $SCRIPTDIR/config/io_defaults.sh
-# sets met-only mode based on "Wind10m" suffix
 
 PREPPEDARCHIVE=prepped_${GRIDNAME}_${INSTANCENAME}_${NCPU}.tar.gz
 HINDCASTARCHIVE=prepped_${GRIDNAME}_hc_${INSTANCENAME}_${NCPU}.tar.gz
