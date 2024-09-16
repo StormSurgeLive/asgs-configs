@@ -32,7 +32,7 @@ GRIDNAME=HSOFS
 source $SCRIPTDIR/config/mesh_defaults.sh
    # !! contains mesh defaults
 
-ADCIRCVERSION="v53.05"
+ADCIRCVERSION="v55.02"
    # !! intended ADCIRC version (no impact as of 2024-09-16 16:18:11 UTC)
 
 #-------------------------------------------------------------------
@@ -119,7 +119,7 @@ INTENDEDAUDIENCE=general
    # !! used by CERA to pick where to display result; "general" | "developers-only"
 OPENDAPPOST=opendap_post2.sh
    # !! posts OpenDAP/THREDDS servers via ssh (default, opendap_post2.sh)
-POSTPROCESS=(  $OPENDAPPOST )
+POSTPROCESS=( includeWind10m.sh createOPeNDAPFileList.sh $OPENDAPPOST )
    # !! scripts to run during the POSTPROCESS ASGS hook
 OPENDAPNOTIFY="coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asgs.cera.lsu@coastalrisk.live,asgs.cera.pub.lsu@coastalrisk.live,asgsnotify@memenesia.net,jasongfleming@gmail.com"
    # !! main set of email addresses to notify
