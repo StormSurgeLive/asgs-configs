@@ -73,7 +73,7 @@ BACKGROUNDMET=off
 # Tropical/Hurricane (ATCF data for internal GAHM wind generation)
 TROPICALCYCLONE=on
    # !! tropical cyclone forcing (mutually exclusive with BACKGROUNDMET in most cases)
-   STORM=01
+   STORM=08
    # !! !! storm number, e.g. 05=ernesto in 2006
    YEAR=2024
    # !! !! year of the storm
