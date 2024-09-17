@@ -113,7 +113,7 @@ INTENDEDAUDIENCE=general
    # !! used by CERA to pick where to display result; "general" | "developers-only"
 OPENDAPPOST=opendap_post2.sh
    # !! posts OpenDAP/THREDDS servers via ssh (default, opendap_post2.sh)
-POSTPROCESS=(  $OPENDAPPOST )
+POSTPROCESS=( includeWind10m.sh createOPeNDAPFileList.sh $OPENDAPPOST )
    # !! scripts to run during the POSTPROCESS ASGS hook
 OPENDAPNOTIFY="coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asgs.cera.lsu@coastalrisk.live,asgs.cera.pub.lsu@coastalrisk.live,asgsnotify@memenesia.net,jasongfleming@gmail.com,cdelcastillo21@gmail.com"
    # !! main set of email addresses to notify
