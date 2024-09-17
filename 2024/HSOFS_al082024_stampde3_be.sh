@@ -50,11 +50,11 @@ statusNotify="asgsnotify@memenesia.net"
 #-------------------------------------------------------------------
 #
 
-HOTORCOLD=hotstart
+HOTORCOLD=coldstart
    # !! initial state (overridden by STATEFILE after ASGS gets going since it's then a "hotstart")
-COLDSTARTDATE=auto
+COLDSTARTDATE=$(get-coldstart-date)
    # !! already computes based on HINDCASTLENGTH (default is 30 days before TODAY)
-LASTSUBDIR=https://fortytwo.cct.lsu.edu/thredds/fileServer/2024/GFS/2024091512/HSOFS/mike.hpc.lsu.edu/HSOFS_gfs_mike_ak/gfsforecast
+LASTSUBDIR=null #https://fortytwo.cct.lsu.edu/thredds/fileServer/2024/GFS/2024091512/HSOFS/mike.hpc.lsu.edu/HSOFS_gfs_mike_ak/gfsforecast
    # !! used when HOTORCOLD=hotstart
 HINDCASTLENGTH=30
    # !! length of initial hindcast, from cold (days)
@@ -119,13 +119,13 @@ INTENDEDAUDIENCE=general
    # !! used by CERA to pick where to display result; "general" | "developers-only"
 OPENDAPPOST=opendap_post2.sh
    # !! posts OpenDAP/THREDDS servers via ssh (default, opendap_post2.sh)
-POSTPROCESS=(  $OPENDAPPOST )
+POSTPROCESS=( includeWind10m.sh createOPeNDAPFileList.sh $OPENDAPPOST )
    # !! scripts to run during the POSTPROCESS ASGS hook
 OPENDAPNOTIFY="coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asgs.cera.lsu@coastalrisk.live,asgs.cera.pub.lsu@coastalrisk.live,asgsnotify@memenesia.net,jasongfleming@gmail.com,cdelcastillo21@gmail.com"
    # !! main set of email addresses to notify
 NOTIFY_SCRIPT=cera_notify.sh
    # !! notification used ...
-TDS=( lsu_tds )
+TDS=( lsu_tds  )
    # !! servers receiving results via ssh
 
 hooksScripts[FINISH_SPINUP_SCENARIO]=" output/createOPeNDAPFileList.sh output/$OPENDAPPOST "
