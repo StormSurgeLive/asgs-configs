@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-#-- created on 2024-09-17 07:36:23 UTC, https://tools.adcirc.live --#
+#-- created on 2024-09-17 07:47:39 UTC, https://tools.adcirc.live --#
 
 # Copyright(C) 2024 Jason Fleming <jason.fleming@adcirc.live>
 # Copyright(C) 2024 Brett Estrade <brett.estrade@adcirc.live>
@@ -19,13 +19,13 @@ INSTANCENAME=HSOFS_NAM_stampede3_be
    # !! "name" of this ASGS process
 ASGSADMIN=asgsnotify@memenesia.net
    # !! email address of operator, HPCs need it
-ACCOUNT=TG-DMS080016N
+ACCOUNT=MCA08X013
    # !! used on HPC's to specify allocation account
-### QOS=vipPJ_P3000
+QOS=## vipPJ_P3000
    # !! used for priority access at TACC
 
 #-------------------------------------------------------------------
-# Grid and Domain Settings 
+# Grid and Domain Settings
 #-------------------------------------------------------------------
 #
 
@@ -35,10 +35,10 @@ source $SCRIPTDIR/config/mesh_defaults.sh
    # !! contains mesh defaults
 
 ADCIRCVERSION="v55.02"
-   # !! intended ADCIRC version (no impact as of 2024-09-17 07:36:23 UTC)
+   # !! intended ADCIRC version (no impact as of 2024-09-17 07:47:39 UTC)
 
 #-------------------------------------------------------------------
-# Logging Settings 
+# Logging Settings
 #-------------------------------------------------------------------
 #
 
@@ -56,7 +56,7 @@ HOTORCOLD=coldstart
    # !! initial state (overridden by STATEFILE after ASGS gets going since it's then a "hotstart")
   COLDSTARTDATE=$(get-coldstart-date)
    # !! already computes based on HINDCASTLENGTH (default is 30 days before TODAY)
-  LASTSUBDIR=ererer4er
+  LASTSUBDIR=null
    # !! used when HOTORCOLD=hotstart
 HINDCASTLENGTH=30
    # !! length of initial hindcast, from cold (days)
@@ -119,7 +119,7 @@ POSTPROCESS=( includeWind10m.sh createOPeNDAPFileList.sh $OPENDAPPOST )
    # !! scripts to run during the POSTPROCESS ASGS hook
 postAdditionalFiles=""
    # !! additional files to send over 
-OPENDAPNOTIFY="coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asgs.cera.lsu@coastalrisk.live,asgs.cera.pub.lsu@coastalrisk.live,asgsnotify@memenesia.net,jasongfleming@gmail.com"
+OPENDAPNOTIFY="coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asgs.cera.lsu@coastalrisk.live,asgs.cera.pub.lsu@coastalrisk.live,asgsnotify@memenesia.net,jasongfleming@gmail.com,cdelcastillo21@gmail.com"
    # !! main set of email addresses to notify
 NOTIFY_SCRIPT=cera_notify.sh
    # !! notification used ...
@@ -163,7 +163,7 @@ case $si in
    ;;
 1)
    ENSTORM=namforecast
-   OPENDAPNOTIFY="coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asgs.cera.lsu@coastalrisk.live,asgs.cera.pub.lsu@coastalrisk.live,asgsnotify@memenesia.net,jasongfleming@gmail.com"
+   OPENDAPNOTIFY="coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asgs.cera.lsu@coastalrisk.live,asgs.cera.pub.lsu@coastalrisk.live,asgsnotify@memenesia.net,jasongfleming@gmail.com,cdelcastillo21@gmail.com"
    ;;
 *)
    echo "CONFIGRATION ERROR: Unknown scenario number: '$si'."
@@ -210,4 +210,5 @@ HINDCASTARCHIVE=prepped_${GRIDNAME}_hc_${INSTANCENAME}_${NCPU}.tar.gz
 # the ASGS.  If not, see <http://www.gnu.org/licenses/>.
 #-------------------------------------------------------------------
 
-#-- created on 2024-09-17 07:36:23 UTC, https://tools.adcirc.live --#
+#-- created on 2024-09-17 07:47:39 UTC, https://tools.adcirc.live --#
+
