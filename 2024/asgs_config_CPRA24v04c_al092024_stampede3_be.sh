@@ -9,13 +9,13 @@
 # and Licensing information should be at the bottom of this file.
 
 # file:
-#   asgs_config_Custom_al092024_stampede3_be.sh
+#   asgs_config_CPRA24v04c_al092024_stampede3_be.sh
 #-------------------------------------------------------------------
 # Instance and Operator Information
 #-------------------------------------------------------------------
 #
 
-INSTANCENAME=Custom_al092024_stampede3_be
+INSTANCENAME=CPRA24v04c_al092024_stampede3_be
    # !! "name" of this ASGS process
 ASGSADMIN=asgsnotify@memenesia.net
    # !! email address of operator, HPCs need it
@@ -29,7 +29,7 @@ QOS=vipPJ_P3000
 #-------------------------------------------------------------------
 #
 
-GRIDNAME=Custom
+GRIDNAME=CPRA24v04c
    # !! the "mesh"
 source $SCRIPTDIR/config/mesh_defaults.sh
    # !! contains mesh defaults
