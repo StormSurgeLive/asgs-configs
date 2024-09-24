@@ -52,11 +52,11 @@ statusNotify="asgsnotify@memenesia.net"
 #-------------------------------------------------------------------
 #
 
-HOTORCOLD=coldstart
+HOTORCOLD=hotstart
    # !! initial state (overridden by STATEFILE after ASGS gets going since it's then a "hotstart")
-  COLDSTARTDATE=$(get-coldstart-date)
+  COLDSTARTDATE=auto #$(get-coldstart-date)
    # !! already computes based on HINDCASTLENGTH (default is 30 days before TODAY)
-  LASTSUBDIR=null
+  LASTSUBDIR=https://fortytwo.cct.lsu.edu/thredds/fileServer/2024/al09/02/NGOMv19b/mike.hpc.lsu.edu/NGOMv19b_al092024_mike_jgf/nowcast/
    # !! used when HOTORCOLD=hotstart
 HINDCASTLENGTH=30
    # !! length of initial hindcast, from cold (days)
