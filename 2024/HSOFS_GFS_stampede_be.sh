@@ -34,7 +34,7 @@ GRIDNAME=HSOFS
 source $SCRIPTDIR/config/mesh_defaults.sh
    # !! contains mesh defaults
 
-ADCIRCVERSION="v53.05"
+ADCIRCVERSION="v55.02"
    # !! intended ADCIRC version (no impact as of 2024-09-17 07:51:13 UTC)
 
 #-------------------------------------------------------------------
@@ -67,7 +67,7 @@ HINDCASTLENGTH=30
 #
 
 # Meteorological (winds - NAM, GFS, etc)
-BACKGROUNDMET=on
+BACKGROUNDMET=GFS
    # !! download/ meteorological forcing from an upstream source
   FORECASTCYCLE="00,06,12,18"
    # !! !! used when BACKGROUNDMET is turned on (e.g., "00,06,12,18"), in UTC / "Z"
