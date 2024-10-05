@@ -56,7 +56,7 @@ HOTORCOLD=hotstart
    # !! initial state (overridden by STATEFILE after ASGS gets going since it's then a "hotstart")
 COLDSTARTDATE=auto
    # !! ensures that COLDSTARTDATE is ignored, and it is gotten from the hotstart file
-LASTSUBDIR=https://fortytwo.cct.lsu.edu/thredds/fileServer/2024/GFS/2024092306/HSOFS/qbc.loni.org/HSOFS_gfs_qbc_sn/gfsforecast/
+LASTSUBDIR=https://fortytwo.cct.lsu.edu/thredds/fileServer/2024/GFS/2024092400/HSOFS/qbc.loni.org/HSOFS_gfs_qbc_sn/gfsforecast
    # !! used when HOTORCOLD=hotstart
 HINDCASTLENGTH=30
    # !! length of initial hindcast, from cold (days)
