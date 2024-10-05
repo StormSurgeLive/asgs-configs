@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-#-- created on 2024-09-24 15:19:58 UTC, https://tools.adcirc.live --#
+#-- created on 2024-10-05 17:41:45 UTC, https://tools.adcirc.live --#
 
 # Copyright(C) 2024 Jason Fleming <jason.fleming@adcirc.live>
 # Copyright(C) 2024 Brett Estrade <brett.estrade@adcirc.live>
@@ -9,19 +9,19 @@
 # and Licensing information should be at the bottom of this file.
 
 # file:
-#   asgs_config_CPRA24v04c_al092024_stampede3_be.sh
+#   asgs_config_EGOMv20b_al142024_stampede3_be.sh
 #-------------------------------------------------------------------
 # Instance and Operator Information
 #-------------------------------------------------------------------
 #
 
-INSTANCENAME=CPRA24v04c_al092024_stampede3_be
+INSTANCENAME=EGOMv20b_al142024_stampede3_be
    # !! "name" of this ASGS process
 ASGSADMIN=asgsnotify@memenesia.net
    # !! email address of operator, HPCs need it
 ACCOUNT=TG-DMS080016N
    # !! used on HPC's to specify allocation account
-#QOS=vipPJ_P3000
+QOS= #
    # !! used for priority access at TACC
 
 #-------------------------------------------------------------------
@@ -29,15 +29,13 @@ ACCOUNT=TG-DMS080016N
 #-------------------------------------------------------------------
 #
 
-GRIDNAME=CPRA24v04c
+GRIDNAME=EGOMv20b
    # !! the "mesh"
-parameterPackage=default   # <-----<< added manually
-createWind10mLayer="yes"   # <-----<< added manually
 source $SCRIPTDIR/config/mesh_defaults.sh
    # !! contains mesh defaults
 
 ADCIRCVERSION="v53.05"
-   # !! intended ADCIRC version (no impact as of 2024-09-24 15:19:58 UTC)
+   # !! intended ADCIRC version (no impact as of 2024-10-05 17:41:45 UTC)
 
 #-------------------------------------------------------------------
 # Logging Settings
@@ -54,11 +52,11 @@ statusNotify="asgsnotify@memenesia.net"
 #-------------------------------------------------------------------
 #
 
-HOTORCOLD=hotstart
+HOTORCOLD=coldstart
    # !! initial state (overridden by STATEFILE after ASGS gets going since it's then a "hotstart")
-COLDSTARTDATE=auto
-   # !! ensures that COLDSTARTDATE is ignored, and it is gotten from the hotstart file
-LASTSUBDIR=https://fortytwo.cct.lsu.edu/thredds/fileServer/2024/nam/2024092306/CPRA24v04c/qbd.loni.org/CPRA24v04c_nam_qbd_jgf/namforecast
+  COLDSTARTDATE=$(get-coldstart-date)
+   # !! already computes based on HINDCASTLENGTH (default is 30 days before TODAY)
+  LASTSUBDIR=null
    # !! used when HOTORCOLD=hotstart
 HINDCASTLENGTH=30
    # !! length of initial hindcast, from cold (days)
@@ -77,7 +75,7 @@ BACKGROUNDMET=off
 # Tropical/Hurricane (ATCF data for internal GAHM wind generation)
 TROPICALCYCLONE=on
    # !! tropical cyclone forcing (mutually exclusive with BACKGROUNDMET in most cases)
-   STORM=09
+   STORM=14
    # !! !! storm number, e.g. 05=ernesto in 2006
    YEAR=2024
    # !! !! year of the storm
@@ -101,14 +99,11 @@ CYCLETIMELIMIT=99:00:00
 #-------------------------------------------------------------------
 #
 
-QUEUENAME=spr # added manually
-SERQUEUE=spr  # added manually
-
 QUEUESYS=SLURM
    # !! platform specific, e.g., SLURM
-PPN=112       # adjusted manually
+PPN=112
    # !! platform specific, processors-per-node
-NCPU=895      # adjusted manually
+NCPU=895
    # !! number of compute CPUs for all simulations, should be a set in consideration of PPN
 NUMWRITERS=1
    # !! usually just 1, total CPUs for the run is NCPU+NUMWRITERS
@@ -134,7 +129,7 @@ OPENDAPNOTIFY="coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asg
    # !! main set of email addresses to notify
 NOTIFY_SCRIPT=cera_notify.sh
    # !! notification used ...
-TDS=( lsu_tds )
+TDS=( tacc_tds3 lsu_tds )
    # !! servers receiving results via ssh
 
 hooksScripts[FINISH_SPINUP_SCENARIO]=" output/createOPeNDAPFileList.sh output/$OPENDAPPOST "
@@ -153,9 +148,9 @@ hooksScripts[FINISH_NOWCAST_SCENARIO]=" output/createOPeNDAPFileList.sh output/$
    # !! default is the track as described by the ATCF data; veerRight is positive;
    # !! veerLeft is negative. 100 is wrt the right most edge of the cone, -100 is
    # !! wrt left most edge of the cone
-SCENARIOPACKAGESIZE=4
+SCENARIOPACKAGESIZE=6
    # !! GAHM (using ATCF/BEST data) can have many different scenarios
-   # !! as the tracks of the storm may be altered; here there are 4
+   # !! as the tracks of the storm may be altered; here there are 6
    # !! scenarios, not including the hindcast and the nowcast
 case $si in
  -2)
@@ -176,18 +171,29 @@ case $si in
 1)
    ENSTORM=nhcConsensusWind10m
    PERCENT=0
-   OPENDAPNOTIFY="coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asgs.cera.lsu@coastalrisk.live,asgs.cera.pub.lsu@coastalrisk.live,asgsnotify@memenesia.net,jasongfleming@gmail.com,cdelcastillo21@gmail.com"
+   OPENDAPNOTIFY="asgsnotify@memenesia.net"
    source $SCRIPTDIR/config/io_defaults.sh # sets met-only mode based on "Wind10m" suffix
    ;;
 2)
+   ENSTORM=veerRight100
+   PERCENT=100
+   OPENDAPNOTIFY="coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asgs.cera.lsu@coastalrisk.live,asgs.cera.pub.lsu@coastalrisk.live,asgsnotify@memenesia.net,jasongfleming@gmail.com,cdelcastillo21@gmail.com"
+   ;;
+3)
+   ENSTORM=veerRight100Wind10m
+   PERCENT=100
+   OPENDAPNOTIFY="asgsnotify@memenesia.net"
+   source $SCRIPTDIR/config/io_defaults.sh # sets met-only mode based on "Wind10m" suffix
+   ;;
+4)
    ENSTORM=veerLeft100
    PERCENT=-100
    OPENDAPNOTIFY="coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asgs.cera.lsu@coastalrisk.live,asgs.cera.pub.lsu@coastalrisk.live,asgsnotify@memenesia.net,jasongfleming@gmail.com,cdelcastillo21@gmail.com"
    ;;
-3)
+5)
    ENSTORM=veerLeft100Wind10m
    PERCENT=-100
-   OPENDAPNOTIFY="coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asgs.cera.lsu@coastalrisk.live,asgs.cera.pub.lsu@coastalrisk.live,asgsnotify@memenesia.net,jasongfleming@gmail.com,cdelcastillo21@gmail.com"
+   OPENDAPNOTIFY="asgsnotify@memenesia.net"
    source $SCRIPTDIR/config/io_defaults.sh # sets met-only mode based on "Wind10m" suffix
    ;;
 *)
@@ -235,5 +241,5 @@ HINDCASTARCHIVE=prepped_${GRIDNAME}_hc_${INSTANCENAME}_${NCPU}.tar.gz
 # the ASGS.  If not, see <http://www.gnu.org/licenses/>.
 #-------------------------------------------------------------------
 
-#-- created on 2024-09-24 15:19:58 UTC, https://tools.adcirc.live --#
+#-- created on 2024-10-05 17:41:45 UTC, https://tools.adcirc.live --#
 
