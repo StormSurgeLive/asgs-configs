@@ -146,7 +146,7 @@ hooksScripts[FINISH_NOWCAST_SCENARIO]=" output/createOPeNDAPFileList.sh output/$
    # !! default is the track as described by the ATCF data; veerRight is positive;
    # !! veerLeft is negative. 100 is wrt the right most edge of the cone, -100 is
    # !! wrt left most edge of the cone
-SCENARIOPACKAGESIZE=6
+SCENARIOPACKAGESIZE=2
    # !! GAHM (using ATCF/BEST data) can have many different scenarios
    # !! as the tracks of the storm may be altered; here there are 6
    # !! scenarios, not including the hindcast and the nowcast
@@ -169,28 +169,6 @@ case $si in
 1)
    ENSTORM=nhcConsensusWind10m
    PERCENT=0
-   OPENDAPNOTIFY="asgsnotify@memenesia.net"
-   source $SCRIPTDIR/config/io_defaults.sh # sets met-only mode based on "Wind10m" suffix
-   ;;
-2)
-   ENSTORM=veerRight100
-   PERCENT=100
-   OPENDAPNOTIFY="coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asgs.cera.lsu@coastalrisk.live,asgs.cera.pub.lsu@coastalrisk.live,asgsnotify@memenesia.net,jasongfleming@gmail.com,cdelcastillo21@gmail.com"
-   ;;
-3)
-   ENSTORM=veerRight100Wind10m
-   PERCENT=100
-   OPENDAPNOTIFY="asgsnotify@memenesia.net"
-   source $SCRIPTDIR/config/io_defaults.sh # sets met-only mode based on "Wind10m" suffix
-   ;;
-4)
-   ENSTORM=veerLeft100
-   PERCENT=-100
-   OPENDAPNOTIFY="coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asgs.cera.lsu@coastalrisk.live,asgs.cera.pub.lsu@coastalrisk.live,asgsnotify@memenesia.net,jasongfleming@gmail.com,cdelcastillo21@gmail.com"
-   ;;
-5)
-   ENSTORM=veerLeft100Wind10m
-   PERCENT=-100
    OPENDAPNOTIFY="asgsnotify@memenesia.net"
    source $SCRIPTDIR/config/io_defaults.sh # sets met-only mode based on "Wind10m" suffix
    ;;
