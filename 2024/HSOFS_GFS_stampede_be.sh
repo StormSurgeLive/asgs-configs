@@ -9,13 +9,13 @@
 # and Licensing information should be at the bottom of this file.
 
 # file:
-#   asgs_config_HSOFS_NAM_stampede3_be.sh
+#   asgs_config_HSOFS_GFS_stampede3_be.sh
 #-------------------------------------------------------------------
 # Instance and Operator Information
 #-------------------------------------------------------------------
 #
 
-INSTANCENAME=HSOFS_NAM_stampede3_be
+INSTANCENAME=HSOFS_GFS_stampede3_be
    # !! "name" of this ASGS process
 ASGSADMIN=asgsnotify@memenesia.net
    # !! email address of operator, HPCs need it
@@ -34,7 +34,7 @@ GRIDNAME=HSOFS
 source $SCRIPTDIR/config/mesh_defaults.sh
    # !! contains mesh defaults
 
-ADCIRCVERSION="v55.02"
+ADCIRCVERSION="v56.0.2"
    # !! intended ADCIRC version (no impact as of 2024-09-17 07:51:13 UTC)
 
 #-------------------------------------------------------------------
@@ -126,7 +126,7 @@ OPENDAPNOTIFY="coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asg
    # !! main set of email addresses to notify
 NOTIFY_SCRIPT=cera_notify.sh
    # !! notification used ...
-TDS=( lsu_tds )
+TDS=( lsu_tds tacc_tds3 )
    # !! servers receiving results via ssh
 
 hooksScripts[FINISH_SPINUP_SCENARIO]=" output/createOPeNDAPFileList.sh output/$OPENDAPPOST "
