@@ -36,17 +36,17 @@ source $SCRIPTDIR/config/mesh_defaults.sh
 #-------------------------------------------------------------------
 #
 
-HOTORCOLD=coldstart
+HOTORCOLD=hotstart
 # Note: Initial state (overridden by STATEFILE after ASGS gets going since
 # it's then a "hotstart")
 
 HINDCASTLENGTH=30
 # length of initial hindcast, from cold (days)
 
-COLDSTARTDATE=$(get-coldstart-date)
+COLDSTARTDATE=auto
 # already computes based on HINDCASTLENGTH (default is 30 days before TODAY)
 
-LASTSUBDIR=null
+LASTSUBDIR=http://chg-1.oden.tacc.utexas.edu/thredds/fileServer/asgs/2024/GFS/2024090818/TX2008/frontera.tacc.utexas.edu/TX2008_gfs_frontera_jgf/gfsforecast
 # used when HOTORCOLD=hotstart
 
 #-------------------------------------------------------------------
@@ -74,6 +74,7 @@ TROPICALCYCLONE=on
 
    BASIN=al
    # ocean basin, e.g., AL (Atlantic), EP (East Pacific)
+
 WAVES=on
 # wave forcing via built-in SWAN coupling (adcswan/padcswan)
 
@@ -135,6 +136,9 @@ NOTIFY_SCRIPT=cera_notify.sh
 
 TDS=( tacc_tds3 lsu_tds )
 # servers receiving results via ssh
+
+hooksScripts[FINISH_SPINUP_SCENARIO]=" output/createOPeNDAPFileList.sh output/$OPENDAPPOST "
+hooksScripts[FINISH_NOWCAST_SCENARIO]=" output/createOPeNDAPFileList.sh output/$OPENDAPPOST "
 
 #-------------------------------------------------------------------
 # Scenario Package (Ensemble) Settings

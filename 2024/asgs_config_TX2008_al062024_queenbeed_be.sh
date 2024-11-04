@@ -33,17 +33,17 @@ source $SCRIPTDIR/config/mesh_defaults.sh
 #-------------------------------------------------------------------
 #
 
-HOTORCOLD=coldstart
+HOTORCOLD=hotstart
 # Note: Initial state (overridden by STATEFILE after ASGS gets going since
 # it's then a "hotstart")
 
 HINDCASTLENGTH=30
 # length of initial hindcast, from cold (days)
 
-COLDSTARTDATE=$(get-coldstart-date)
+COLDSTARTDATE=auto
 # already computes based on HINDCASTLENGTH (default is 30 days before TODAY)
 
-LASTSUBDIR=null
+LASTSUBDIR=http://chg-1.oden.tacc.utexas.edu/thredds/fileServer/asgs/2024/GFS/2024090818/TX2008/frontera.tacc.utexas.edu/TX2008_gfs_frontera_jgf/gfsforecast
 # used when HOTORCOLD=hotstart
 
 #-------------------------------------------------------------------
@@ -130,7 +130,7 @@ OPENDAPNOTIFY="coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asg
 NOTIFY_SCRIPT=cera_notify.sh
 # notification used ...
 
-TDS=( tacc_tds3 lsu_tds )
+TDS=( lsu_tds )
 # servers receiving results via ssh
 
 #-------------------------------------------------------------------

@@ -69,12 +69,12 @@ NCPUCAPACITY=9999
 # Post processing and publication
 EMAILNOTIFY=yes
 INTENDEDAUDIENCE=general    # can also be "developers-only" or "professional"
-OPENDAPPOST=opendap_post2.sh
+OPENDAPPOST= #opendap_post2.sh
 POSTPROCESS=( includeWind10m.sh createOPeNDAPFileList.sh $OPENDAPPOST )
 OPENDAPNOTIFY="coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asgsnotify@memenesia.net"
 TDS=( lsu_tds )
-hooksScripts[FINISH_SPINUP_SCENARIO]=" output/createOPeNDAPFileList.sh output/$OPENDAPPOST "
-hooksScripts[FINISH_NOWCAST_SCENARIO]=" output/createOPeNDAPFileList.sh output/$OPENDAPPOST "
+#hooksScripts[FINISH_SPINUP_SCENARIO]=" output/createOPeNDAPFileList.sh output/$OPENDAPPOST "
+#hooksScripts[FINISH_NOWCAST_SCENARIO]=" output/createOPeNDAPFileList.sh output/$OPENDAPPOST "
 
 # Monitoring
 enablePostStatus="yes"
@@ -83,8 +83,8 @@ statusNotify="null"
 
 # Initial state (overridden by STATEFILE after ASGS gets going)
 COLDSTARTDATE=$(get-coldstart-date)
-HOTORCOLD=hotstart      # "hotstart" or "coldstart"
-LASTSUBDIR=https://fortytwo.cct.lsu.edu/thredds/fileServer/2023/nam/2023071606/CPRA23v01c/mike.hpc.lsu.edu/CPRA23v01c_nam_jgf_5kcms/namforecast
+HOTORCOLD=coldstart      # "hotstart" or "coldstart"
+LASTSUBDIR=
 
 # Scenario package
 

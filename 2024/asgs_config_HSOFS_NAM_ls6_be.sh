@@ -1,5 +1,5 @@
-#!/bin/sh
-#-- created on 2024-09-15 19:46:07 UTC, https://tools.adcirc.live --#
+#!/usr/bin/env bash
+#-- created on 2024-11-03 21:54:05 UTC, https://tools.adcirc.live --#
 
 # Copyright(C) 2024 Jason Fleming <jason.fleming@adcirc.live>
 # Copyright(C) 2024 Brett Estrade <brett.estrade@adcirc.live>
@@ -8,12 +8,14 @@
 # or deriving works from this source code file; additional Copyright
 # and Licensing information should be at the bottom of this file.
 
+# file:
+#   asgs_config_HSOFS_NAM_ls6_be.sh
 #-------------------------------------------------------------------
 # Instance and Operator Information
 #-------------------------------------------------------------------
 #
 
-INSTANCENAME=TX2008_GFS_ls6_be
+INSTANCENAME=HSOFS_NAM_ls6_be
    # !! "name" of this ASGS process
 ASGSADMIN=asgsnotify@memenesia.net
    # !! email address of operator, HPCs need it
@@ -23,20 +25,20 @@ QOS=vipPJ_P3000
    # !! used for priority access at TACC
 
 #-------------------------------------------------------------------
-# Grid and Domain Settings 
+# Grid and Domain Settings
 #-------------------------------------------------------------------
 #
 
-GRIDNAME=TX2008
+GRIDNAME=HSOFS
    # !! the "mesh"
 source $SCRIPTDIR/config/mesh_defaults.sh
    # !! contains mesh defaults
 
-ADCIRCVERSION="v53.05"
-   # !! intended ADCIRC version (no impact as of 2024-09-15 19:46:07 UTC)
+ADCIRCVERSION="v55.02"
+   # !! intended ADCIRC version (no impact as of 2024-11-03 21:54:05 UTC)
 
 #-------------------------------------------------------------------
-# Logging Settings 
+# Logging Settings
 #-------------------------------------------------------------------
 #
 
@@ -50,11 +52,11 @@ statusNotify="asgsnotify@memenesia.net"
 #-------------------------------------------------------------------
 #
 
-HOTORCOLD=hotstart
+HOTORCOLD=coldstart
    # !! initial state (overridden by STATEFILE after ASGS gets going since it's then a "hotstart")
-COLDSTARTDATE=auto
+  COLDSTARTDATE=$(get-coldstart-date)
    # !! already computes based on HINDCASTLENGTH (default is 30 days before TODAY)
-LASTSUBDIR=https://fortytwo.cct.lsu.edu/thredds/fileServer/2024/GFS/2024092000/TX2008/ls6.tacc.utexas.edu/TX2008_GFS_ls6_be/nowcast/
+  LASTSUBDIR=null
    # !! used when HOTORCOLD=hotstart
 HINDCASTLENGTH=30
    # !! length of initial hindcast, from cold (days)
@@ -65,7 +67,7 @@ HINDCASTLENGTH=30
 #
 
 # Meteorological (winds - NAM, GFS, etc)
-BACKGROUNDMET=GFS
+BACKGROUNDMET=on
    # !! download/ meteorological forcing from an upstream source
   FORECASTCYCLE="00,06,12,18"
    # !! !! used when BACKGROUNDMET is turned on (e.g., "00,06,12,18"), in UTC / "Z"
@@ -115,7 +117,9 @@ OPENDAPPOST=opendap_post2.sh
    # !! posts OpenDAP/THREDDS servers via ssh (default, opendap_post2.sh)
 POSTPROCESS=( includeWind10m.sh createOPeNDAPFileList.sh $OPENDAPPOST )
    # !! scripts to run during the POSTPROCESS ASGS hook
-OPENDAPNOTIFY="coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asgs.cera.lsu@coastalrisk.live,asgs.cera.pub.lsu@coastalrisk.live,asgsnotify@memenesia.net,jasongfleming@gmail.com,cdelcastillo21@gmail.com"
+postAdditionalFiles=""
+   # !! additional files to send over 
+OPENDAPNOTIFY="coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asgs.cera.lsu@coastalrisk.live,asgs.cera.pub.lsu@coastalrisk.live,asgsnotify@memenesia.net,cdelcastillo21@gmail.com"
    # !! main set of email addresses to notify
 NOTIFY_SCRIPT=cera_notify.sh
    # !! notification used ...
@@ -139,33 +143,27 @@ hooksScripts[FINISH_NOWCAST_SCENARIO]=" output/createOPeNDAPFileList.sh output/$
    # !! veerLeft is negative. 100 is wrt the right most edge of the cone, -100 is
    # !! wrt left most edge of the cone
 SCENARIOPACKAGESIZE=2
-   # !! GFS only has 2 actual scenarios, not including the hindcast and the nowcast
+   # !! NAM only has 2 actual scenarios, not including the hindcast and the nowcast
 case $si in
  -2)
    ENSTORM=hindcast
    # initial ramp up during a coldstart
-
-   OPENDAPNOTIFY="coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asgs.cera.lsu@coastalrisk.live,asgs.cera.pub.lsu@coastalrisk.live,asgsnotify@memenesia.net,jasongfleming@gmail.com,cdelcastillo21@gmail.com"
+   OPENDAPNOTIFY="asgsnotify@memenesia.net"
    ;;
 -1)
    ENSTORM=nowcast
    # do nothing ... this is "catch up", not a forecast
-
-   OPENDAPNOTIFY="null"
+   OPENDAPNOTIFY="asgsnotify@memenesia.net"
    ;;
 0)
-   ENSTORM=gfsforecastWind10m
+   ENSTORM=namforecastWind10m
    # generates winds and writes them to a fort.22, very fast running
-
    OPENDAPNOTIFY="asgsnotify@memenesia.net"
-
-   source $SCRIPTDIR/config/io_defaults.sh
-   # sets met-only mode based on "Wind10m" suffix
+   source $SCRIPTDIR/config/io_defaults.sh # sets met-only mode based on "Wind10m" suffix
    ;;
 1)
-   ENSTORM=gfsforecast
-
-   OPENDAPNOTIFY="coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asgs.cera.lsu@coastalrisk.live,asgs.cera.pub.lsu@coastalrisk.live,asgsnotify@memenesia.net,jasongfleming@gmail.com,cdelcastillo21@gmail.com"
+   ENSTORM=namforecast
+   OPENDAPNOTIFY="coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asgs.cera.lsu@coastalrisk.live,asgs.cera.pub.lsu@coastalrisk.live,asgsnotify@memenesia.net,cdelcastillo21@gmail.com"
    ;;
 *)
    echo "CONFIGRATION ERROR: Unknown scenario number: '$si'."
@@ -212,5 +210,5 @@ HINDCASTARCHIVE=prepped_${GRIDNAME}_hc_${INSTANCENAME}_${NCPU}.tar.gz
 # the ASGS.  If not, see <http://www.gnu.org/licenses/>.
 #-------------------------------------------------------------------
 
-#-- created on 2024-09-15 19:46:07 UTC, https://tools.adcirc.live --#
+#-- created on 2024-11-03 21:54:05 UTC, https://tools.adcirc.live --#
 
