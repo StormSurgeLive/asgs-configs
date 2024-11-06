@@ -22,6 +22,9 @@ ASGSADMIN=asgsnotify@memenesia.net
 ACCOUNT=TG-DMS080016N
    # !! used on HPC's to specify allocation account
 
+parameterPackage=default   # <-----<<
+createWind10mLayer="yes"   # <-----<<
+
 #-------------------------------------------------------------------
 # Grid and Domain Settings
 #-------------------------------------------------------------------
@@ -146,12 +149,12 @@ hooksScripts[FINISH_NOWCAST_SCENARIO]=" output/createOPeNDAPFileList.sh output/$
    # !! default is the track as described by the ATCF data; veerRight is positive;
    # !! veerLeft is negative. 100 is wrt the right most edge of the cone, -100 is
    # !! wrt left most edge of the cone
-SCENARIOPACKAGESIZE=6
+SCENARIOPACKAGESIZE=3
    # !! GAHM (using ATCF/BEST data) can have many different scenarios
    # !! as the tracks of the storm may be altered; here there are 6
    # !! scenarios, not including the hindcast and the nowcast
 case $si in
- -2)
+-2)
    ENSTORM=hindcast
    # initial ramp up during a coldstart
    OPENDAPNOTIFY="asgsnotify@memenesia.net"
@@ -161,40 +164,22 @@ case $si in
    # do nothing ... this is "catch up", not a forecast
    OPENDAPNOTIFY="asgsnotify@memenesia.net"
    ;;
-0)
+ 0)
    ENSTORM=nhcConsensus
    PERCENT=0
    OPENDAPNOTIFY="coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asgs.cera.lsu@coastalrisk.live,asgs.cera.pub.lsu@coastalrisk.live,cdelcastillo21@gmail.com"
    ;;
-1)
-   ENSTORM=nhcConsensusWind10m
-   PERCENT=0
-   OPENDAPNOTIFY="coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asgs.cera.lsu@coastalrisk.live,asgs.cera.pub.lsu@coastalrisk.live,cdelcastillo21@gmail.com"
-   source $SCRIPTDIR/config/io_defaults.sh # sets met-only mode based on "Wind10m" suffix
-   ;;
-2)
+ 1)
    ENSTORM=veerRight50
    PERCENT=50
    OPENDAPNOTIFY="coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asgs.cera.lsu@coastalrisk.live,asgs.cera.pub.lsu@coastalrisk.live,cdelcastillo21@gmail.com"
    ;;
-3)
-   ENSTORM=veerRight50Wind10m
-   PERCENT=50
-   OPENDAPNOTIFY="coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asgs.cera.lsu@coastalrisk.live,asgs.cera.pub.lsu@coastalrisk.live,cdelcastillo21@gmail.com"
-   source $SCRIPTDIR/config/io_defaults.sh # sets met-only mode based on "Wind10m" suffix
-   ;;
-4)
+ 2)
    ENSTORM=veerLeft50
    PERCENT=-50
    OPENDAPNOTIFY="coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asgs.cera.lsu@coastalrisk.live,asgs.cera.pub.lsu@coastalrisk.live,cdelcastillo21@gmail.com"
    ;;
-5)
-   ENSTORM=veerLeft50Wind10m
-   PERCENT=-50
-   OPENDAPNOTIFY="coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asgs.cera.lsu@coastalrisk.live,asgs.cera.pub.lsu@coastalrisk.live,cdelcastillo21@gmail.com"
-   source $SCRIPTDIR/config/io_defaults.sh # sets met-only mode based on "Wind10m" suffix
-   ;;
-*)
+ *)
    echo "CONFIGRATION ERROR: Unknown scenario number: '$si'."
    ;;
 esac
