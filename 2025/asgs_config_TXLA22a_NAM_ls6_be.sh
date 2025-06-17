@@ -17,7 +17,7 @@
 
 INSTANCENAME=TXLA22a_NAM_ls6_be
    # !! "name" of this ASGS process
-ASGSADMIN=asgsnotify@memenesia.net
+#ASGSADMIN=asgsnotify@memenesia.net
    # !! email address of operator, HPCs need it
 #ACCOUNT=ADCIRC # NOTE: consider setting in ~/.asgsh_profile on the host machine
    # !! used on HPC's to specify allocation account
@@ -41,7 +41,7 @@ createWind10mLayer="yes"
    # !! older versions of ASGS may require explictly defining the "Wind10m"
    # !! scenario runs, but this happens automatically now if set to "yes",
    # !! otherwise, these need to be defined explicitly if set to "no"
-ADCIRCVERSION="v56.0.2"
+ADCIRCVERSION="v55.00*"
    # !! intended ADCIRC version (no impact as of 2025-06-09 05:21:20 UTC)
 
 #-------------------------------------------------------------------
