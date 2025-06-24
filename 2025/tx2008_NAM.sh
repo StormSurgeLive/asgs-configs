@@ -183,8 +183,6 @@ case $si in
    OPENDAPNOTIFY="coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asgs.cera.lsu@coastalrisk.live,asgs.cera.pub.lsu@coastalrisk.live asgsnotify@memenesia.net"
    ;;
 1)
-   # NOTE: includes namforecastWind10m when createWind10mLayer="yes", which is the
-   # preferred now (fewer runs required)
    ENSTORM=namforecast
    OPENDAPNOTIFY="coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asgs.cera.lsu@coastalrisk.live,asgs.cera.pub.lsu@coastalrisk.live asgsnotify@memenesia.net"
    ;;
