@@ -179,7 +179,7 @@ case $si in
    OPENDAPNOTIFY="asgsnotify@memenesia.net"
    ;;
 0)
-   ENSTORM=nhcConsensusWind10m
+   ENSTORM=namforecastWind10m
    OPENDAPNOTIFY="coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asgs.cera.lsu@coastalrisk.live,asgs.cera.pub.lsu@coastalrisk.live asgsnotify@memenesia.net"
    ;;
 1)
