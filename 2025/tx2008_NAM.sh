@@ -41,7 +41,7 @@ createWind10mLayer="no"
    # !! older versions of ASGS may require explictly defining the "Wind10m"
    # !! scenario runs, but this happens automatically now if set to "yes",
    # !! otherwise, these need to be defined explicitly if set to "no"
-ADCIRCVERSION="v56.0.2*"
+ADCIRCVERSION="v56.0.2"
    # !! intended ADCIRC version (no impact as of 2025-06-09 05:21:20 UTC)
 
 #-------------------------------------------------------------------
