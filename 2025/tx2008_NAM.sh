@@ -34,7 +34,7 @@ INSTANCENAME=TX2008_nam_qbd_be
 
 GRIDNAME=tx2008_r35h
    # !! the "mesh"
-parameterPackage=default
+#parameterPackage=default
    # !! if not set, uses 'hardcoded', options are defined in mesh_defaults.sh
    # !! for given GRIDNAME
 createWind10mLayer="no"
@@ -180,7 +180,7 @@ case $si in
    ;;
 0)
    ENSTORM=namforecastWind10m
-   OPENDAPNOTIFY="coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asgs.cera.lsu@coastalrisk.live,asgs.cera.pub.lsu@coastalrisk.live asgsnotify@memenesia.net"
+   OPENDAPNOTIFY="asgsnotify@memenesia.net"
    ;;
 1)
    ENSTORM=namforecast
