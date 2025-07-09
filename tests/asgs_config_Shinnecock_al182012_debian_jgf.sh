@@ -27,7 +27,7 @@
 
 # Fundamental
 
-INSTANCENAME=Shinnecock_al122012_debian_jgf # "name" of this ASGS process
+INSTANCENAME=Shinnecock_al182012_compute01_jgf # "name" of this ASGS process
 
 # Input files and templates
 
@@ -45,7 +45,7 @@ BACKGROUNDMET=off        # NAM/GFS download/forcing
 TROPICALCYCLONE=on       # tropical cyclone forcing
    STORM=18              # storm number, e.g. 05=ernesto in 2006
    YEAR=2012             # year of the storm
-   FDIR=~/Campaigns/Development/2025/issue-1377/input/sample_advisories/2012
+   FDIR=$WORK/atcf
    HDIR="$FDIR"
    RSSSITE=filesystem
    FTPSITE=filesystem
