@@ -61,6 +61,8 @@ source $SCRIPTDIR/config/mesh_defaults.sh
    # !! meshes are available. Falls back to ASGS_LOCAL_DIR if set,
    # !! so no need to touch this in that case either.
 
+advection=off
+
 #-------------------------------------------------------------------
 # Logging Settings
 #-------------------------------------------------------------------
