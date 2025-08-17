@@ -108,3 +108,5 @@ esac
 #
 PREPPEDARCHIVE=prepped_${GRIDNAME}_${INSTANCENAME}_${NCPU}.tar.gz
 HINDCASTARCHIVE=prepped_${GRIDNAME}_hc_${INSTANCENAME}_${NCPU}.tar.gz
+# for debian+slurm
+JOBLAUNCHER='srun -n %totalcpu%'
