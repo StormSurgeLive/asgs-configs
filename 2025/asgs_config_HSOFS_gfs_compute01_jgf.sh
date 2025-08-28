@@ -27,14 +27,29 @@
 
 # Fundamental
 
-INSTANCENAME=HSOFS_gfs_compute01_jgf # "name" of this ASGS process
+INSTANCENAME=HSOFS_gfs_compute01_jgf_gfortran # "name" of this ASGS process
 
 # Input files and templates
 
 GRIDNAME=HSOFS
 parameterPackage=default   # <-----<<
-createWind10mLayer="yes"   # <-----<<
+#createWind10mLayer="yes"   # <-----<<
 source $SCRIPTDIR/config/mesh_defaults.sh
+
+#--------------------------------------------------------------
+# -- I N C R E A S E   I N I T I A L   W A T E R   L E V E L --
+#
+# use fort.13 template that has this nodal attribute in it (unlike the default fort.13 template for HSOFS)
+NAFILE=hsofs-parameters-v2.13
+#
+# add 15cm to the default initial water level for this mesh (HSOFS is 0.0 by default)
+stericOffset=0.15
+newValue=$(printf "%.4f" $(echo ${nodal_attribute_default_values["sea_surface_height_above_geoid"]} + $stericOffset | bc -l))
+nodal_attribute_default_values["sea_surface_height_above_geoid"]=$newValue
+#
+# add this nodal attribute to fort.15 files for this instance (it is not activated by default for HSOFS)
+nodal_attribute_activate+=( sea_surface_height_above_geoid )
+#--------------------------------------------------------------
 
 # Physical forcing (defaults set in config/forcing_defaults.sh)
 
@@ -53,7 +68,7 @@ CYCLETIMELIMIT="99:00:00"
 
 # Computational Resources (related defaults set in platforms.sh)
 
-NCPU=79                  # number of compute CPUs for all simulations
+NCPU=119                 # number of compute CPUs for all simulations
 NCPUCAPACITY=9999
 NUMWRITERS=1
 PPN=40
@@ -79,7 +94,7 @@ statusNotify="null"
 
 COLDSTARTDATE=auto
 HOTORCOLD=hotstart
-LASTSUBDIR=https://fortytwo.cct.lsu.edu/thredds/fileServer/2025/nam/2025070806/HSOFS/mike.hpc.lsu.edu/HSOFS_nam_mike_ak/namforecast
+LASTSUBDIR=https://fortytwo.cct.lsu.edu/thredds/fileServer/2025/al05/46/HSOFS/qbd.loni.org/HSOFS_al052025_qbd_jgf/nhcConsensus
 
 #
 # Scenario package
