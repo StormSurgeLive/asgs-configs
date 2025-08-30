@@ -130,7 +130,7 @@ OPENDAPNOTIFY="coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asg
    # !! main set of email addresses to notify
 NOTIFY_SCRIPT=cera_notify.sh
    # !! notification used ...
-TDS=( lsu_tds )
+TDS=( tacc_tds3 lsu_tds )
    # !! servers receiving results via ssh
 
 hooksScripts[FINISH_SPINUP_SCENARIO]=" output/createOPeNDAPFileList.sh output/$OPENDAPPOST "

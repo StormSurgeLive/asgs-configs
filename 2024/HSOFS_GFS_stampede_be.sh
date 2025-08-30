@@ -19,7 +19,7 @@ INSTANCENAME=HSOFS_GFS_stampede3_be
    # !! "name" of this ASGS process
 ASGSADMIN=asgsnotify@memenesia.net
    # !! email address of operator, HPCs need it
-ACCOUNT=TG-DMS080016N
+#ACCOUNT=TG-DMS080016N
    # !! used on HPC's to specify allocation account
 #QOS=vipPJ_P3000
    # !! used for priority access at TACC
