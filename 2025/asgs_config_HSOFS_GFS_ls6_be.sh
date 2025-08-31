@@ -121,7 +121,7 @@ QUEUESYS=SLURM
    # !! platform specific, e.g., SLURM
 PPN=128
    # !! platform specific, processors-per-node
-NCPU=959
+NCPU=1919
    # !! number of compute CPUs for all simulations, should be a set in consideration of PPN
 NUMWRITERS=1
    # !! usually just 1, total CPUs for the run is NCPU+NUMWRITERS
