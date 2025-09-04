@@ -27,25 +27,23 @@
 
 # Fundamental
 
-INSTANCENAME=HSOFS_gfs_kitt_v53release_gfortran # "name" of this ASGS process
+INSTANCENAME=EGOMv20b_al092024_frontera_jgf # "name" of this ASGS process
 
 # Input files and templates
 
-GRIDNAME=HSOFS
-#parameterPackage=default   # <-----<<
-#createWind10mLayer="yes"   # <-----<<
+GRIDNAME=EGOMv20b
 source $SCRIPTDIR/config/mesh_defaults.sh
 
 # Physical forcing (defaults set in config/forcing_defaults.sh)
 
 TIDEFAC=on               # tide factor recalc
    HINDCASTLENGTH=20.0   # length of initial hindcast, from cold (days)
-BACKGROUNDMET=GFS        # GFS download/forcing
+BACKGROUNDMET=off         # NAM/GFS download/forcing
    FORECASTCYCLE="00,06,12,18"
-TROPICALCYCLONE=off      # tropical cyclone forcing
-   STORM=08              # storm number, e.g. 05=ernesto in 2006
-   YEAR=2021             # year of the storm
-WAVES=off               # wave forcing
+TROPICALCYCLONE=on      # tropical cyclone forcing
+   STORM=09              # storm number, e.g. 05=ernesto in 2006
+   YEAR=2024             # year of the storm
+WAVES=on                 # wave forcing
    REINITIALIZESWAN=no   # used to bounce the wave solution
 VARFLUX=off              # variable river flux forcing
 #
@@ -53,7 +51,7 @@ CYCLETIMELIMIT="99:00:00"
 
 # Computational Resources (related defaults set in platforms.sh)
 
-NCPU=15                # number of compute CPUs for all simulations
+NCPU=959                 # number of compute CPUs for all simulations
 NCPUCAPACITY=9999
 NUMWRITERS=1
 
@@ -64,18 +62,17 @@ OPENDAPPOST=opendap_post2.sh
 POSTPROCESS=( includeWind10m.sh createOPeNDAPFileList.sh $OPENDAPPOST )
 hooksScripts[FINISH_SPINUP_SCENARIO]=" output/createOPeNDAPFileList.sh output/$OPENDAPPOST "
 hooksScripts[FINISH_NOWCAST_SCENARIO]=" output/includeWind10m.sh output/createOPeNDAPFileList.sh output/$OPENDAPPOST "
-OPENDAPNOTIFY="null"
-# OPENDAPNOTIFY is set in ~/.asgsh_profile
+OPENDAPNOTIFY="coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asgs.cera.pub.lsu@coastalrisk.live,asgs.cera.lsu@coastalrisk.live,jason.fleming@stormsurge.live"
 
 # Monitoring
 
-enablePostStatus="no"
+enablePostStatus="yes"
 enableStatusNotify="no"
 statusNotify="null"
 
 # Initial state (overridden by STATEFILE after ASGS gets going)
 
-COLDSTARTDATE=2024103000
+COLDSTARTDATE=2024090306
 HOTORCOLD=coldstart
 LASTSUBDIR=null
 
@@ -83,26 +80,26 @@ LASTSUBDIR=null
 # Scenario package
 #
 #PERCENT=default
-SCENARIOPACKAGESIZE=0        # <-----<<
+SCENARIOPACKAGESIZE=2    # <-----<<
 case $si in
    -2)
        ENSTORM=hindcast
-       OPENDAPNOTIFY="null"  # do not notify CERA of the results of this scenario
+       OPENDAPNOTIFY="null"  # <-<< do not notify CERA 
        ;;
    -1)
        # do nothing ... this is not a forecast
        ENSTORM=nowcast
-       OPENDAPNOTIFY="null"  # do not notify CERA of the results of this scenario
+       OPENDAPNOTIFY="null"  # <-<< do not notify CERA 
        ;;
     0)
-       ENSTORM=gfsforecastWind10m
+       ENSTORM=nhcConsensusWind10m
        source $SCRIPTDIR/config/io_defaults.sh # sets met-only mode based on "Wind10m" suffix
        ;;
     1)
-       ENSTORM=gfsforecast
+       ENSTORM=nhcConsensus
        ;;
     *)
-       echo "CONFIGURATION ERROR: Unknown ensemble member number: '$si'."
+       echo "CONFIGURATION ERROR: Unknown scenario number: '$si'."
       ;;
 esac
 #

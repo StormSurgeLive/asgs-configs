@@ -8,7 +8,7 @@
 # etc)
 #-------------------------------------------------------------------
 #
-# Copyright(C) 2024 Jason Fleming
+# Copyright(C) 2025 Jason Fleming
 #
 # This file is part of the ADCIRC Surge Guidance System (ASGS).
 #
@@ -27,25 +27,29 @@
 
 # Fundamental
 
-INSTANCENAME=HSOFS_gfs_kitt_v53release_gfortran # "name" of this ASGS process
+INSTANCENAME=Shinnecock_al182012_compute01_jgf # "name" of this ASGS process
 
 # Input files and templates
 
-GRIDNAME=HSOFS
-#parameterPackage=default   # <-----<<
-#createWind10mLayer="yes"   # <-----<<
+GRIDNAME=Shinnecock
+parameterPackage=default   # <-----<<
+createWind10mLayer="yes"   # <-----<<
 source $SCRIPTDIR/config/mesh_defaults.sh
 
 # Physical forcing (defaults set in config/forcing_defaults.sh)
 
 TIDEFAC=on               # tide factor recalc
-   HINDCASTLENGTH=20.0   # length of initial hindcast, from cold (days)
-BACKGROUNDMET=GFS        # GFS download/forcing
+   HINDCASTLENGTH=1.0    # length of initial hindcast, from cold (days)
+BACKGROUNDMET=off        # NAM/GFS download/forcing
    FORECASTCYCLE="00,06,12,18"
-TROPICALCYCLONE=off      # tropical cyclone forcing
-   STORM=08              # storm number, e.g. 05=ernesto in 2006
-   YEAR=2021             # year of the storm
-WAVES=off               # wave forcing
+TROPICALCYCLONE=on       # tropical cyclone forcing
+   STORM=18              # storm number, e.g. 05=ernesto in 2006
+   YEAR=2012             # year of the storm
+   FDIR=$WORK/atcf
+   HDIR="$FDIR"
+   RSSSITE=filesystem
+   FTPSITE=filesystem
+WAVES=on                 # wave forcing
    REINITIALIZESWAN=no   # used to bounce the wave solution
 VARFLUX=off              # variable river flux forcing
 #
@@ -53,7 +57,7 @@ CYCLETIMELIMIT="99:00:00"
 
 # Computational Resources (related defaults set in platforms.sh)
 
-NCPU=15                # number of compute CPUs for all simulations
+NCPU=3                 # number of compute CPUs for all simulations
 NCPUCAPACITY=9999
 NUMWRITERS=1
 
@@ -61,11 +65,10 @@ NUMWRITERS=1
 
 INTENDEDAUDIENCE=general    # "general" | "developers-only" | "professional"
 OPENDAPPOST=opendap_post2.sh
-POSTPROCESS=( includeWind10m.sh createOPeNDAPFileList.sh $OPENDAPPOST )
-hooksScripts[FINISH_SPINUP_SCENARIO]=" output/createOPeNDAPFileList.sh output/$OPENDAPPOST "
-hooksScripts[FINISH_NOWCAST_SCENARIO]=" output/includeWind10m.sh output/createOPeNDAPFileList.sh output/$OPENDAPPOST "
-OPENDAPNOTIFY="null"
-# OPENDAPNOTIFY is set in ~/.asgsh_profile
+#POSTPROCESS=( includeWind10m.sh createOPeNDAPFileList.sh $OPENDAPPOST )
+#hooksScripts[FINISH_SPINUP_SCENARIO]=" output/createOPeNDAPFileList.sh output/$OPENDAPPOST "
+#hooksScripts[FINISH_NOWCAST_SCENARIO]=" output/includeWind10m.sh output/createOPeNDAPFileList.sh output/$OPENDAPPOST "
+OPENDAPNOTIFY="jason.fleming@stormsurge.live"
 
 # Monitoring
 
@@ -75,7 +78,8 @@ statusNotify="null"
 
 # Initial state (overridden by STATEFILE after ASGS gets going)
 
-COLDSTARTDATE=2024103000
+
+COLDSTARTDATE=2012102406
 HOTORCOLD=coldstart
 LASTSUBDIR=null
 
@@ -83,28 +87,26 @@ LASTSUBDIR=null
 # Scenario package
 #
 #PERCENT=default
-SCENARIOPACKAGESIZE=0        # <-----<<
+SCENARIOPACKAGESIZE=1    # <-----<<
 case $si in
    -2)
        ENSTORM=hindcast
-       OPENDAPNOTIFY="null"  # do not notify CERA of the results of this scenario
+       OPENDAPNOTIFY="null"  # <-<< do not notify CERA 
        ;;
    -1)
        # do nothing ... this is not a forecast
        ENSTORM=nowcast
-       OPENDAPNOTIFY="null"  # do not notify CERA of the results of this scenario
+       OPENDAPNOTIFY="null"  # <-<< do not notify CERA 
        ;;
     0)
-       ENSTORM=gfsforecastWind10m
-       source $SCRIPTDIR/config/io_defaults.sh # sets met-only mode based on "Wind10m" suffix
-       ;;
-    1)
-       ENSTORM=gfsforecast
+       ENSTORM=nhcConsensus
        ;;
     *)
-       echo "CONFIGURATION ERROR: Unknown ensemble member number: '$si'."
+       echo "CONFIGURATION ERROR: Unknown scenario number: '$si'."
       ;;
 esac
 #
 PREPPEDARCHIVE=prepped_${GRIDNAME}_${INSTANCENAME}_${NCPU}.tar.gz
 HINDCASTARCHIVE=prepped_${GRIDNAME}_hc_${INSTANCENAME}_${NCPU}.tar.gz
+# for debian+slurm
+JOBLAUNCHER='srun -n %totalcpu%'
