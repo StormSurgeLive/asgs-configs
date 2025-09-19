@@ -78,17 +78,18 @@ NUMWRITERS=1
 
 INTENDEDAUDIENCE=general    # "general" | "developers-only" | "professional"
 OPENDAPPOST=opendap_post2.sh
-POSTPROCESS=( null_post.sh )
-#POSTPROCESS=( includeWind10m.sh createOPeNDAPFileLit.sh $OPENDAPPOST )
+POSTPROCESS=( includeWind10m.sh createOPeNDAPFileList.sh $OPENDAPPOST )
 #OPENDAPNOTIFY="coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,jason.fleming@seahorsecoastal.com,jason.fleming@stormsurge.live"
-#hooksScripts[FINISH_SPINUP_SCENARIO]=" output/createOPeNDAPFileList.sh output/$OPENDAPPOST "
-#hooksScripts[FINISH_NOWCAST_SCENARIO]=" output/createOPeNDAPFileList.sh output/$OPENDAPPOST "
+OPENDAPNOTIFY="null"
+hooksScripts[FINISH_SPINUP_SCENARIO]=" output/createOPeNDAPFileList.sh output/$OPENDAPPOST "
+hooksScripts[FINISH_NOWCAST_SCENARIO]=" output/createOPeNDAPFileList.sh output/$OPENDAPPOST "
 
 # Monitoring
 
-enablePostStatus="no"
+enablePostStatus="yes"
 enableStatusNotify="no"
 statusNotify="null"
+EMAILNOTIFY=yes
 
 # Initial state (overridden by STATEFILE after ASGS gets going)
 
