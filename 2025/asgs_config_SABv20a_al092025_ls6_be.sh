@@ -1,24 +1,27 @@
 #!/usr/bin/env bash
-#-- created on 2025-08-31 03:02:23 UTC, https://tools.adcirc.live --#
+#-- created on 2025-09-27 06:36:24 UTC, https://tools.adcirc.live --#
 
-# Copyright(C) 2025 Jason Fleming <jason.fleming@adcirc.live>
-# Copyright(C) 2025 Brett Estrade <brett.estrade@adcirc.live>
+# Copyright(C) 2024-2025 Jason Fleming <jason.fleming@adcirc.live>
+# Copyright(C) 2024-2025 Brett Estrade <brett.estrade@adcirc.live>
 
 # All Copyright information must be retained when sharing, modifying,
 # or deriving works from this source code file; additional Copyright
 # and Licensing information should be at the bottom of this file.
 
 # file:
-#   asgs_config_HSOFS_GFS_ls6_be.sh
+#   asgs_config_SABv20a_al092025_ls6_be.sh
 #-------------------------------------------------------------------
 # Instance and Operator Information
 #-------------------------------------------------------------------
 #
 
-INSTANCENAME=HSOFS_GFS_ls6_be
+INSTANCENAME=SABv20a_al092025_ls6_be
    # !! "name" of this ASGS process
 ASGSADMIN=asgsnotify@memenesia.net
    # !! email address of operator, HPCs need it
+#ACCOUNT=ADCIRC                   # commented out
+   # !! NOTE: this should actually be set in in ~/.asgsh_profile on the host machine
+   # !! used on HPC's to specify allocation account
 QOS=vippj_p1000
    # !! used for priority access at TACC
 
@@ -30,7 +33,7 @@ QOS=vippj_p1000
 # file is source'd
 #
 
-GRIDNAME=HSOFS
+GRIDNAME=SABv20a
    # !! the "mesh"
 parameterPackage=default
    # !! if not set, uses 'hardcoded', options are defined in mesh_defaults.sh
@@ -40,7 +43,13 @@ createWind10mLayer="yes"
    # !! scenario runs, but this happens automatically now if set to "yes",
    # !! otherwise, these need to be defined explicitly if set to "no"
 ADCIRCVERSION="v56.0.4"
-   # !! intended ADCIRC version (no impact as of 2025-08-31 03:02:23 UTC)
+   # !! intended ADCIRC version (no impact as of 2025-09-27 06:36:24 UTC)
+#NSCREEN=-1000                           # commented out
+   # !! this controls the variable in the generated fort.15 that specifies
+   # !! how output is handled; the integer part is how often in number of
+   # !! timestep status output is printed; negative indicates that it is
+   # !! written to the file, "adcirc.log"; a positive integer indicates
+   # !! that it is written to STDOUT
 
 #-------------------------------------------------------------------
 # Source mesh_defaults - DO NOT PUT GRID SETTINGS ABOVE PAST the mesh_defaults.sh line below
@@ -89,14 +98,20 @@ HINDCASTLENGTH=30
 #
 
 # Meteorological (winds - NAM, GFS, etc)
-BACKGROUNDMET=GFS
+BACKGROUNDMET=off
    # !! download/ meteorological forcing from an upstream source
-  FORECASTCYCLE="00,06,12,18"
+###FORECASTCYCLE=""
    # !! !! used when BACKGROUNDMET is turned on (e.g., "00,06,12,18"), in UTC / "Z"
 
 # Tropical/Hurricane (ATCF data for internal GAHM wind generation)
-TROPICALCYCLONE=off
+TROPICALCYCLONE=on
    # !! tropical cyclone forcing (mutually exclusive with BACKGROUNDMET in most cases)
+   STORM=09
+   # !! !! storm number, e.g. 05=ernesto in 2006
+   YEAR=2025
+   # !! !! year of the storm
+   BASIN=al
+   # !! !! ocean basin, e.g., AL (Atlantic), EP (East Pacific), CP (Central Pacific)
 
 # Other
 TIDEFAC=on
@@ -119,7 +134,7 @@ QUEUESYS=SLURM
    # !! platform specific, e.g., SLURM
 PPN=128
    # !! platform specific, processors-per-node
-NCPU=1919
+NCPU=959
    # !! number of compute CPUs for all simulations, should be a set in consideration of PPN
 NUMWRITERS=1
    # !! usually just 1, total CPUs for the run is NCPU+NUMWRITERS
@@ -137,15 +152,19 @@ INTENDEDAUDIENCE=general
    # !! used by CERA to pick where to display result; "general" | "developers-only"
 OPENDAPPOST=opendap_post2.sh
    # !! posts OpenDAP/THREDDS servers via ssh (default, opendap_post2.sh)
+#OPENDAPADDROOT=additionDir              # commented out
+   # !! specify another directory to root the output when posting it
+   # !! via opendap_post2.sh; useful for test runs or some way to differentiate
+   # !! sets of results apart from the ones being used directly upstream
 POSTPROCESS=( includeWind10m.sh createOPeNDAPFileList.sh $OPENDAPPOST )
    # !! scripts to run during the POSTPROCESS ASGS hook
 postAdditionalFiles=""
    # !! additional files to send over 
-OPENDAPNOTIFY="coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asgs.cera.lsu@coastalrisk.live,asgs.cera.pub.lsu@coastalrisk.live,asgsnotify@memenesia.net,jasongfleming@gmail.com asgsnotify@memenesia.net"
+OPENDAPNOTIFY="coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asgs.cera.lsu@coastalrisk.live,asgs.cera.pub.lsu@coastalrisk.live,asgsnotify@memenesia.net,jasongfleming@gmail.com,clint.dawson@austin.utexas.edu asgsnotify@memenesia.net"
    # !! main set of email addresses to notify
 NOTIFY_SCRIPT=cera_notify.sh
    # !! notification used ...
-TDS=( lsu_tds )
+TDS=( lsu_tds, tds_tacc3 )
    # !! servers receiving results via ssh
 
 hooksScripts[FINISH_SPINUP_SCENARIO]=" output/createOPeNDAPFileList.sh output/$OPENDAPPOST "
@@ -164,10 +183,10 @@ hooksScripts[FINISH_NOWCAST_SCENARIO]=" output/createOPeNDAPFileList.sh output/$
    # !! default is the track as described by the ATCF data; veerRight is positive;
    # !! veerLeft is negative. 100 is wrt the right most edge of the cone, -100 is
    # !! wrt left most edge of the cone
-SCENARIOPACKAGESIZE=1
-   # !! GFS only has 1 actual scenarios, not including the hindcast and the nowcast
-   # !! the "gfsforecaseWind10m" step is now rolled into "gfsforecast" when
-   # !! createWind10mLayer="yes", which is the preferred now (fewer runs required)
+SCENARIOPACKAGESIZE=2
+   # !! GAHM (using ATCF/BEST data) can have many different scenarios
+   # !! as the tracks of the storm may be altered; here there are 2
+   # !! scenarios, not including the hindcast and the nowcast
 case $si in
  -2)
    ENSTORM=hindcast
@@ -180,10 +199,14 @@ case $si in
    OPENDAPNOTIFY="asgsnotify@memenesia.net"
    ;;
 0)
-   # NOTE: includes gfsforecastWind10m when createWind10mLayer="yes", which is the
-   # preferred now (fewer runs required)
-   ENSTORM=gfsforecast
-   OPENDAPNOTIFY="coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asgs.cera.lsu@coastalrisk.live,asgs.cera.pub.lsu@coastalrisk.live,asgsnotify@memenesia.net,jasongfleming@gmail.com asgsnotify@memenesia.net"
+   ENSTORM=nhcConsensus
+   PERCENT=0
+   OPENDAPNOTIFY="coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asgs.cera.lsu@coastalrisk.live,asgs.cera.pub.lsu@coastalrisk.live,asgsnotify@memenesia.net,jasongfleming@gmail.com,clint.dawson@austin.utexas.edu"
+   ;;
+1)
+   ENSTORM=veerLeft100
+   PERCENT=-100
+   OPENDAPNOTIFY="coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asgs.cera.lsu@coastalrisk.live,asgs.cera.pub.lsu@coastalrisk.live,asgsnotify@memenesia.net,jasongfleming@gmail.com,clint.dawson@austin.utexas.edu"
    ;;
 *)
    echo "CONFIGRATION ERROR: Unknown scenario number: '$si'."
@@ -230,5 +253,5 @@ HINDCASTARCHIVE=prepped_${GRIDNAME}_hc_${INSTANCENAME}_${NCPU}.tar.gz
 # the ASGS.  If not, see <http://www.gnu.org/licenses/>.
 #-------------------------------------------------------------------
 
-#-- created on 2025-08-31 03:02:23 UTC, https://tools.adcirc.live --#
+#-- created on 2025-09-27 06:36:24 UTC, https://tools.adcirc.live --#
 
