@@ -78,9 +78,9 @@ statusNotify="asgsnotify@memenesia.net"
 #-------------------------------------------------------------------
 #
 
-HOTORCOLD=coldstart
+HOTORCOLD=hotstart
    # !! initial state (overridden by STATEFILE after ASGS gets going since it's then a "hotstart")
-  COLDSTARTDATE=hotstart #$(get-coldstart-date)
+  COLDSTARTDATE=auto #$(get-coldstart-date)
    # !! already computes based on HINDCASTLENGTH (default is 30 days before TODAY)
   LASTSUBDIR=https://fortytwo.cct.lsu.edu/thredds/fileServer/2025/GFS/2025092706/SABv20a/mike.hpc.lsu.edu/SABv20a_gfs_mike_jgf/gfsforecast
    # !! used when HOTORCOLD=hotstart
