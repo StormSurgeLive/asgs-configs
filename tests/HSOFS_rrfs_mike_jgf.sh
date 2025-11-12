@@ -60,7 +60,7 @@ BACKGROUNDMET=RRFS        # GFS download/forcing
 TROPICALCYCLONE=off      # tropical cyclone forcing
    STORM=08              # storm number, e.g. 05=ernesto in 2006
    YEAR=2021             # year of the storm
-WAVES=off                # wave forcing
+WAVES=on                 # wave forcing
    REINITIALIZESWAN=no   # used to bounce the wave solution
 VARFLUX=off              # variable river flux forcing
 #
@@ -74,7 +74,7 @@ NUMWRITERS=1
 
 # Post processing and publication
 
-INTENDEDAUDIENCE=developers-only   # "general" | "developers-only" | "professional"
+INTENDEDAUDIENCE=general   # "general" | "developers-only" | "professional"
 OPENDAPPOST=opendap_post2.sh
 #POSTPROCESS=( null_post.sh )
 POSTPROCESS=( includeWind10m.sh createOPeNDAPFileList.sh $OPENDAPPOST )
