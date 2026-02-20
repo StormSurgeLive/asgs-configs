@@ -39,7 +39,7 @@ BACKGROUNDMET=GFS        # GFS download/forcing
 TROPICALCYCLONE=off      # tropical cyclone forcing
    STORM=08              # storm number, e.g. 05=ernesto in 2006
    YEAR=2021             # year of the storm
-WAVES=off                # wave forcing
+WAVES=on                 # wave forcing
    REINITIALIZESWAN=no   # used to bounce the wave solution
 VARFLUX=off              # variable river flux forcing
 #
@@ -49,13 +49,12 @@ CYCLETIMELIMIT="99:00:00"
 
 NCPU=15                # number of compute CPUs for all simulations
 NCPUCAPACITY=9999
-NUMWRITERS=1
+NUMWRITERS=0
 #PPN=40
 #JOBLAUNCHER='srun -n %totalcpu%'
 
 # Post processing and publication
 
-INTENDEDAUDIENCE=general    # "general" | "developers-only" | "professional"
 OPENDAPPOST=opendap_post2.sh
 POSTPROCESS=( null_post.sh )
 #POSTPROCESS=( includeWind10m.sh createOPeNDAPFileList.sh $OPENDAPPOST )
@@ -72,7 +71,7 @@ EMAILNOTIFY="no"
 
 # Initial state (overridden by STATEFILE after ASGS gets going)
 
-COLDSTARTDATE=2026021000
+COLDSTARTDATE=2026021600
 HOTORCOLD=coldstart
 LASTSUBDIR=null
 
