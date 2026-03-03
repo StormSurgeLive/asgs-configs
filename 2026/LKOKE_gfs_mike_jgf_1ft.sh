@@ -57,7 +57,7 @@ NUMWRITERS=0
 # Post processing and publication
 
 OPENDAPPOST=opendap_post2.sh
-POSTPROCESS=( asgs_post.sh )
+POSTPROCESS=( vispipe_post.sh asgs_post.sh )
 #POSTPROCESS=( includeWind10m.sh createOPeNDAPFileList.sh $OPENDAPPOST )
 OPENDAPNOTIFY="coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,jason.fleming@seahorsecoastal.com,jason.fleming@stormsurge.live"
 #hooksScripts[FINISH_SPINUP_SCENARIO]=" output/createOPeNDAPFileList.sh output/$OPENDAPPOST "
