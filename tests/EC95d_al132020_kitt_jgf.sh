@@ -1,14 +1,9 @@
 #!/bin/sh
 #-------------------------------------------------------------------
-# config.sh: This file is read at the beginning of the execution of the ASGS to
-# set up the runs  that follow. It is reread at the beginning of every cycle,
-# every time it polls the datasource for a new advisory. This gives the user
-# the opportunity to edit this file mid-storm to change config parameters
-# (e.g., the name of the queue to submit to, the addresses on the mailing list,
-# etc)
+# Test large forecast scenario package
 #-------------------------------------------------------------------
 #
-# Copyright(C) 2025 Jason Fleming
+# Copyright(C) 2026 Jason Fleming
 #
 # This file is part of the ADCIRC Surge Guidance System (ASGS).
 #
@@ -27,25 +22,25 @@
 
 # Fundamental
 
-INSTANCENAME=Shinnecock_gfs_kitt_jgf # "name" of this ASGS process
+INSTANCENAME=EC95d_al132020_kitt_jgf # "name" of this ASGS process
 
 # Input files and templates
 
-GRIDNAME=Shinnecock
-parameterPackage=default   # <-----<<
-createWind10mLayer="yes"   # <-----<<
+GRIDNAME=EC95d
+parameterPackage=default
+createWind10mLayer="no"  # don't need this because there are no wind roughnesses
 source $SCRIPTDIR/config/mesh_defaults.sh
 
 # Physical forcing (defaults set in config/forcing_defaults.sh)
 
 TIDEFAC=on               # tide factor recalc
-   HINDCASTLENGTH=1.0    # length of initial hindcast, from cold (days)
-BACKGROUNDMET=GFS        # NAM/GFS download/forcing
+   HINDCASTLENGTH=30.0   # length of initial hindcast, from cold (days)
+BACKGROUNDMET=off        # NAM/GFS download/forcing
    FORECASTCYCLE="00,06,12,18"
-TROPICALCYCLONE=off      # tropical cyclone forcing
-   STORM=18              # storm number, e.g. 05=ernesto in 2006
-   YEAR=2012             # year of the storm
-   FDIR=$WORK/atcf
+TROPICALCYCLONE=on       # tropical cyclone forcing
+   STORM=13              # storm number, e.g. 05=ernesto in 2006
+   YEAR=2020             # year of the storm
+   FDIR=$WORK
    HDIR="$FDIR"
    RSSSITE=filesystem
    FTPSITE=filesystem
@@ -57,8 +52,8 @@ CYCLETIMELIMIT="99:00:00"
 
 # Computational Resources (related defaults set in platforms.sh)
 
-NCPU=3                 # number of compute CPUs for all simulations
-NCPUCAPACITY=9999
+NCPU=15                 # number of compute CPUs for all simulations
+NCPUCAPACITY=16
 NUMWRITERS=1
 
 # Post processing and publication
@@ -72,42 +67,98 @@ OPENDAPNOTIFY="jason.fleming@stormsurge.live"
 
 # Monitoring
 
-EMAILNOTIFY="yes"
 enablePostStatus="no"
 enableStatusNotify="no"
 statusNotify="null"
 
-
-EXITONERROR="yes"   # <-----<< stop execution when a run fails
-
 # Initial state (overridden by STATEFILE after ASGS gets going)
 
-
-COLDSTARTDATE=2026040200
+COLDSTARTDATE=2020072300
 HOTORCOLD=coldstart
 LASTSUBDIR=null
-
 #
 # Scenario package
 #
-#PERCENT=default
-SCENARIOPACKAGESIZE=1    # <-----<<
 case $si in
    -2)
        ENSTORM=hindcast
-       OPENDAPNOTIFY="null"   
+       OPENDAPNOTIFY="null"
        ;;
    -1)
-       # do nothing ... this is not a forecast
        ENSTORM=nowcast
        OPENDAPNOTIFY="null"
        ;;
     0)
-       ENSTORM=gfsforecast
+       ENSTORM=01.nhcTrack       # track 01
+       PERCENT=default
+       ;;
+    1)
+       ENSTORM=02.veerLeft75     # track 02
+       PERCENT=-75
+       ;;
+    2)
+       ENSTORM=03.veerRight75    # track 03
+       PERCENT=75
+       ;;
+    3)
+       ENSTORM=04.veerLeft37.5   # track 04
+       PERCENT=-37.5
+       ;;
+    4)
+       ENSTORM=05.veerRight37.5  # track 05
+       PERCENT=37.5
+       ;;
+    5)
+       ENSTORM=06.veerLeft100    # track 06
+       PERCENT=-100
+       ;;
+    6)
+       ENSTORM=07.veerLeft50     # track 07
+       PERCENT=-75
+       ;;
+    7)
+       ENSTORM=08.veerLeft25     # track 08
+       PERCENT=-25
+       ;;
+    8)
+       ENSTORM=09.veerRight25    # track 09
+       PERCENT=25
+       ;;
+    9)
+       ENSTORM=10.veerRight50    # track 10
+       PERCENT=50
+       ;;
+   10)
+       ENSTORM=11.veerRight100   # track 11
+       PERCENT=100
+       ;;
+   11)
+       ENSTORM=12.veerLeft87.5   # track 12
+       PERCENT=-87.5
+       ;;
+   12)
+       ENSTORM=13.veerLeft62.5   # track 13
+       PERCENT=-62.5
+       ;;
+   13)
+       ENSTORM=14.veerLeft12.5   # track 14
+       PERCENT=-12.5
+       ;;
+   14)
+       ENSTORM=15.veerRight12.5  # track 15
+       PERCENT=12.5
+       ;;
+   15)
+       ENSTORM=16.veerRight62.5  # track 16
+       PERCENT=62.5
+       ;;
+   16)
+       ENSTORM=17.veerRight87.5  # track 17
+       PERCENT=87.5
        ;;
     *)
        echo "CONFIGURATION ERROR: Unknown scenario number: '$si'."
-      ;;
+       ;;
 esac
 #
 PREPPEDARCHIVE=prepped_${GRIDNAME}_${INSTANCENAME}_${NCPU}.tar.gz

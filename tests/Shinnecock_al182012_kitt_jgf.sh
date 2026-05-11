@@ -27,29 +27,29 @@
 
 # Fundamental
 
-INSTANCENAME=Shinnecock_gfs_kitt_jgf # "name" of this ASGS process
+INSTANCENAME=Shinnecock_al182012_kitt_jgf # "name" of this ASGS process
 
 # Input files and templates
 
 GRIDNAME=Shinnecock
-parameterPackage=default   # <-----<<
-createWind10mLayer="yes"   # <-----<<
+parameterPackage=default
+createWind10mLayer="yes"
 source $SCRIPTDIR/config/mesh_defaults.sh
 
 # Physical forcing (defaults set in config/forcing_defaults.sh)
 
 TIDEFAC=on               # tide factor recalc
    HINDCASTLENGTH=1.0    # length of initial hindcast, from cold (days)
-BACKGROUNDMET=GFS        # NAM/GFS download/forcing
+BACKGROUNDMET=off        # NAM/GFS download/forcing
    FORECASTCYCLE="00,06,12,18"
-TROPICALCYCLONE=off      # tropical cyclone forcing
+TROPICALCYCLONE=on       # tropical cyclone forcing
    STORM=18              # storm number, e.g. 05=ernesto in 2006
    YEAR=2012             # year of the storm
-   FDIR=$WORK/atcf
+   FDIR=$WORK
    HDIR="$FDIR"
    RSSSITE=filesystem
    FTPSITE=filesystem
-WAVES=off                # wave forcing
+WAVES=on                 # wave forcing
    REINITIALIZESWAN=no   # used to bounce the wave solution
 VARFLUX=off              # variable river flux forcing
 #
@@ -72,18 +72,14 @@ OPENDAPNOTIFY="jason.fleming@stormsurge.live"
 
 # Monitoring
 
-EMAILNOTIFY="yes"
 enablePostStatus="no"
 enableStatusNotify="no"
 statusNotify="null"
 
-
-EXITONERROR="yes"   # <-----<< stop execution when a run fails
-
 # Initial state (overridden by STATEFILE after ASGS gets going)
 
 
-COLDSTARTDATE=2026040200
+COLDSTARTDATE=2012102406
 HOTORCOLD=coldstart
 LASTSUBDIR=null
 
@@ -91,23 +87,23 @@ LASTSUBDIR=null
 # Scenario package
 #
 #PERCENT=default
-SCENARIOPACKAGESIZE=1    # <-----<<
+SCENARIOPACKAGESIZE=auto
 case $si in
    -2)
        ENSTORM=hindcast
-       OPENDAPNOTIFY="null"   
+       OPENDAPNOTIFY="null"  # <-<< do not notify CERA 
        ;;
    -1)
        # do nothing ... this is not a forecast
        ENSTORM=nowcast
-       OPENDAPNOTIFY="null"
+       OPENDAPNOTIFY="null"  # <-<< do not notify CERA 
        ;;
     0)
-       ENSTORM=gfsforecast
+       ENSTORM=nhcConsensus
        ;;
     *)
        echo "CONFIGURATION ERROR: Unknown scenario number: '$si'."
-      ;;
+       ;;
 esac
 #
 PREPPEDARCHIVE=prepped_${GRIDNAME}_${INSTANCENAME}_${NCPU}.tar.gz

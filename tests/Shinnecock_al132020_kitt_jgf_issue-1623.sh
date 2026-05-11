@@ -27,7 +27,7 @@
 
 # Fundamental
 
-INSTANCENAME=Shinnecock_gfs_kitt_jgf # "name" of this ASGS process
+INSTANCENAME=Shinnecock_gfs_kitt_jgf_issue-1671 # "name" of this ASGS process
 
 # Input files and templates
 
@@ -72,18 +72,18 @@ OPENDAPNOTIFY="jason.fleming@stormsurge.live"
 
 # Monitoring
 
-EMAILNOTIFY="yes"
+EMAILNOTIFY="no"
 enablePostStatus="no"
 enableStatusNotify="no"
 statusNotify="null"
-
+log_level=DEBUG
 
 EXITONERROR="yes"   # <-----<< stop execution when a run fails
 
 # Initial state (overridden by STATEFILE after ASGS gets going)
 
 
-COLDSTARTDATE=2026040200
+COLDSTARTDATE=2026041000
 HOTORCOLD=coldstart
 LASTSUBDIR=null
 

@@ -27,7 +27,7 @@
 
 # Fundamental
 
-LINTSETTING=off # off|info|warn|prompt|strict
+LINTSETTING=prompt  # off|info|warn|prompt|strict
 INSTANCENAME=Shinnecock_gfs_kitt_jgf_issue-1603 # "name" of this ASGS process
 
 # Input files and templates
@@ -84,7 +84,7 @@ EXITONERROR="yes"   # <-----<< stop execution when a run fails
 # Initial state (overridden by STATEFILE after ASGS gets going)
 
 
-COLDSTARTDATE=2026040200
+COLDSTARTDATE=2026050500
 HOTORCOLD=coldstart
 LASTSUBDIR=null
 
