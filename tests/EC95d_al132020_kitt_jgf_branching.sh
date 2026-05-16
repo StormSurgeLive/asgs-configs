@@ -22,7 +22,7 @@
 
 # Fundamental
 
-INSTANCENAME=EC95d_al132020_kitt_jgf # "name" of this ASGS process
+INSTANCENAME=EC95d_al132020_kitt_jgf_branching # "name" of this ASGS process
 
 # Input files and templates
 
@@ -89,72 +89,55 @@ case $si in
        OPENDAPNOTIFY="null"
        ;;
     0)
-       ENSTORM=01.veerLeft100       # track 01
-       PERCENT=-100
+       ENSTORM=branching09
        ;;
     1)
-       ENSTORM=02.veerLeft87.5     # track 02
-       PERCENT=-87.5
+       ENSTORM=branching03
        ;;
     2)
-       ENSTORM=03.veerLeft75    # track 03
-       PERCENT=-75
+       ENSTORM=branching15
        ;;
     3)
-       ENSTORM=04.veerLeft62.5   # track 04
-       PERCENT=-62.5
+       ENSTORM=branching06
        ;;
     4)
-       ENSTORM=05.veerLeft50  # track 05
-       PERCENT=-50
+       ENSTORM=branching12
        ;;
     5)
-       ENSTORM=06.veerLeft37.5    # track 06
-       PERCENT=-37.5
+       ENSTORM=branching17
        ;;
     6)
-       ENSTORM=07.veerLeft25     # track 07
-       PERCENT=-25
+       ENSTORM=branching01
        ;;
     7)
-       ENSTORM=08.veerLeft12.5     # track 08
-       PERCENT=-12.5
+       ENSTORM=branching05
        ;;
     8)
-       ENSTORM=09.nhcTrack    # track 09
-       PERCENT=0
+       ENSTORM=branching13
        ;;
     9)
-       ENSTORM=10.veerRight12.5    # track 10
-       PERCENT=12.5
+       ENSTORM=branching11
        ;;
    10)
-       ENSTORM=11.veerRight25   # track 11
-       PERCENT=25
+       ENSTORM=branching07
        ;;
    11)
-       ENSTORM=12.veerRight37.5   # track 12
-       PERCENT=37.5
+       ENSTORM=branching14
        ;;
    12)
-       ENSTORM=13.veerRight50   # track 13
-       PERCENT=50
+       ENSTORM=branching16
        ;;
    13)
-       ENSTORM=14.veerRight62.5   # track 14
-       PERCENT=62.5
+       ENSTORM=branching10
        ;;
    14)
-       ENSTORM=15.veerRight75  # track 15
-       PERCENT=75
+       ENSTORM=branching08
        ;;
    15)
-       ENSTORM=16.veerRight87.5  # track 16
-       PERCENT=87.5
+       ENSTORM=branching02
        ;;
    16)
-       ENSTORM=17.veerRight100  # track 17
-       PERCENT=100
+       ENSTORM=branching04
        ;;
     *)
        echo "CONFIGURATION ERROR: Unknown scenario number: '$si'."
@@ -162,4 +145,4 @@ case $si in
 esac
 #
 PREPPEDARCHIVE=prepped_${GRIDNAME}_${INSTANCENAME}_${NCPU}.tar.gz
-LHINDCASTARCHIVE=prepped_${GRIDNAME}_hc_${INSTANCENAME}_${NCPU}.tar.gz
+HINDCASTARCHIVE=prepped_${GRIDNAME}_hc_${INSTANCENAME}_${NCPU}.tar.gz
