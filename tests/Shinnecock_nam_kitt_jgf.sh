@@ -1,7 +1,8 @@
 #!/bin/sh
 #-------------------------------------------------------------------
-# config.sh : Operator specifications for an ASGS instance
+# config.sh: Set parameters for ASGS instance
 #-------------------------------------------------------------------
+#
 # Copyright(C) 2026 Jason Fleming
 #
 # This file is part of the ADCIRC Surge Guidance System (ASGS).
@@ -21,25 +22,29 @@
 
 # Fundamental
 
-INSTANCENAME=LKOKE_gfs_kitt_jgf # "name" of this ASGS process
+INSTANCENAME=Shinnecock_nam_kitt_jgf # "name" of this ASGS process
 
 # Input files and templates
 
-GRIDNAME=LKOKE
+GRIDNAME=Shinnecock
 parameterPackage=default   # <-----<<
 createWind10mLayer="yes"   # <-----<<
 source $SCRIPTDIR/config/mesh_defaults.sh
 
 # Physical forcing (defaults set in config/forcing_defaults.sh)
 
-TIDEFAC=off              # tide factor recalc
-   HINDCASTLENGTH=0.0   # length of initial hindcast, from cold (days)
-BACKGROUNDMET=GFS        # GFS download/forcing
-   FORECASTCYCLE="06"
+TIDEFAC=on               # tide factor recalc
+   HINDCASTLENGTH=1.0    # length of initial hindcast, from cold (days)
+BACKGROUNDMET=on         # NAM/GFS download/forcing
+   FORECASTCYCLE="00,06,12,18"
 TROPICALCYCLONE=off      # tropical cyclone forcing
-   STORM=08              # storm number, e.g. 05=ernesto in 2006
-   YEAR=2021             # year of the storm
-WAVES=on                 # wave forcing
+   STORM=18              # storm number, e.g. 05=ernesto in 2006
+   YEAR=2012             # year of the storm
+   FDIR=$WORK/atcf
+   HDIR="$FDIR"
+   RSSSITE=filesystem
+   FTPSITE=filesystem
+WAVES=off                # wave forcing
    REINITIALIZESWAN=no   # used to bounce the wave solution
 VARFLUX=off              # variable river flux forcing
 #
@@ -47,52 +52,53 @@ CYCLETIMELIMIT="99:00:00"
 
 # Computational Resources (related defaults set in platforms.sh)
 
-NCPU=15                # number of compute CPUs for all simulations
+NCPU=3                 # number of compute CPUs for all simulations
 NCPUCAPACITY=9999
-NUMWRITERS=0
-#PPN=40
-#JOBLAUNCHER='srun -n %totalcpu%'
+NUMWRITERS=1
 
 # Post processing and publication
 
+INTENDEDAUDIENCE=general    # "general" | "developers-only" | "professional"
 OPENDAPPOST=opendap_post2.sh
-POSTPROCESS=( null_post.sh )
 #POSTPROCESS=( includeWind10m.sh createOPeNDAPFileList.sh $OPENDAPPOST )
-OPENDAPNOTIFY="coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,jason.fleming@seahorsecoastal.com,jason.fleming@stormsurge.live"
 #hooksScripts[FINISH_SPINUP_SCENARIO]=" output/createOPeNDAPFileList.sh output/$OPENDAPPOST "
-#hooksScripts[FINISH_NOWCAST_SCENARIO]=" output/createOPeNDAPFileList.sh output/$OPENDAPPOST "
+#hooksScripts[FINISH_NOWCAST_SCENARIO]=" output/includeWind10m.sh output/createOPeNDAPFileList.sh output/$OPENDAPPOST "
+OPENDAPNOTIFY="jason.fleming@stormsurge.live"
 
 # Monitoring
 
+EMAILNOTIFY="no"
 enablePostStatus="no"
 enableStatusNotify="no"
 statusNotify="null"
-EMAILNOTIFY="no"
+
+EXITONERROR="yes"   # <-----<< stop execution when a run fails
 
 # Initial state (overridden by STATEFILE after ASGS gets going)
 
-COLDSTARTDATE=2026060800
+COLDSTARTDATE=2026071700
 HOTORCOLD=coldstart
 LASTSUBDIR=null
 
 #
 # Scenario package
 #
-PERCENT=default
+#PERCENT=default
 case $si in
    -2)
        ENSTORM=hindcast
+       OPENDAPNOTIFY="null"   
        ;;
    -1)
        # do nothing ... this is not a forecast
        ENSTORM=nowcast
+       OPENDAPNOTIFY="null"
        ;;
     0)
-       # do nothing ... this is not a forecast
-       ENSTORM=gfsforecast
+       ENSTORM=namforecast
        ;;
     *)
-       echo "CONFIGURATION ERROR: Unknown ensemble member number: '$si'."
+       # this is not a forecast scenario
       ;;
 esac
 #
