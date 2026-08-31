@@ -27,7 +27,7 @@
 
 # Fundamental
 
-INSTANCENAME=TXLA22a_GFS_frontera_be # "name" of this ASGS process
+INSTANCENAME=TXLA22a_al052026_frontera_be # "name" of this ASGS process
 
 # Input files and templates
 
@@ -40,11 +40,11 @@ source $SCRIPTDIR/config/mesh_defaults.sh
 
 TIDEFAC=on               # tide factor recalc
    HINDCASTLENGTH=20.0   # length of initial hindcast, from cold (days)
-BACKGROUNDMET=GFS        # NAM download/forcing
+BACKGROUNDMET=off        # NAM download/forcing
    FORECASTCYCLE="00,06,12,18"
 TROPICALCYCLONE=off      # tropical cyclone forcing
-   STORM=08              # storm number, e.g. 05=ernesto in 2006
-   YEAR=2021             # year of the storm
+   STORM=05              # storm number, e.g. 05=ernesto in 2006
+   YEAR=2026             # year of the storm
 WAVES=on                 # wave forcing
    REINITIALIZESWAN=no   # used to bounce the wave solution
 VARFLUX=off              # variable river flux forcing
@@ -89,17 +89,31 @@ LASTSUBDIR=null
 case $si in
    -2)
        SCENARIO=hindcast
+       OPENDAPNOTIFY="null"  # do not notify CERA of the results of this scenario
        ;;
    -1)
        # do nothing ... this is not a forecast
        SCENARIO=nowcast
+       OPENDAPNOTIFY="null"  # do not notify CERA of the results of this scenario
        ;;
     0)
-       SCENARIO=gfsforecast
-       OPENDAPNOTIFY="coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,jason.fleming@seahorsecoastal.com,jason.fleming@stormsurge.live,asgs-notify@memenesia.net"
+       SCENARIO=nhcConsensus
+       OPENDAPNOTIFY="coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asgs.cera.lsu@coastalrisk.live,asgs.cera.pub.lsu@coastalrisk.live,asgsnotify@memenesia.net,jasongfleming@gmail.com"
+       source $SCRIPTDIR/config/io_defaults.sh
        ;;
+    1)
+       SCENARIO=veerRight100
+       PERCENT=100
+       OPENDAPNOTIFY="coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asgs.cera.lsu@coastalrisk.live,asgs.cera.pub.lsu@coastalrisk.live,asgsnotify@memenesia.net,jasongfleming@gmail.com"
+       source $SCRIPTDIR/config/io_defaults.sh
+      ;;
+    2)
+       SCENARIO=veerLeft100
+       PERCENT=-100
+       OPENDAPNOTIFY="coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asgs.cera.lsu@coastalrisk.live,asgs.cera.pub.lsu@coastalrisk.live,asgsnotify@memenesia.net,jasongfleming@gmail.com"
+       source $SCRIPTDIR/config/io_defaults.sh
     *)
-       echo "CONFIGURATION ERROR: Unknown ensemble member number: '$si'."
+       # this is not a forecast scenario
       ;;
 esac
 #
