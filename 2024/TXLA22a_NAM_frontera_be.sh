@@ -119,7 +119,7 @@ POSTPROCESS=( includeWind10m.sh createOPeNDAPFileList.sh $OPENDAPPOST )
    # !! scripts to run during the POSTPROCESS ASGS hook
 postAdditionalFiles=""
    # !! additional files to send over 
-OPENDAPNOTIFY="coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asgs.cera.lsu@coastalrisk.live,asgs.cera.pub.lsu@coastalrisk.live,asgsnotify@memenesia.net,jasongfleming@gmail.com,cdelcastillo21@gmail.com"
+OPENDAPNOTIFY="coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asgs.cera.lsu@coastalrisk.live,asgs.cera.pub.lsu@coastalrisk.live,asgsnotify@memenesia.net,jasongfleming@gmail.com"
    # !! main set of email addresses to notify
 NOTIFY_SCRIPT=cera_notify.sh
    # !! notification used ...
@@ -142,7 +142,6 @@ hooksScripts[FINISH_NOWCAST_SCENARIO]=" output/createOPeNDAPFileList.sh output/$
    # !! default is the track as described by the ATCF data; veerRight is positive;
    # !! veerLeft is negative. 100 is wrt the right most edge of the cone, -100 is
    # !! wrt left most edge of the cone
-SCENARIOPACKAGESIZE=2
    # !! NAM only has 2 actual scenarios, not including the hindcast and the nowcast
 case $si in
  -2)
@@ -163,7 +162,7 @@ case $si in
    ;;
 1)
    ENSTORM=namforecast
-   OPENDAPNOTIFY="coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asgs.cera.lsu@coastalrisk.live,asgs.cera.pub.lsu@coastalrisk.live,asgsnotify@memenesia.net,jasongfleming@gmail.com,cdelcastillo21@gmail.com"
+   OPENDAPNOTIFY="coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,asgs.cera.lsu@coastalrisk.live,asgs.cera.pub.lsu@coastalrisk.live,asgsnotify@memenesia.net,jasongfleming@gmail.com"
    ;;
 *)
    echo "CONFIGRATION ERROR: Unknown scenario number: '$si'."
