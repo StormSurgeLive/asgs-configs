@@ -88,14 +88,14 @@ LASTSUBDIR=null
 #PERCENT=default
 case $si in
    -2)
-       ENSTORM=hindcast
+       SCENARIO=hindcast
        ;;
    -1)
        # do nothing ... this is not a forecast
-       ENSTORM=nowcast
+       SCENARIO=nowcast
        ;;
     0)
-       ENSTORM=gfsforecast
+       SCENARIO=gfsforecast
        ;;
     *)
        echo "CONFIGURATION ERROR: Unknown ensemble member number: '$si'."
