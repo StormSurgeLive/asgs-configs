@@ -41,7 +41,7 @@ source $SCRIPTDIR/config/mesh_defaults.sh
 TIDEFAC=on               # tide factor recalc
    HINDCASTLENGTH=20.0   # length of initial hindcast, from cold (days)
 BACKGROUNDMET=GFS        # NAM download/forcing
-   FORECASTCYCLE="06"
+   FORECASTCYCLE="00,06,12,18"
 TROPICALCYCLONE=off      # tropical cyclone forcing
    STORM=08              # storm number, e.g. 05=ernesto in 2006
    YEAR=2021             # year of the storm
