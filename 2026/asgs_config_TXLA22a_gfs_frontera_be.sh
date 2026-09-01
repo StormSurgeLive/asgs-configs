@@ -63,12 +63,19 @@ NUMWRITERS=1
 # Post processing and publication
 
 INTENDEDAUDIENCE=general    # "general" | "developers-only" | "professional"
+
 OPENDAPPOST=opendap_post2.sh
+
 #POSTPROCESS=( null_post.sh )
 POSTPROCESS=( includeWind10m.sh createOPeNDAPFileList.sh $OPENDAPPOST )
+
 OPENDAPNOTIFY="coastalrisk.live@outlook.com,pub.coastalrisk.live@outlook.com,jason.fleming@seahorsecoastal.com,jason.fleming@stormsurge.live,asgs-notify@memenesia.net"
-hooksScripts[FINISH_SPINUP_SCENARIO]=" output/createOPeNDAPFileList.sh output/$OPENDAPPOST "
-hooksScripts[FINISH_NOWCAST_SCENARIO]=" output/createOPeNDAPFileList.sh output/$OPENDAPPOST "
+
+addScriptTo FINISH_SPINUP_SCENARIO "output/createOPeNDAPFileList.sh"
+addScriptTo FINISH_SPINUP_SCENARIO "output/$OPENDAPPOST"
+
+addScriptTo FINISH_NOWCAST_SCENARIO "output/createOPeNDAPFileList.sh"
+addScriptTo FINISH_NOWCAST_SCENARIO "output/$OPENDAPPOST"
 
 # Monitoring
 
@@ -102,6 +109,7 @@ case $si in
        echo "CONFIGURATION ERROR: Unknown ensemble member number: '$si'."
       ;;
 esac
+    ENSTORM=$SCENARIO
 #
 PREPPEDARCHIVE=prepped_${GRIDNAME}_${INSTANCENAME}_${NCPU}.tar.gz
 HINDCASTARCHIVE=prepped_${GRIDNAME}_hc_${INSTANCENAME}_${NCPU}.tar.gz
